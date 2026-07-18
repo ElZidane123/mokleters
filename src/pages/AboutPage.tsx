@@ -97,30 +97,36 @@ export default function AboutPage() {
         {/* ── PROFILE SECTION ── */}
         <section className="about-profile-section glass-1" aria-label="Profil Komunitas">
           <div className="about-profile-grid">
-            <div className="about-profile-text">
-              <h2 className="about-section-title">Siapa Kami?</h2>
-              <p className="about-paragraph">
-                Mokleters adalah komunitas pendukung resmi (supporter) dari SMK Telkom Malang. Lahir dari rasa cinta yang mendalam terhadap almamater dan tim olahraga sekolah (Wikusama), kami menjadi motor penggerak kreativitas di tribun penonton.
-              </p>
-              <p className="about-paragraph">
-                Bukan sekadar tentang bernyanyi lantang selama 90 menit, Mokleters adalah wadah pemersatu korsa, melatih kepemimpinan, dan mengekspresikan seni koreografi visual di setiap pertandingan kejuaraan.
-              </p>
-            </div>
-            <div className="about-profile-visual">
-              <div className="about-mascot-card glass-2">
-                <img src={mokletsMascot} alt="Maskot Mokleters" className="about-mascot-img" />
-                <div className="about-mascot-info">
-                  <span className="about-mascot-badge">Maskot Resmi</span>
-                  <h3 className="about-mascot-name">Bombi</h3>
-                  <p className="about-mascot-desc">
-                    Bombi merupakan logo yang terbentuk berlandaskan kearifan lokal. Ia menyiratkan perangai tokoh Gatotkaca sewaktu kecil bernama Tetuko — kesatria yang memiliki kesaktian paling sempurna, hebat di segala medan baik di darat maupun di udara.
-                  </p>
-                  <p className="about-mascot-desc">
-                    Karakter Bombi mengajarkan tangkas, lincah, kuat, dan trengginas. Harapannya, semua anak Moklet dapat memiliki kualitas akademis dan softskill yang komplet, sehingga kelak mampu berdaya saing, disegani, dan mengharumkan nama MOKLET tercinta.
-                  </p>
-                </div>
+            <div className="about-profile-visual" style={{ justifyContent: 'center' }}>
+              <div className="about-mascot-visual-container">
+                <img src={mokletsMascot} alt="Maskot Mokleters Bombi" className="about-mascot-page-img" />
               </div>
             </div>
+            <div className="about-profile-text">
+              <span className="about-mascot-badge" style={{ fontSize: '11px', display: 'inline-block', marginBottom: '8px' }}>Maskot Resmi Mokleters</span>
+              <h2 className="about-section-title" style={{ marginTop: '4px', marginBottom: '16px' }}>Makna Bombi</h2>
+              <p className="about-paragraph" style={{ fontWeight: 500, color: '#ffffff', fontSize: '16px' }}>
+                Bombi merupakan logo yang terbentuk berlandaskan kearifan lokal dengan menyiratkan perangai tokoh Gatotkaca sewaktu kecil bernama Tetuko.
+              </p>
+              <p className="about-paragraph">
+                Tetuko adalah kesatria yang memiliki kesaktian paling sempurna, hebat di segala medan baik di darat maupun di udara. Karakter ini dicirikan dengan sifat yang tangkas, lincah, kuat, dan trengginas.
+              </p>
+              <p className="about-paragraph" style={{ marginBottom: 0 }}>
+                Harapannya, dengan filosofi tersebut semua anak Moklet dapat memiliki karakter Tetuko. Tidak hanya memiliki kemampuan akademis di atas rata-rata melainkan juga memiliki softskill dan hardskill agar berdaya saing, disegani oleh sesama, dan mampu mengharumkan nama MOKLET tercinta.
+              </p>
+            </div>
+          </div>
+          
+          <div style={{ margin: '40px 0', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.08) 50%, transparent)' }} />
+          
+          <div className="about-who-we-are" style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
+            <h2 className="about-section-title" style={{ justifyContent: 'center', marginBottom: '20px' }}>Siapa Kami?</h2>
+            <p className="about-paragraph" style={{ fontSize: '15.5px', lineHeight: '1.85' }}>
+              Mokleters adalah komunitas pendukung resmi (supporter) dari SMK Telkom Malang. Lahir dari rasa cinta yang mendalam terhadap almamater dan tim olahraga sekolah (Wikusama), kami menjadi motor penggerak kreativitas di tribun penonton.
+            </p>
+            <p className="about-paragraph" style={{ fontSize: '15.5px', lineHeight: '1.85', marginBottom: 0 }}>
+              Bukan sekadar tentang bernyanyi lantang selama pertandingan, Mokleters adalah wadah pemersatu korsa, melatih kepemimpinan, dan mengekspresikan seni koreografi visual di setiap pertandingan kejuaraan.
+            </p>
           </div>
         </section>
 

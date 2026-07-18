@@ -5307,3 +5307,39 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   }
 }
 
+/* =============================================
+   ABOUT PAGE MASCOT PRESENTATION
+   ============================================= */
+.about-mascot-visual-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle, rgba(161, 15, 18, 0.08) 0%, rgba(0, 0, 0, 0.3) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 24px;
+  padding: 32px;
+  min-height: 380px;
+  width: 100%;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.6);
+  position: relative;
+  overflow: hidden;
+}
+
+.about-mascot-page-img {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 30px rgba(215, 38, 46, 0.4));
+  animation: mascotFloat 4s ease-in-out infinite;
+}
+
+@media (max-width: 992px) {
+  .about-profile-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px;
+  }
+  .about-mascot-visual-container {
+    min-height: 280px;
+  }
+}
