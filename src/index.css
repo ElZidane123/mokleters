@@ -4064,16 +4064,40 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .container { padding-inline: 16px; }
   main { padding-bottom: 80px; } /* clearance for player bar */
 
-  /* â”€â”€ NAVBAR â”€â”€ */
+  /* ── NAVBAR ── */
   .navbar-logo { font-size: 18px; gap: 6px; }
   .navbar-logo-img { height: 28px; }
   .navbar-avatar-img { width: 34px; height: 34px; }
   .navbar .container { gap: 12px; }
   .navbar-actions { gap: 8px; }
 
-  /* â”€â”€ HERO â”€â”€ */
+  /* ── HERO ── */
   .hero-section { min-height: calc(100svh - 80px); align-items: center; padding-top: 24px; padding-bottom: 32px; }
   .hero-content { padding-top: 0; padding-bottom: 0; padding-inline: 16px; }
+  
+  /* ── STATS ── */
+  .stats-section { padding: 28px 0 24px; }
+  .stats-grid {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+    padding-bottom: 6px;
+    scrollbar-width: none; /* Hide scrollbar Firefox */
+  }
+  .stats-grid::-webkit-scrollbar {
+    display: none; /* Hide scrollbar Chrome/Safari */
+  }
+  .stat-item {
+    min-width: 150px;
+    flex: 0 0 auto;
+    text-align: center;
+    padding: 18px 14px;
+  }
+  .stat-number { font-size: 28px; }
+  .stat-label { font-size: 10px; }
+
   .hero-title {
     font-size: clamp(34px, 10vw, 58px);
     line-height: 1.02;
@@ -4085,12 +4109,6 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .hero-scroll-hint { display: none; }
   .hero-eyebrow { font-size: 10px; }
 
-  /* â”€â”€ STATS â”€â”€ */
-  .stats-section { padding: 28px 0 24px; }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .stat-item { padding: 18px 14px; }
-  .stat-number { font-size: 32px; }
-  .stat-label { font-size: 11px; }
 
   /* â”€â”€ SECTIONS â”€â”€ */
   .section { padding: 40px 0; }
@@ -4362,8 +4380,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   }
   .footer-graffiti-wrap { display: none; }
 
-  /* â”€â”€ CHANT LIBRARY â”€â”€ */
-  .cl-page { padding-top: 80px; padding-bottom: 90px; }
+  /* ── CHANT LIBRARY ── */
+  .cl-page { padding-top: 80px; padding-bottom: 125px; }
   .cl-header { padding: 24px 0 20px; }
   .cl-header h1 { font-size: clamp(26px, 8vw, 44px); }
   .cl-header p { font-size: 13px; }
@@ -4376,8 +4394,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .cl-card-title { font-size: 12px; }
   .cl-card-meta { font-size: 10px; }
 
-  /* â”€â”€ PLAYLIST PAGE â”€â”€ */
-  .pl-page { padding-top: 80px; padding-bottom: 90px; }
+  /* ── PLAYLIST PAGE ── */
+  .pl-page { padding-top: 80px; padding-bottom: 125px; }
   .pl-page-inner { padding: 20px 0; }
   .pl-page-layout { grid-template-columns: 1fr !important; gap: 24px; }
   .pl-player-col { position: static !important; }
@@ -4391,8 +4409,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .pl-lyrics-line { font-size: 18px !important; padding: 10px 12px; }
   .pl-lyrics-line--active { font-size: 22px !important; }
 
-  /* â”€â”€ LEADERBOARD PAGE â”€â”€ */
-  .lb-page { padding-top: 80px; padding-bottom: 90px; }
+  /* ── LEADERBOARD PAGE ── */
+  .lb-page { padding-top: 80px; padding-bottom: 125px; }
   .lb-header { padding: 24px 0 20px; }
   .lb-title { font-size: clamp(28px, 9vw, 48px) !important; }
   .lb-top-row { grid-template-columns: 1fr; gap: 20px; }
@@ -4419,12 +4437,12 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .lb-recent-meta { font-size: 11px; }
   .lb-footer-inner { grid-template-columns: 1fr; gap: 20px; }
 
-  /* â”€â”€ CHANT DETAIL PAGE â”€â”€ */
+  /* ── CHANT DETAIL PAGE ── */
   .chant-detail-layout {
     grid-template-columns: 1fr;
     gap: 24px;
     padding-top: 80px;
-    padding-bottom: 100px;
+    padding-bottom: 135px;
   }
   .chant-detail-player { position: static; gap: 16px; }
   .chant-detail-artwork-wrap { max-width: 240px; margin: 0 auto; }
@@ -4460,29 +4478,6 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .hero-subtitle { font-size: 12px; max-width: 100%; margin-bottom: 20px; }
   .hero-content { padding-inline: 12px; }
 
-  /* Stats */
-  .stats-grid {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-x;
-    padding-bottom: 4px;
-  }
-  .stats-grid::-webkit-scrollbar { height: 6px; }
-  .stats-grid::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.16); border-radius: 999px; }
-  .stats-grid::-webkit-scrollbar-track { background: transparent; }
-  .stat-item {
-    min-width: 180px;
-    flex: 0 0 auto;
-    text-align: center;
-    scroll-snap-align: start;
-    padding: 18px 16px;
-  }
-  .stat-item::after { display: none; }
-  .stat-number { font-size: 28px; }
-  .stat-label { font-size: 10px; }
 
   /* Anthems */
   .anthem-featured { height: auto; }

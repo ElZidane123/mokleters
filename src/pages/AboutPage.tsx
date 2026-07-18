@@ -220,7 +220,7 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="about-profile-text">
-              <span className="about-mascot-badge" style={{ fontSize: '11px', display: 'inline-block', marginBottom: '8px' }}>Maskot Resmi Mokleters</span>
+              <span className="about-mascot-badge" style={{ fontSize: '11px', display: 'block', width: 'fit-content', marginBottom: '12px' }}>Maskot Resmi Mokleters</span>
               <h2 className="about-section-title" style={{ marginTop: '4px', marginBottom: '16px' }}>Makna Bombi</h2>
               <p className="about-paragraph" style={{ fontWeight: 500, color: '#ffffff', fontSize: '16px' }}>
                 Bombi merupakan logo yang terbentuk berlandaskan kearifan lokal dengan menyiratkan perangai tokoh Gatotkaca sewaktu kecil bernama Tetuko.
@@ -249,7 +249,7 @@ export default function AboutPage() {
 
         {/* ── CAPTAINS SECTION ── */}
         <section className="about-captains-section" aria-label="Sejarah Kapten Suporter" style={{ marginTop: '64px', width: '100%' }}>
-          <h2 className="about-section-title" style={{ justifyContent: 'center', marginBottom: '8px' }}>Sejarah &amp; Mantan Kapten Tribun (Capo)</h2>
+          <h2 className="about-section-title" style={{ marginBottom: '16px' }}>Sejarah &amp; Mantan Capo</h2>
           <p style={{ textAlign: 'center', color: 'var(--color-outline)', fontSize: '14px', maxWidth: '600px', margin: '0 auto 32px' }}>
             Para ksatria pemandu sorak yang memimpin komando yel-yel, menjaga tertib barisan, dan membakar semangat korsa Mokleters dari masa ke masa.
           </p>
