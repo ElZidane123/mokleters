@@ -184,6 +184,9 @@ function PlayerBar({
   onSeek,
   onVolume,
   onOpenDetail,
+  onToggleCrowdMode,
+  onToggleQueue,
+  onOpenPlaylist,
 }: {
   track: PlayerTrack
   isPlaying: boolean
@@ -200,6 +203,9 @@ function PlayerBar({
   onSeek: (pct: number) => void
   onVolume: (v: number) => void
   onOpenDetail: () => void
+  onToggleCrowdMode: () => void
+  onToggleQueue: () => void
+  onOpenPlaylist: () => void
 }) {
   const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -300,13 +306,38 @@ function PlayerBar({
           className="player-crowd-mode"
           type="button"
           aria-label="Lirik Mode Tribun"
-          onClick={onOpenDetail}
+          onClick={(e) => {
+            e.stopPropagation()
+            onToggleCrowdMode()
+          }}
         >
           <IconMic />
           Mode Tribun
         </button>
-        <button id="player-queue-btn" className="ctrl-btn" type="button" aria-label="Antrean"><IconQueue /></button>
-        <button id="player-playlist-btn" className="ctrl-btn" type="button" aria-label="Playlist" onClick={onOpenDetail}><IconList /></button>
+        <button
+          id="player-queue-btn"
+          className="ctrl-btn"
+          type="button"
+          aria-label="Antrean"
+          onClick={(e) => {
+            e.stopPropagation()
+            onToggleQueue()
+          }}
+        >
+          <IconQueue />
+        </button>
+        <button
+          id="player-playlist-btn"
+          className="ctrl-btn"
+          type="button"
+          aria-label="Playlist"
+          onClick={(e) => {
+            e.stopPropagation()
+            onOpenPlaylist()
+          }}
+        >
+          <IconList />
+        </button>
         <div className="volume-slider" role="group" aria-label="Volume">
           <button
             id="player-volume-btn"
@@ -330,7 +361,23 @@ function PlayerBar({
             <div className="volume-fill" style={{ width: `${volume}%` }} />
           </div>
         </div>
-        <button id="player-fullscreen-btn" className="ctrl-btn" type="button" aria-label="Layar Penuh"><IconMaximize /></button>
+        <button
+          id="player-fullscreen-btn"
+          className="ctrl-btn"
+          type="button"
+          aria-label="Layar Penuh"
+          onClick={() => {
+            if (!document.fullscreenElement) {
+              document.documentElement.requestFullscreen().catch(() => {})
+            } else {
+              if (document.exitFullscreen) {
+                document.exitFullscreen()
+              }
+            }
+          }}
+        >
+          <IconMaximize />
+        </button>
       </div>
     </div>
   )
@@ -339,7 +386,13 @@ function PlayerBar({
 /* =============================================
    HOME PAGE
    ============================================= */
-function HomePage({ onPlay }: { onPlay: () => void }) {
+function HomePage({
+  onPlay,
+  onLaunchCrowdMode,
+}: {
+  onPlay: () => void
+  onLaunchCrowdMode: () => void
+}) {
   return (
     <>
       {/* HERO */}
@@ -465,7 +518,14 @@ function HomePage({ onPlay }: { onPlay: () => void }) {
                 </li>
               ))}
             </ul>
-            <button id="crowd-mode-launch-btn" className="btn btn-primary" type="button">Buka Pemutar <IconZap /></button>
+            <button
+              id="crowd-mode-launch-btn"
+              className="btn btn-primary"
+              type="button"
+              onClick={onLaunchCrowdMode}
+            >
+              Buka Pemutar <IconZap />
+            </button>
           </div>
           <div className="crowd-device-col">
             <div className="crowd-mascot-wrap">
@@ -578,6 +638,8 @@ export default function App() {
   const [isLiked, setIsLiked] = useState(false)
   const [currentTrack, setCurrentTrack] = useState<PlayerTrack>(defaultTrack)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isCrowdMode, setIsCrowdMode] = useState(false)
+  const [isQueueOpen, setIsQueueOpen] = useState(false)
 
   // ── Derived progress ──
   const progress = duration > 0 ? (elapsed / duration) * 100 : 0
@@ -598,6 +660,78 @@ export default function App() {
     setElapsed(0)
     setDuration(0)
   }, [])
+
+  // ── Web Audio Synth for Live Crowd Effects ──
+  const playTribunSound = (type: 'genderang' | 'terompet' | 'sorakan') => {
+    try {
+      const ctx = new (window.AudioContext || (window as any).webkitAudioContext)()
+      if (type === 'genderang') {
+        const osc = ctx.createOscillator()
+        const gain = ctx.createGain()
+        osc.connect(gain)
+        gain.connect(ctx.destination)
+        
+        osc.frequency.setValueAtTime(120, ctx.currentTime)
+        osc.frequency.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4)
+        
+        gain.gain.setValueAtTime(1.2, ctx.currentTime)
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4)
+        
+        osc.start()
+        osc.stop(ctx.currentTime + 0.4)
+      } else if (type === 'terompet') {
+        const osc1 = ctx.createOscillator()
+        const osc2 = ctx.createOscillator()
+        const gain = ctx.createGain()
+        
+        osc1.type = 'sawtooth'
+        osc2.type = 'sawtooth'
+        
+        osc1.frequency.setValueAtTime(294, ctx.currentTime)
+        osc2.frequency.setValueAtTime(296, ctx.currentTime)
+        
+        osc1.connect(gain)
+        osc2.connect(gain)
+        gain.connect(ctx.destination)
+        
+        gain.gain.setValueAtTime(0.25, ctx.currentTime)
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.6)
+        
+        osc1.start()
+        osc2.start()
+        osc1.stop(ctx.currentTime + 0.6)
+        osc2.stop(ctx.currentTime + 0.6)
+      } else if (type === 'sorakan') {
+        const bufferSize = ctx.sampleRate * 1.5
+        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate)
+        const data = buffer.getChannelData(0)
+        for (let i = 0; i < bufferSize; i++) {
+          data[i] = Math.random() * 2 - 1
+        }
+        
+        const noise = ctx.createBufferSource()
+        noise.buffer = buffer
+        
+        const filter = ctx.createBiquadFilter()
+        filter.type = 'bandpass'
+        filter.frequency.value = 850
+        filter.Q.value = 1.2
+        
+        const gain = ctx.createGain()
+        
+        noise.connect(filter)
+        filter.connect(gain)
+        gain.connect(ctx.destination)
+        
+        gain.gain.setValueAtTime(0.35, ctx.currentTime)
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1.2)
+        
+        noise.start()
+      }
+    } catch (err) {
+      console.warn('AudioContext not allowed or supported', err)
+    }
+  }
 
   const handleNavClick = (link: string) => {
     setActiveNav(link)
@@ -808,9 +942,19 @@ export default function App() {
       case 'Tentang':
         return <AboutPage />
       default:
-        return <HomePage onPlay={() => {
-          if (CHANTS[0]) playChant(CHANTS[0])
-        }} />
+        return (
+          <HomePage
+            onPlay={() => {
+              if (CHANTS[0]) playChant(CHANTS[0])
+            }}
+            onLaunchCrowdMode={() => {
+              if (playingChantId === null && CHANTS[0]) {
+                playChant(CHANTS[0])
+              }
+              setIsCrowdMode(true)
+            }}
+          />
+        )
     }
   }
 
@@ -912,7 +1056,69 @@ export default function App() {
           onSeek={handleSeek}
           onVolume={handleVolume}
           onOpenDetail={handleOpenDetail}
+          onToggleCrowdMode={() => setIsCrowdMode(prev => !prev)}
+          onToggleQueue={() => setIsQueueOpen(prev => !prev)}
+          onOpenPlaylist={() => setActiveNav('Playlist')}
         />
+      )}
+
+      {/* CROWD MODE SCREEN OVERLAY (MODE TRIBUN) */}
+      {isCrowdMode && playingChantId !== null && (() => {
+        const chant = CHANTS.find(c => c.id === playingChantId)
+        let currentText = 'MOKLETERS!'
+        if (chant) {
+          const idx = [...chant.lyrics].reverse().findIndex(l => (elapsed + 1.2) >= l.time)
+          if (idx >= 0) {
+            currentText = chant.lyrics[chant.lyrics.length - 1 - idx].text
+          }
+        }
+        return (
+          <div className="crowd-mode-overlay" onClick={() => setIsCrowdMode(false)}>
+            <div className="crowd-mode-close" onClick={() => setIsCrowdMode(false)}>TUTUP ×</div>
+            <div className="crowd-mode-content">
+              <span className="crowd-mode-chant-title">{chant?.title}</span>
+              <h2 className="crowd-mode-big-lyric">{currentText.toUpperCase()}</h2>
+              <div className="crowd-mode-instructions">Arahkan layar ponsel Anda ke lapangan / panggung!</div>
+              
+              <div className="crowd-mode-sound-triggers" onClick={e => e.stopPropagation()}>
+                <button className="btn crowd-trigger-btn" onClick={() => playTribunSound('genderang')}>🥁 Genderang</button>
+                <button className="btn crowd-trigger-btn" onClick={() => playTribunSound('terompet')}>🎺 Terompet</button>
+                <button className="btn crowd-trigger-btn" onClick={() => playTribunSound('sorakan')}>🔥 Sorakan</button>
+              </div>
+            </div>
+          </div>
+        )
+      })()}
+
+      {/* QUEUE POPUP PANEL */}
+      {isQueueOpen && (
+        <div className="player-queue-panel glass-2" onClick={(e) => e.stopPropagation()}>
+          <div className="player-queue-header">
+            <h4>Antrean Chant</h4>
+            <button className="queue-close-btn" onClick={() => setIsQueueOpen(false)}>×</button>
+          </div>
+          <div className="player-queue-body">
+            {CHANTS.map((c) => (
+              <div
+                key={c.id}
+                className={`player-queue-item${c.id === playingChantId ? ' active' : ''}`}
+                onClick={() => {
+                  playChant(c)
+                  setIsQueueOpen(false)
+                }}
+              >
+                <img src={c.img} alt={c.title} className="queue-thumb" />
+                <div style={{ flex: 1 }}>
+                  <p className="queue-title">{c.title}</p>
+                  <p className="queue-meta">{c.duration} • {c.category}</p>
+                </div>
+                {c.id === playingChantId && isPlaying && (
+                  <span className="queue-live-tag">SEDANG DIPUTAR</span>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
       )}
     </>
   )
