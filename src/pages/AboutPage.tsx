@@ -1,5 +1,8 @@
 import mokletsMascot from '../assets/bombi.png'
 import mokletersLogo from '../assets/Mokleters logo.png'
+import nabilPhoto from '../assets/nabil.jpg'
+import elzidanePhoto from '../assets/elzidane.jpg'
+import mascotPhoto from '../assets/mascot.png'
 
 /* =============================================
    LUCIDE-STYLE SVG ICONS
@@ -25,28 +28,28 @@ export default function AboutPage() {
       name: 'Capo Utama Mokleters',
       legacy: 'Mengorkestrasi koreografi kertas 3D raksasa dan memimpin gerakan bendera besar (giant flag) di sepanjang tribun olahraga.',
       achievement: 'Suporter Terbaik Kompetisi DBL',
-      image: ''
+      image: mascotPhoto
     },
     {
       period: '2022 - 2023',
       name: 'Capo Utama Mokleters',
       legacy: 'Memperkenalkan aransemen perkusi tribun terkoordinasi dan menyatukan suara korsa lintas angkatan.',
       achievement: 'Solidaritas Korsa Terbesar',
-      image: ''
+      image: nabilPhoto
     },
     {
       period: '2020 - 2021',
       name: 'Capo Utama Mokleters',
       legacy: 'Menduniakan nyala korsa digital dan merancang aransemen chant modern di masa pembatasan fisik.',
       achievement: 'Inovasi Chant Era Baru',
-      image: ''
+      image: elzidanePhoto
     },
     {
       period: '2018 - 2019',
       name: 'Capo Utama Mokleters',
       legacy: 'Memprakarsai aksi koreografi mosaik penuh warna pertama dan memperluas chant kebanggaan almamater.',
       achievement: 'Pelopor Mosaik Warna',
-      image: ''
+      image: mokletsMascot
     }
   ]
 
