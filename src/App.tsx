@@ -558,7 +558,6 @@ function HomePage({
                   <p className="leaderboard-name">{item.title}</p>
                   <p className="leaderboard-sub">{item.artist}</p>
                 </div>
-                <div className="leaderboard-plays">{item.plays}<span>Minggu ini</span></div>
                 <button id={`leaderboard-play-${item.rank}`} className="leaderboard-play-btn" type="button" aria-label={`Putar ${item.title}`} onClick={() => {
                   const ch = CHANTS.find(c => c.id === item.rank);
                   if (ch) onPlayTrack(ch);
@@ -585,17 +584,48 @@ function HomePage({
             </div>
             <div>
               <p className="footer-col-title">Platform</p>
-              <ul className="footer-links">{['Chant Teratas', 'Lagu Sekolah', 'Galeri Media'].map(l => <li key={l}><a href="#">{l}</a></li>)}</ul>
+              <ul className="footer-links">
+                <li>
+                  <a href="#" onClick={e => {
+                    e.preventDefault();
+                    const el = document.getElementById('leaderboard');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}>Chant Teratas</a>
+                </li>
+                <li>
+                  <a href="#" onClick={e => { e.preventDefault(); onNavigate('Chant'); }}>Lagu Sekolah</a>
+                </li>
+                <li>
+                  <a href="#" onClick={e => { e.preventDefault(); onNavigate('Chant'); }}>Galeri Media</a>
+                </li>
+              </ul>
             </div>
             <div>
               <p className="footer-col-title">Indeks Situs</p>
-              <ul className="footer-links">{['Tentang Kami', 'Sejarah Sekolah', 'Dukungan Konten'].map(l => <li key={l}><a href="#">{l}</a></li>)}</ul>
+              <ul className="footer-links">
+                <li>
+                  <a href="#" onClick={e => { e.preventDefault(); onNavigate('Tentang'); }}>Tentang Kami</a>
+                </li>
+                <li>
+                  <a href="#" onClick={e => { e.preventDefault(); onNavigate('Tentang'); }}>Sejarah Sekolah</a>
+                </li>
+                <li>
+                  <a href="#" onClick={e => { e.preventDefault(); onNavigate('Developer'); }}>Dukungan Konten</a>
+                </li>
+              </ul>
             </div>
             <div>
               <p className="footer-col-title">Buletin</p>
               <p style={{ fontSize: 13, color: 'var(--color-outline)', lineHeight: 1.6, marginBottom: 8 }}>Dapatkan info terbaru tentang chant baru dan acara pertandingan.</p>
-              <form id="footer-newsletter-form" className="footer-newsletter-form" onSubmit={e => e.preventDefault()}>
-                <input id="newsletter-email-input" className="footer-input" type="email" placeholder="Alamat email" aria-label="Email untuk buletin" />
+              <form id="footer-newsletter-form" className="footer-newsletter-form" onSubmit={e => {
+                e.preventDefault();
+                const emailInput = document.getElementById('newsletter-email-input') as HTMLInputElement;
+                if (emailInput && emailInput.value) {
+                  alert(`Terima kasih! Email ${emailInput.value} berhasil didaftarkan ke Buletin Mokleters.`);
+                  emailInput.value = '';
+                }
+              }}>
+                <input id="newsletter-email-input" className="footer-input" type="email" placeholder="Alamat email" aria-label="Email untuk buletin" required />
                 <button id="newsletter-join-btn" className="btn btn-primary" type="submit" style={{ padding: '10px 16px', borderRadius: 'var(--radius)', fontSize: 13 }}>Gabung</button>
               </form>
             </div>
