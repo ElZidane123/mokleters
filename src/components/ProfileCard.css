@@ -60,10 +60,12 @@
 }
 
 .pc-card {
-  height: 80svh;
+  min-height: 420px;
   max-height: 520px;
+  width: 100%;
+  height: auto;
   display: grid;
-  aspect-ratio: 0.718;
+  aspect-ratio: 0.92;
   border-radius: var(--card-radius);
   position: relative;
   background-blend-mode: color-dodge, normal, normal, normal;
@@ -382,34 +384,36 @@
   top: 2.5em;
   display: flex;
   flex-direction: column;
-  padding: 0 20px;
-}
-
-.pc-details h3 {
-  font-weight: 700;
-  margin: 0;
-  font-size: 22px;
-  background-image: linear-gradient(to bottom, #ffffff 40%, rgba(255, 255, 255, 0.6) 100%);
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
-  line-height: 1.2;
-  margin-bottom: 6px;
-}
-
-.pc-details p {
-  font-weight: 600;
-  font-size: 12px;
-  margin: 0 auto;
-  color: var(--color-outline);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-@keyframes glow-bg {
-  0% {
-    --bgrotate: 0deg;
+    gap: 12px;
+    padding: 0 20px;
   }
+
+  .pc-details h3 {
+    font-weight: 800;
+    margin: 0;
+    font-size: 24px;
+    background-image: linear-gradient(to bottom, #ffffff 60%, rgba(255, 255, 255, 0.8) 100%);
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    line-height: 1.1;
+    margin-bottom: 0;
+  }
+
+  .pc-details p {
+    margin: 0;
+    color: var(--color-outline);
+    line-height: 1.6;
+  }
+
+  .pc-bio {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.7;
+    max-height: 7.2em;
+    overflow: hidden;
+    color: rgba(255, 255, 255, 0.82);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
   100% {
     --bgrotate: 360deg;
   }
@@ -431,33 +435,51 @@
 }
 
 @media (max-width: 768px) {
+  .pc-card-wrapper {
+    width: 100%;
+  }
+
   .pc-card {
-    height: 70svh;
-    max-height: 460px;
+    height: auto;
+    min-height: 360px;
+    max-height: none;
+    aspect-ratio: unset;
   }
+
   .pc-details {
-    top: 2em;
+    top: 1.8em;
+    padding: 0 16px;
   }
+
   .pc-details h3 {
     font-size: 19px;
   }
+
   .pc-details p {
-    font-size: 11px;
+    font-size: 12px;
   }
+
   .pc-user-info {
     --ui-inset: 15px;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
     padding: 10px 12px;
   }
+
   .pc-mini-avatar {
     width: 36px;
     height: 36px;
   }
+
   .pc-handle {
     font-size: 12.5px;
   }
+
   .pc-status {
     font-size: 10px;
   }
+
   .pc-contact-btn {
     padding: 8px 12px;
     font-size: 10.5px;
