@@ -103,7 +103,7 @@ export default function PlaylistPage({
 
   // Sync lyric to elapsed time
   useEffect(() => {
-    const idx = [...activeChant.lyrics].reverse().findIndex(l => elapsed >= l.time)
+    const idx = [...activeChant.lyrics].reverse().findIndex(l => (elapsed + 0.6) >= l.time)
     if (idx >= 0) {
       setActiveLyricIdx(activeChant.lyrics.length - 1 - idx)
     } else {
@@ -239,45 +239,12 @@ export default function PlaylistPage({
               <IconRepeat />
             </button>
           </div>
-
-          {/* Volume + Mode Tribun */}
-          <div className="pl-bottom-row">
-            <div className="pl-volume" role="group" aria-label="Kontrol volume">
-              <button id="pl-volume-icon-btn" className="pl-ctrl-btn pl-ctrl-btn--sm" type="button" aria-label="Bisukan" onClick={() => onVolume(volume === 0 ? 70 : 0)}>
-                <IconVolume />
-              </button>
-              <div
-                className="pl-volume-track"
-                id="pl-volume-slider"
-                role="slider"
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-valuenow={volume}
-                aria-label="Volume"
-                onClick={handleVolumeClick}
-              >
-                <div className="pl-volume-fill" style={{ width: `${volume}%` }} />
-                <div className="pl-volume-thumb" style={{ left: `${volume}%` }} aria-hidden="true" />
-              </div>
-            </div>
-
-            <button
-              id="pl-crowd-mode-btn"
-              className="pl-crowd-btn"
-              type="button"
-              aria-label="Masuk Mode Tribun"
-            >
-              <IconUsers />
-              Masuk Mode Tribun
-            </button>
-          </div>
         </section>
 
         {/* ══ KANAN: Panel Lirik Langsung ══ */}
         <section className="pl-lyrics-panel glass-1" aria-label="Lirik langsung" aria-live="polite">
           <div className="pl-lyrics-header">
-            <span className="pl-lyrics-label" aria-label="Lirik Langsung">LIRIK LANGSUNG</span>
-            <div className="live-dot" aria-hidden="true" />
+            <span className="pl-lyrics-label" aria-label="Lirik Langsung">LIRIK CHANT</span>
           </div>
 
           <div className="pl-lyrics-list" role="list">
@@ -311,7 +278,6 @@ export default function PlaylistPage({
             <div className="pl-lyrics-sync-bar">
               <div className="pl-lyrics-sync-fill" style={{ width: `${progress}%` }} />
             </div>
-            <span className="pl-lyrics-sync-label">SINKRONISASI OTOMATIS</span>
           </div>
         </section>
 

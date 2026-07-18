@@ -308,7 +308,6 @@ export default function ChantDetailPage({
             <div className="chant-detail-lyrics-sync-bar">
               <div className="chant-detail-lyrics-sync-fill" style={{ width: `${progress}%` }} />
             </div>
-            <span className="chant-detail-lyrics-sync-label">SINKRONISASI OTOMATIS</span>
           </div>
 
           {/* Stats */}
