@@ -655,11 +655,8 @@ export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isCrowdMode, setIsCrowdMode] = useState(false)
   const [isQueueOpen, setIsQueueOpen] = useState(false)
-<<<<<<< HEAD
   const [isPlayerVisible, setIsPlayerVisible] = useState(true)
-=======
   const [searchQuery, setSearchQuery] = useState('')
->>>>>>> fe4529af52a9d72bb66834d92fdbd6dcdb39575c
 
   // ── Derived progress ──
   const progress = duration > 0 ? (elapsed / duration) * 100 : 0

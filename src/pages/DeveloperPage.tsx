@@ -1,7 +1,7 @@
 import ProfileCard from '../components/ProfileCard'
 import nabilPhoto from '../assets/nabil.jpg'
 import elzidanePhoto from '../assets/elzidane.jpg'
-import iconPattern from '../assets/iconpattern.svg'
+import logoPatternTilted from '../assets/logo_pattern_tilted.svg'
 
 export default function DeveloperPage() {
   const developers = [
@@ -54,7 +54,7 @@ export default function DeveloperPage() {
                 status={dev.team}
                 contactText="Lihat GitHub"
                 avatarUrl={dev.avatar}
-                iconUrl={iconPattern}
+                iconUrl={logoPatternTilted}
                 showUserInfo={true}
                 enableTilt={true}
                 enableMobileTilt={true}
