@@ -648,7 +648,7 @@ export default function App() {
 
     setCurrentTrack({
       title: chant.title,
-      artist: `${chant.category} • ${chant.artist}`,
+      artist: `${chant.category}`,
       img: chant.img,
       duration: chant.duration,
       currentTime: '0:00',

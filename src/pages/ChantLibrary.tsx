@@ -151,7 +151,7 @@ function ChantCard({
           <div className="chant-card-anthem-badge" aria-label="Anthem Utama">ANTHEM UTAMA</div>
         ) : chant.popular ? (
           <div className="chant-card-popular-badge" aria-label="Popular">POPULAR</div>
-        )}
+        ) : null}
 
         {/* Play button */}
         <button
@@ -244,11 +244,10 @@ function ChantRow({
       <img src={chant.img} alt="" aria-hidden="true" className="chant-row-thumb" />
       <div className="chant-row-info">
         <p className="chant-row-title" style={{ color: isPlaying ? '#ff6060' : undefined }}>{chant.title}</p>
-        <p className="chant-row-artist">{chant.artist}</p>
         {isPlaying && <MiniProgressBar progress={progress} />}
       </div>
       <span className="chant-row-category">{chant.category}</span>
-      <span className="chant-row-plays">{chant.plays}</span>
+      <span className="chant-row-plays">{chant.popular ? 'Populer' : 'Standard'}</span>
       <div className="chant-row-actions">
         <button
           className={`chant-card-action-btn${liked ? ' chant-card-action-btn--liked' : ''}`}
