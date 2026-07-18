@@ -4,6 +4,7 @@ import ChantLibrary from './pages/ChantLibrary'
 import PlaylistPage from './pages/PlaylistPage'
 import ChantDetailPage from './pages/ChantDetailPage'
 import AboutPage from './pages/AboutPage'
+import DeveloperPage from './pages/DeveloperPage'
 import mokletersLogo from './assets/Mokleters logo.png'
 import mokletsMascot from './assets/mascot.png'
 import mokletersGraffiti from './assets/Group 1261154060 (1).png'
@@ -654,7 +655,11 @@ export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isCrowdMode, setIsCrowdMode] = useState(false)
   const [isQueueOpen, setIsQueueOpen] = useState(false)
+<<<<<<< HEAD
   const [isPlayerVisible, setIsPlayerVisible] = useState(true)
+=======
+  const [searchQuery, setSearchQuery] = useState('')
+>>>>>>> fe4529af52a9d72bb66834d92fdbd6dcdb39575c
 
   // ── Derived progress ──
   const progress = duration > 0 ? (elapsed / duration) * 100 : 0
@@ -934,6 +939,8 @@ export default function App() {
             playingChantId={playingChantId}
             isPlaying={isPlaying}
             onCardClick={handleLibraryPlay}
+            search={searchQuery}
+            setSearch={setSearchQuery}
           />
         )
       case 'Playlist':
@@ -957,6 +964,8 @@ export default function App() {
         )
       case 'Tentang':
         return <AboutPage />
+      case 'Developer':
+        return <DeveloperPage />
       default:
         return (
           <HomePage
@@ -1002,9 +1011,29 @@ export default function App() {
           </ul>
 
           <div className="navbar-actions">
+            <button
+              className="dev-profile-btn"
+              type="button"
+              onClick={() => {
+                setActiveNav('Developer')
+                setDetailChant(null)
+              }}
+            >
+              Developer
+            </button>
             <label className="navbar-search" htmlFor="navbar-search-input">
               <IconSearch />
-              <input id="navbar-search-input" type="search" placeholder="Cari semua chant..." aria-label="Cari chant" />
+              <input
+                id="navbar-search-input"
+                type="search"
+                placeholder="Cari semua chant..."
+                value={searchQuery}
+                onChange={e => {
+                  setSearchQuery(e.target.value)
+                  if (activeNav !== 'Chant') setActiveNav('Chant')
+                }}
+                aria-label="Cari chant"
+              />
             </label>
             <img src={mokletsMascot} alt="Avatar" className="navbar-avatar-img" />
             {/* Hamburger */}
@@ -1039,7 +1068,17 @@ export default function App() {
           </ul>
           <label className="mobile-search" htmlFor="mobile-search-input">
             <IconSearch />
-            <input id="mobile-search-input" type="search" placeholder="Cari semua chant..." aria-label="Cari chant di mobile" />
+            <input
+              id="mobile-search-input"
+              type="search"
+              placeholder="Cari semua chant..."
+              value={searchQuery}
+              onChange={e => {
+                setSearchQuery(e.target.value)
+                if (activeNav !== 'Chant') setActiveNav('Chant')
+              }}
+              aria-label="Cari chant di mobile"
+            />
           </label>
         </div>
       </nav>

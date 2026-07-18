@@ -4842,3 +4842,276 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     max-height: 380px;
   }
 }
+
+/* =============================================
+   DEVELOPER BUTTON & MODAL
+   ============================================= */
+.dev-profile-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--color-on-surface);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-right: 8px;
+}
+
+.dev-profile-btn:hover {
+  background: var(--color-primary-container);
+  border-color: var(--color-primary);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(161, 15, 18, 0.45);
+}
+
+/* =============================================
+   DEVELOPER PAGE STYLES
+   ============================================= */
+.dev-page {
+  padding-bottom: 220px;
+}
+
+.dev-header {
+  position: relative;
+  padding: 100px 0 70px;
+  text-align: center;
+  background: radial-gradient(50% 100% at 50% 100%, rgba(161, 15, 18, 0.15) 0%, rgba(10, 10, 10, 0) 100%),
+              linear-gradient(180deg, rgba(161, 15, 18, 0.05) 0%, rgba(15, 15, 15, 0) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+.dev-header-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle at 20% 30%, rgba(215, 38, 46, 0.04) 0%, transparent 40%),
+                    radial-gradient(circle at 80% 70%, rgba(215, 38, 46, 0.04) 0%, transparent 45%);
+  pointer-events: none;
+}
+
+.dev-header-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.dev-title {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 6vw, 68px);
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+  margin-bottom: 16px;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.1), 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.dev-subtitle {
+  font-size: 15px;
+  color: var(--color-outline);
+  line-height: 1.6;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.dev-content-layout {
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.developers-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.dev-card {
+  position: relative;
+  padding: 36px;
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.dev-card:hover {
+  border-color: rgba(161, 15, 18, 0.35);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(161, 15, 18, 0.12);
+}
+
+.dev-card-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(150px circle at 0px 0px, rgba(215, 38, 46, 0.08), transparent 80%);
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.dev-card-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.dev-avatar-wrap {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+}
+
+.dev-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.08);
+}
+
+.dev-avatar-ring {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 1px dashed rgba(161, 15, 18, 0.4);
+  border-radius: 50%;
+  animation: spin-ring 20s linear infinite;
+}
+
+@keyframes spin-ring {
+  to { transform: rotate(360deg); }
+}
+
+.dev-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dev-badge {
+  font-family: var(--font-display);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-primary-bright);
+  text-transform: uppercase;
+}
+
+.dev-name {
+  font-size: 19px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.25;
+}
+
+.dev-role {
+  font-size: 13px;
+  color: var(--color-outline);
+}
+
+.dev-card-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  width: 100%;
+  margin: 24px 0;
+}
+
+.dev-bio {
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+
+.dev-skills-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dev-skills-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-outline);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dev-skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dev-skill-tag {
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.dev-skill-tag:hover {
+  background: rgba(161, 15, 18, 0.08);
+  border-color: rgba(161, 15, 18, 0.3);
+  color: var(--color-primary-bright);
+}
+
+.dev-mission-section {
+  padding: 36px;
+  border-radius: var(--radius-2xl);
+  text-align: center;
+  max-width: 800px;
+  margin: 16px auto 0;
+}
+
+.dev-mission-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.dev-mission-text {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--color-outline);
+}
+
+@media (max-width: 768px) {
+  .developers-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .dev-profile-btn {
+    display: none;
+  }
+}
