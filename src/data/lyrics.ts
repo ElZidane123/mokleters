@@ -17,8 +17,6 @@ export interface ChantData {
   tag: string
   popular: boolean
   img: string
-  artist: string
-  plays: string
   src: string
   lyrics: LyricLine[]
 }
@@ -29,12 +27,10 @@ export const CHANTS: ChantData[] = [
     title: 'Kami Datang Lagi',
     duration: '0:37',
     durationSec: 37,
-    category: 'Anthem Pembuka',
-    tag: 'Pembuka',
+    category: 'Chant Mokleters',
+    tag: 'Chant Mokleters',
     popular: true,
     img: '/anthem1.png',
-    artist: 'Fans Mokleters',
-    plays: '1.5Jt',
     src: '/src/assets/mp4/kami datang lagi.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Kami datang lagi', time: 0 },
@@ -53,8 +49,6 @@ export const CHANTS: ChantData[] = [
     tag: 'Pembuka',
     popular: true,
     img: '/anthem2.png',
-    artist: 'Paduan Suara Tribun Utara',
-    plays: '892Rb',
     src: '/src/assets/mp4/smk telkom malang kami datang.m4a.mp4',
     lyrics: [
       { id: 0, text: 'SMK Telkom Malang', time: 0 },
@@ -77,8 +71,6 @@ export const CHANTS: ChantData[] = [
     tag: 'Pertandingan',
     popular: false,
     img: '/anthem3.png',
-    artist: 'Unit Perkusi',
-    plays: '740Rb',
     src: '/src/assets/mp4/bukalah matamu.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Buka lah Matamu', time: 0 },
@@ -101,8 +93,6 @@ export const CHANTS: ChantData[] = [
     tag: 'Kebanggaan',
     popular: true,
     img: '/anthem1.png',
-    artist: 'Ensembel Vokal 2025',
-    plays: '612Rb',
     src: '/src/assets/mp4/mokleters mokleters wikusama.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Mokleters Mokleters wikusama (oe oe o)', time: 0 },
@@ -120,8 +110,6 @@ export const CHANTS: ChantData[] = [
     tag: 'Pertandingan',
     popular: false,
     img: '/anthem2.png',
-    artist: 'Ultras SMK Malang',
-    plays: '541Rb',
     src: '/src/assets/mp4/kami pendukung telkom malang.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Kami pendukung Telkom Malang', time: 0 },
@@ -142,8 +130,6 @@ export const CHANTS: ChantData[] = [
     tag: 'Penutup',
     popular: true,
     img: '/anthem3.png',
-    artist: 'Fans Mokleters',
-    plays: '498Rb',
     src: '/src/assets/mp4/LOYALITAS TANPA BATAS ANTHEM.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Dengarlah kawan cerita dan semangatku', time: 0 },
@@ -170,8 +156,6 @@ export const CHANTS: ChantData[] = [
     tag: 'Pertandingan',
     popular: true,
     img: '/anthem1.png',
-    artist: 'Paduan Suara Tribun Utara',
-    plays: '432Rb',
     src: '/src/assets/mp4/hey forza moklet forza forza moklet.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Hari ini Telkom Malang berlaga', time: 0 },
@@ -191,8 +175,6 @@ export const CHANTS: ChantData[] = [
     tag: 'Kemenangan',
     popular: false,
     img: '/anthem2.png',
-    artist: 'Unit Perkusi',
-    plays: '387Rb',
     src: '/src/assets/mp4/bret.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Wis sue aku ngenteni koe', time: 0 },
@@ -212,8 +194,6 @@ export const CHANTS: ChantData[] = [
     tag: 'Kemenangan',
     popular: false,
     img: '/anthem3.png',
-    artist: 'Ensembel Vokal 2025',
-    plays: '356Rb',
     src: '/src/assets/mp4/yeyeye happy yayaya.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Yeyeye happy yayaya', time: 0 },
@@ -237,8 +217,6 @@ export const CHANTS: ChantData[] = [
     tag: 'Kebanggaan',
     popular: true,
     img: '/anthem1.png',
-    artist: 'Fans Mokleters',
-    plays: '324Rb',
     src: '/src/assets/mp4/warna merah kebanggan kami.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Warna merah kebanggaan kami', time: 0 },
@@ -259,8 +237,6 @@ export const CHANTS: ChantData[] = [
     tag: 'Pembuka',
     popular: false,
     img: '/anthem2.png',
-    artist: 'Ultras SMK Malang',
-    plays: '289Rb',
     src: '/src/assets/mp4/hari ini ku tinggalkan pelajaran.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Hari ini kutinggalkan Pelajaran', time: 0 },

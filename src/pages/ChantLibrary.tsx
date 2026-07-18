@@ -108,7 +108,7 @@ function ChantCard({
 
   return (
     <article
-      className={`chant-card${isPlaying ? ' chant-card--playing' : ''}`}
+      className={`chant-card${isPlaying ? ' chant-card--playing' : ''}${chant.id === 6 ? ' chant-card--featured' : ''}`}
       id={`chant-card-${chant.id}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -146,8 +146,10 @@ function ChantCard({
           </div>
         </div>
 
-        {/* Popular badge */}
-        {chant.popular && (
+        {/* Popular / Anthem badge */}
+        {chant.id === 6 ? (
+          <div className="chant-card-anthem-badge" aria-label="Anthem Utama">ANTHEM UTAMA</div>
+        ) : chant.popular ? (
           <div className="chant-card-popular-badge" aria-label="Popular">POPULAR</div>
         )}
 

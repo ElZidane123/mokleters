@@ -1618,6 +1618,70 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   box-shadow: 0 0 0 1px rgba(161,15,18,0.40), 0 8px 32px rgba(161,15,18,0.20);
 }
 
+/* Featured Card for Anthem */
+.chant-card--featured {
+  grid-column: span 2;
+  flex-direction: row !important;
+  background: linear-gradient(135deg, rgba(161, 15, 18, 0.12) 0%, rgba(20, 20, 20, 0.85) 100%) !important;
+  border: 1px solid rgba(161, 15, 18, 0.35) !important;
+  position: relative;
+}
+
+.chant-card--featured .chant-card-img-wrap {
+  width: 45%;
+  flex-shrink: 0;
+  aspect-ratio: 1 / 1;
+}
+
+.chant-card--featured .chant-card-info {
+  width: 55%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.chant-card-anthem-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--color-primary);
+  color: white;
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 12px rgba(161, 15, 18, 0.4);
+  z-index: 10;
+  animation: pulse-glow 2.5s infinite alternate;
+}
+
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 4px 12px rgba(161, 15, 18, 0.4);
+    filter: brightness(1);
+  }
+  100% {
+    box-shadow: 0 4px 20px rgba(161, 15, 18, 0.85), 0 0 12px rgba(161, 15, 18, 0.5);
+    filter: brightness(1.15);
+  }
+}
+
+@media (max-width: 640px) {
+  .chant-card--featured {
+    flex-direction: column !important;
+  }
+  .chant-card--featured .chant-card-img-wrap {
+    width: 100%;
+  }
+  .chant-card--featured .chant-card-info {
+    width: 100%;
+    padding: 16px;
+  }
+}
+
 /* Image wrapper */
 .chant-card-img-wrap {
   position: relative;
