@@ -7,6 +7,8 @@ import AboutPage from './pages/AboutPage'
 import DeveloperPage from './pages/DeveloperPage'
 import mokletersLogo from './assets/Mokleters logo.png'
 import mokletsMascot from './assets/mascot.png'
+import mokletsBombi from './assets/bombi.png'
+
 import mokletersGraffiti from './assets/Group 1261154060 (1).png'
 import { CHANTS } from './data/lyrics'
 import type { ChantData } from './data/lyrics'
@@ -529,7 +531,7 @@ function HomePage({
             </div>
             <div className="crowd-device-col" style={{ flex: '1 1 40%', display: 'flex', justifyContent: 'center', zIndex: 2 }}>
               <div className="crowd-mascot-wrap" style={{ minHeight: 'auto' }}>
-                <img src={mokletsMascot} alt="Maskot Mokleters" className="crowd-mascot-img" />
+                <img src={mokletsBombi} alt="Maskot Mokleters" className="crowd-mascot-img" />
                 <div className="crowd-mascot-badge" role="status">
                   <span>Mokleters Maskot</span>
                 </div>

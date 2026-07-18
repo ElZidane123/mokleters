@@ -31,7 +31,7 @@ export const CHANTS: ChantData[] = [
     tag: 'Chant Mokleters',
     popular: true,
     img: '/anthem1.png',
-    src: '/src/assets/mp4/kami datang lagi.m4a.mp4',
+    src: '/mp4/kami datang lagi.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Kami datang lagi', time: 0 },
       { id: 1, text: 'SMK Telkom Malang', time: 6 },
@@ -49,7 +49,7 @@ export const CHANTS: ChantData[] = [
     tag: 'Pembuka',
     popular: true,
     img: '/anthem2.png',
-    src: '/src/assets/mp4/smk telkom malang kami datang.m4a.mp4',
+    src: '/mp4/smk telkom malang kami datang.m4a.mp4',
     lyrics: [
       { id: 0, text: 'SMK Telkom Malang', time: 0 },
       { id: 1, text: 'Kami datang', time: 5 },
@@ -71,7 +71,7 @@ export const CHANTS: ChantData[] = [
     tag: 'Pertandingan',
     popular: false,
     img: '/anthem3.png',
-    src: '/src/assets/mp4/bukalah matamu.m4a.mp4',
+    src: '/mp4/bukalah matamu.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Buka lah Matamu', time: 0 },
       { id: 1, text: 'Pasang telingamu', time: 4 },
@@ -93,7 +93,7 @@ export const CHANTS: ChantData[] = [
     tag: 'Kebanggaan',
     popular: true,
     img: '/anthem1.png',
-    src: '/src/assets/mp4/mokleters mokleters wikusama.m4a.mp4',
+    src: '/mp4/mokleters mokleters wikusama.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Mokleters Mokleters wikusama (oe oe o)', time: 0 },
       { id: 1, text: 'Wikusama SMK Telkom (Syalalalalalala)', time: 9 },
@@ -110,7 +110,7 @@ export const CHANTS: ChantData[] = [
     tag: 'Pertandingan',
     popular: false,
     img: '/anthem2.png',
-    src: '/src/assets/mp4/kami pendukung telkom malang.m4a.mp4',
+    src: '/mp4/kami pendukung telkom malang.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Kami pendukung Telkom Malang', time: 0 },
       { id: 1, text: 'Ditribun bernyanyi Bersama', time: 6 },
@@ -130,7 +130,7 @@ export const CHANTS: ChantData[] = [
     tag: 'Penutup',
     popular: true,
     img: '/anthem3.png',
-    src: '/src/assets/mp4/LOYALITAS TANPA BATAS ANTHEM.m4a.mp4',
+    src: '/mp4/LOYALITAS TANPA BATAS ANTHEM.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Dengarlah kawan cerita dan semangatku', time: 0 },
       { id: 1, text: 'Kami Mokleters, Telkom school Malang', time: 8 },
@@ -156,7 +156,7 @@ export const CHANTS: ChantData[] = [
     tag: 'Pertandingan',
     popular: true,
     img: '/anthem1.png',
-    src: '/src/assets/mp4/hey forza moklet forza forza moklet.m4a.mp4',
+    src: '/mp4/hey forza moklet forza forza moklet.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Hari ini Telkom Malang berlaga', time: 0 },
       { id: 1, text: 'Hari ini Telkom Malang Pemenangnya', time: 7 },
@@ -175,7 +175,7 @@ export const CHANTS: ChantData[] = [
     tag: 'Kemenangan',
     popular: false,
     img: '/anthem2.png',
-    src: '/src/assets/mp4/bret.m4a.mp4',
+    src: '/mp4/bret.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Wis sue aku ngenteni koe', time: 0 },
       { id: 1, text: 'Rino wengi ora nyambut gawe', time: 9 },
@@ -194,7 +194,7 @@ export const CHANTS: ChantData[] = [
     tag: 'Kemenangan',
     popular: false,
     img: '/anthem3.png',
-    src: '/src/assets/mp4/yeyeye happy yayaya.m4a.mp4',
+    src: '/mp4/yeyeye happy yayaya.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Yeyeye happy yayaya', time: 0 },
       { id: 1, text: 'Kami ini Telkom School Malang', time: 6 },
@@ -217,7 +217,7 @@ export const CHANTS: ChantData[] = [
     tag: 'Kebanggaan',
     popular: true,
     img: '/anthem1.png',
-    src: '/src/assets/mp4/warna merah kebanggan kami.m4a.mp4',
+    src: '/mp4/warna merah kebanggan kami.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Warna merah kebanggaan kami', time: 0 },
       { id: 1, text: 'Disini kami terus berdiri', time: 6 },
@@ -237,7 +237,7 @@ export const CHANTS: ChantData[] = [
     tag: 'Pembuka',
     popular: false,
     img: '/anthem2.png',
-    src: '/src/assets/mp4/hari ini ku tinggalkan pelajaran.m4a.mp4',
+    src: '/mp4/hari ini ku tinggalkan pelajaran.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Hari ini kutinggalkan Pelajaran', time: 0 },
       { id: 1, text: 'Siap siap untuk nonton pertandingan', time: 6 },
