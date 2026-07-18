@@ -402,12 +402,22 @@ function PlayerBar({
    HOME PAGE
    ============================================= */
 function HomePage({
-  onPlay,
+  onPlayTrack,
+  onNavigate,
   onLaunchCrowdMode,
 }: {
-  onPlay: () => void
+  onPlayTrack: (chant: any) => void
+  onNavigate: (page: string) => void
   onLaunchCrowdMode: () => void
 }) {
+  const getCorrespondingChant = (anthemId: number) => {
+    if (anthemId === 1) return CHANTS.find(c => c.id === 6);
+    if (anthemId === 2) return CHANTS.find(c => c.id === 2);
+    if (anthemId === 3) return CHANTS.find(c => c.id === 3);
+    if (anthemId === 4) return CHANTS.find(c => c.id === 4);
+    return null;
+  }
+
   return (
     <>
       {/* HERO */}
@@ -425,10 +435,10 @@ function HomePage({
             rasakan riuhnya tribun, dan jaga agar bara merah putih tetap menyala.
           </p>
           <div className="hero-actions">
-            <button id="hero-explore-btn" className="btn btn-primary" type="button">
+            <button id="hero-explore-btn" className="btn btn-primary" type="button" onClick={() => onNavigate('Chant')}>
               Jelajahi Chant <IconArrowRight />
             </button>
-            <button id="hero-rankings-btn" className="btn btn-glass" type="button">
+            <button id="hero-rankings-btn" className="btn btn-glass" type="button" onClick={() => onNavigate('Tentang')}>
               Tentang
             </button>
           </div>
@@ -440,7 +450,7 @@ function HomePage({
         <div className="container">
           <dl className="stats-grid">
             {[
-              { value: '247', label: 'Chant Tersedia' },
+              { value: `${CHANTS.length}`, label: 'Chant Tersedia' },
               { value: '12K', label: 'Pendukung Aktif' },
               { value: '94', label: 'Pertandingan Diliput' },
               { value: '3.2Jt', label: 'Total Putaran' },
@@ -463,7 +473,7 @@ function HomePage({
               <h2 className="section-title">Anthem Terpopuler</h2>
               <p style={{ fontSize: 13, color: 'var(--color-outline)', marginTop: 4 }}>Chant yang paling sering dinyanyikan di stadion minggu ini.</p>
             </div>
-            <a href="#" id="view-all-anthems" className="section-view-all">Lihat Semua <IconArrowRight /></a>
+            <a href="#" id="view-all-anthems" className="section-view-all" onClick={e => { e.preventDefault(); onNavigate('Chant'); }}>Lihat Semua <IconArrowRight /></a>
           </header>
           <div className="anthems-grid">
             <article className="anthem-featured" id="anthem-featured-card">
@@ -475,26 +485,32 @@ function HomePage({
                   <h3 className="playlist-card-title">{anthemData[0].title}</h3>
                   <p className="playlist-card-meta">{anthemData[0].plays} putaran</p>
                   <p style={{ fontSize: 13, color: 'rgba(229,226,225,0.60)', marginTop: 6, lineHeight: 1.5 }}>{anthemData[0].desc}</p>
-                  <button id="featured-play-btn" className="playlist-card-play" type="button" aria-label={`Putar ${anthemData[0].title}`} onClick={onPlay}>
+                  <button id="featured-play-btn" className="playlist-card-play" type="button" aria-label={`Putar ${anthemData[0].title}`} onClick={() => {
+                    const ch = getCorrespondingChant(1);
+                    if (ch) onPlayTrack(ch);
+                  }}>
                     <IconPlay size={18} />
                   </button>
                 </div>
               </div>
             </article>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              {[1, 2].map((i) => (
-                <div key={i} className="anthem-side">
-                  <div className="playlist-card">
-                    <img src={anthemData[i].img} alt={anthemData[i].title} className="playlist-card-img" />
-                    <div className="playlist-card-vignette" aria-hidden="true" />
-                    <div className="playlist-card-content">
-                      <span className={`playlist-card-tag ${tagClass[anthemData[i].tag]}`}>{anthemData[i].tagLabel}</span>
-                      <h3 className="playlist-card-title">{anthemData[i].title}</h3>
-                      <p className="playlist-card-meta">{anthemData[i].plays} putaran</p>
+              {[1, 2].map((i) => {
+                const ch = getCorrespondingChant(i + 1);
+                return (
+                  <div key={i} className="anthem-side" style={{ cursor: 'pointer' }} onClick={() => ch && onPlayTrack(ch)}>
+                    <div className="playlist-card">
+                      <img src={anthemData[i].img} alt={anthemData[i].title} className="playlist-card-img" />
+                      <div className="playlist-card-vignette" aria-hidden="true" />
+                      <div className="playlist-card-content">
+                        <span className={`playlist-card-tag ${tagClass[anthemData[i].tag]}`}>{anthemData[i].tagLabel}</span>
+                        <h3 className="playlist-card-title">{anthemData[i].title}</h3>
+                        <p className="playlist-card-meta">{anthemData[i].plays} putaran</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
               <div className="anthem-side-inner" id="anthem-braket-row" role="article">
                 <img src={anthemData[3].img} alt={anthemData[3].title} className="anthem-side-thumb" />
                 <div className="anthem-side-info">
@@ -502,7 +518,10 @@ function HomePage({
                   <p className="anthem-side-title">{anthemData[3].title}</p>
                   <p className="anthem-side-sub">{anthemData[3].desc}</p>
                 </div>
-                <button id="anthem-braket-play" className="anthem-side-btn" type="button" onClick={onPlay}>Dengar Sekarang <IconArrowRight /></button>
+                <button id="anthem-braket-play" className="anthem-side-btn" type="button" onClick={() => {
+                  const ch = getCorrespondingChant(4);
+                  if (ch) onPlayTrack(ch);
+                }}>Dengar Sekarang <IconArrowRight /></button>
               </div>
             </div>
           </div>
@@ -561,7 +580,7 @@ function HomePage({
               <p className="section-label">Musim Ini</p>
               <h2 className="section-title">Chant Teratas</h2>
             </div>
-            <a href="#" id="view-all-leaderboard" className="section-view-all">Peringkat Lengkap <IconTrophy /></a>
+            <a href="#" id="view-all-leaderboard" className="section-view-all" onClick={e => { e.preventDefault(); onNavigate('Chant'); }}>Peringkat Lengkap <IconTrophy /></a>
           </header>
           <ol className="leaderboard-list" aria-label="Papan peringkat chant teratas">
             {leaderboardData.map((item) => (
@@ -573,7 +592,10 @@ function HomePage({
                   <p className="leaderboard-sub">{item.artist}</p>
                 </div>
                 <div className="leaderboard-plays">{item.plays}<span>Minggu ini</span></div>
-                <button id={`leaderboard-play-${item.rank}`} className="leaderboard-play-btn" type="button" aria-label={`Putar ${item.title}`} onClick={onPlay}>
+                <button id={`leaderboard-play-${item.rank}`} className="leaderboard-play-btn" type="button" aria-label={`Putar ${item.title}`} onClick={() => {
+                  const ch = CHANTS.find(c => c.id === item.rank);
+                  if (ch) onPlayTrack(ch);
+                }}>
                   <IconPlay size={14} />
                 </button>
               </li>
@@ -966,9 +988,8 @@ export default function App() {
       default:
         return (
           <HomePage
-            onPlay={() => {
-              if (CHANTS[0]) playChant(CHANTS[0])
-            }}
+            onPlayTrack={playChant}
+            onNavigate={handleNavClick}
             onLaunchCrowdMode={() => {
               if (playingChantId === null && CHANTS[0]) {
                 playChant(CHANTS[0])
