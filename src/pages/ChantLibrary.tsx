@@ -364,17 +364,34 @@ export default function ChantLibrary({
             <p style={{ fontSize: 14, color: 'var(--color-outline)', marginTop: 8 }}>Coba gunakan filter atau kata kunci pencarian lainnya.</p>
           </div>
         ) : viewMode === 'grid' ? (
-          <div className="chant-grid" role="list" aria-label="Grid perpustakaan chant">
-            {filtered.map(chant => (
-              <ChantCard
-                key={chant.id}
-                chant={chant}
-                isPlaying={playingChantId === chant.id && isPlaying}
-                onPlay={() => onCardClick(chant)}
-                progress={0}
-              />
-            ))}
-          </div>
+          <>
+            <div className="chant-grid" role="list" aria-label="Grid perpustakaan chant">
+              {filtered.filter(c => c.id !== 6).map(chant => (
+                <ChantCard
+                  key={chant.id}
+                  chant={chant}
+                  isPlaying={playingChantId === chant.id && isPlaying}
+                  onPlay={() => onCardClick(chant)}
+                  progress={0}
+                />
+              ))}
+            </div>
+
+            {filtered.some(c => c.id === 6) && (
+              <div className="chant-featured-section">
+                <div className="chant-featured-separator" />
+                <div className="chant-featured-label-row">
+                  <span className="chant-featured-tag">ANTHEM UTAMA WIKUSAMA</span>
+                </div>
+                <ChantCard
+                  chant={CHANTS.find(c => c.id === 6)!}
+                  isPlaying={playingChantId === 6 && isPlaying}
+                  onPlay={() => onCardClick(CHANTS.find(c => c.id === 6)!)}
+                  progress={0}
+                />
+              </div>
+            )}
+          </>
         ) : (
           <div className="chant-list-view">
             <div className="chant-list-header" aria-hidden="true">

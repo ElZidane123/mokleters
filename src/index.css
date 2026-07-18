@@ -1618,27 +1618,69 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   box-shadow: 0 0 0 1px rgba(161,15,18,0.40), 0 8px 32px rgba(161,15,18,0.20);
 }
 
-/* Featured Card for Anthem */
+/* Featured Section & Card for Anthem (bottom of page) */
+.chant-featured-section {
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.chant-featured-separator {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(161, 15, 18, 0.4) 0%, rgba(255, 255, 255, 0.05) 100%);
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.chant-featured-label-row {
+  display: flex;
+  align-items: center;
+}
+
+.chant-featured-tag {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: var(--color-primary-bright);
+}
+
 .chant-card--featured {
-  grid-column: span 2;
   flex-direction: row !important;
-  background: linear-gradient(135deg, rgba(161, 15, 18, 0.12) 0%, rgba(20, 20, 20, 0.85) 100%) !important;
-  border: 1px solid rgba(161, 15, 18, 0.35) !important;
+  background: linear-gradient(135deg, rgba(161, 15, 18, 0.16) 0%, rgba(15, 15, 15, 0.95) 100%) !important;
+  border: 1px solid rgba(161, 15, 18, 0.45) !important;
   position: relative;
+  width: 100%;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 24px rgba(161, 15, 18, 0.15);
+  border-radius: var(--radius-2xl) !important;
 }
 
 .chant-card--featured .chant-card-img-wrap {
-  width: 45%;
+  width: 320px;
+  height: 200px;
   flex-shrink: 0;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 16 / 10 !important;
 }
 
 .chant-card--featured .chant-card-info {
-  width: 55%;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 20px;
+  justify-content: center;
+  padding: 32px 40px !important;
+  gap: 12px;
+}
+
+.chant-card--featured .chant-card-title {
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  color: #ffffff;
+}
+
+.chant-card--featured .chant-card-meta {
+  font-size: 14px !important;
+  color: var(--color-outline) !important;
 }
 
 .chant-card-anthem-badge {
@@ -1669,16 +1711,17 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .chant-card--featured {
     flex-direction: column !important;
   }
   .chant-card--featured .chant-card-img-wrap {
-    width: 100%;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 9 !important;
   }
   .chant-card--featured .chant-card-info {
-    width: 100%;
-    padding: 16px;
+    padding: 20px !important;
   }
 }
 
