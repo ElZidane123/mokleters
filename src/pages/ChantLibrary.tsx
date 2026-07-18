@@ -307,14 +307,17 @@ export default function ChantLibrary({
   playingChantId,
   isPlaying,
   onCardClick,
+  search,
+  setSearch,
 }: {
   playingChantId: number | null
   isPlaying: boolean
   onCardClick: (chant: ChantData) => void
+  search: string
+  setSearch: (s: string) => void
 }) {
   const [activeFilter, setActiveFilter] = useState('Semua Chant')
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
-  const [search, setSearch] = useState('')
 
   const filtered = CHANTS.filter(c => {
     const matchFilter = activeFilter === 'Semua Chant' || c.tag === activeFilter

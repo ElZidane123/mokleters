@@ -4807,3 +4807,165 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     max-height: 380px;
   }
 }
+
+/* =============================================
+   DEVELOPER BUTTON & MODAL
+   ============================================= */
+.dev-profile-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--color-on-surface);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-right: 8px;
+}
+
+.dev-profile-btn:hover {
+  background: var(--color-primary-container);
+  border-color: var(--color-primary);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(161, 15, 18, 0.45);
+}
+
+.dev-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(6, 6, 6, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 999999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--container-pad-mobile);
+}
+
+.dev-modal-card {
+  width: 100%;
+  max-width: 400px;
+  background: rgba(18, 18, 18, 0.96) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: var(--radius-2xl);
+  padding: 40px 32px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8);
+  animation: slide-scale-modal 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@keyframes slide-scale-modal {
+  from {
+    transform: scale(0.95) translateY(15px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.dev-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: var(--color-outline);
+  font-size: 24px;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.dev-modal-close:hover {
+  color: #ffffff;
+}
+
+.dev-modal-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(161, 15, 18, 0.4);
+  box-shadow: 0 8px 24px rgba(161, 15, 18, 0.25);
+  margin-bottom: 20px;
+}
+
+.dev-modal-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.dev-modal-role {
+  font-size: 13px;
+  color: var(--color-primary-bright);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.dev-modal-team {
+  font-size: 11.5px;
+  color: var(--color-outline);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.dev-modal-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.08) 50%, transparent 100%);
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.dev-modal-bio {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: rgba(229, 226, 225, 0.75);
+  margin-bottom: 24px;
+}
+
+.dev-modal-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.dev-modal-stat-box {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 12px;
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-val {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.stat-lbl {
+  font-size: 10px;
+  color: var(--color-outline);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 640px) {
+  .dev-profile-btn {
+    display: none; /* Hide dev button in tight mobile nav bar, available in profile details */
+  }
+}
