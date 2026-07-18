@@ -321,44 +321,50 @@ export default function ChantLibrary({
 
   const matchFlowPhases = [
     {
-      phase: 'PRE-MATCH / INTRO',
-      sub: 'Intro Panjang Baru (6 Menit)',
+      phase: 'INTRO PANJANG BARU (6 MENIT)',
+      sub: 'Dinyanyikan sebelum pertandingan dimulai',
       chants: [
-        { id: 4, num: '1', note: 'Mokleters Mokleters wikusama' },
-        { id: 7, num: '2', note: 'Hey Forza Moklet (Clap 4x)' },
+        { id: 4, num: '1.', title: '1. Mokleters Mokleters wikusama (oe oe o)', note: 'Wikusama SMK Telkom (Syalalalalalala) - 1.35 MENIT' },
+        { id: 7, num: '2.', title: '2. Hari ini Telkom Malang berlaga', note: 'Hey forza moklet (clap 4x tangan diatas) - 1.40 MENIT' },
       ]
     },
     {
-      phase: 'QUARTER 1 ➔ 2',
-      sub: 'Istirahat Quarter 1 (Intro Pendek)',
+      phase: 'ISTIRAHAT QUARTER 1 KE 2 (INTRO PENDEK)',
+      sub: 'Jeda pertandingan Quarter 1 ke Quarter 2',
       chants: [
-        { id: 1, num: '3', note: 'Kami datang lagi' },
-        { id: 2, num: '5', note: 'SMK Telkom Malang Kami Datang (Clap 4x)' },
+        { id: 1, num: '3.', title: '3. Kami datang lagi', note: 'SMK Telkom Malang (Lantang ku bernyanyi 3X) - 2 MENIT' },
+        { id: 2, num: '5.', title: '5. SMK Telkom Malang', note: 'Mendukungmu selamanya (clap 4x tangan diatas) - 2 MENIT' },
       ]
     },
     {
-      phase: 'QUARTER 2',
-      sub: 'Selama Kuarter 2',
+      phase: 'QUARTER 2 (TRIBUN)',
+      sub: 'Dinyanyikan selama Quarter 2 berlangsung',
       chants: [
-        { id: 3, num: '10', note: 'Buka lah Matamu' },
-        { id: 11, num: '11', note: 'Hari ini kutinggalkan Pelajaran (Clap 4x)' },
-        { id: 8, num: '12', note: 'Bret (Oooooooooooo bret)' },
+        { id: 3, num: '10.', title: '10. Buka lah Matamu', note: 'Dukung wikusama (Kiri & Kanan bersuara) - 1.50 MENIT' },
+        { id: 11, num: '11.', title: '11. Hari ini kutinggalkan Pelajaran', note: 'Untuk moklet segalanya kulakukan (clap 4x) - 2 MENIT' },
+        { id: 8, num: '12.', title: '12. Wis sue aku ngenteni koe', note: 'Telkom Malang kudu dimenangke (Bret) - 2.10 MENIT' },
       ]
     },
     {
-      phase: 'QUARTER 2 ➔ 3',
-      sub: 'Quarter 2 ke 3 (Intro Panjang Lawas)',
+      phase: 'QUARTER 2 KE 3 (INTRO PANJANG LAWAS) 3.30 MENIT',
+      sub: 'Jeda Quarter 2 ke 3',
       chants: [
-        { id: 5, num: '14', note: 'Kami pendukung Telkom Malang' },
-        { id: 10, num: '17', note: 'Warna merah kebanggaan kami' },
+        { id: 5, num: '14.', title: '14. Kami pendukung Telkom Malang', note: 'Ale ale Telkom School selamanya - 2.10 MENIT' },
+        { id: 10, num: '17.', title: '17. Warna merah kebanggaan kami', note: 'Disini kami terus berdiri (Takkan berhenti) - 2 MENIT' },
       ]
     },
     {
-      phase: 'QUARTER 3 ➔ 4 & ANTHEM',
-      sub: 'Quarter 3 ke 4 & Penutup Laga',
+      phase: 'QUARTER 3 KE 4 (INTRO PENDEK)',
+      sub: 'Jeda Quarter 3 ke 4 & Pengulangan',
       chants: [
-        { id: 9, num: '17', note: 'Yeyeye happy yayaya' },
-        { id: 6, num: 'ANTHEM', note: 'Loyalitas Tanpa Batas Mokleters' },
+        { id: 9, num: '17.', title: '17. Yeyeye happy yayaya', note: 'Telkom Malang jadi juara (4x) - 1.40 MENIT' },
+      ]
+    },
+    {
+      phase: 'ANTHEM (PENUTUP)',
+      sub: 'Dinyanyikan bersama di akhir laga',
+      chants: [
+        { id: 6, num: 'ANTHEM', title: 'LOYALITAS TANPA BATAS MOKLETERS', note: 'Dengarlah kawan cerita dan semangatku' },
       ]
     }
   ]
