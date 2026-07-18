@@ -391,6 +391,30 @@ function HomePage({
   onPlayTrack: (chant: any) => void
   onNavigate: (page: string) => void
 }) {
+  const statsRef = useRef<HTMLDListElement | null>(null)
+
+  useEffect(() => {
+    if (!statsRef.current) return
+    if (typeof window === 'undefined') return
+
+    const statsEl = statsRef.current
+    const stepSize = 1
+    let direction = 1
+
+    const updateScroll = () => {
+      if (!statsEl) return
+      const maxScroll = statsEl.scrollWidth - statsEl.clientWidth
+      if (maxScroll <= 0) return
+
+      statsEl.scrollLeft += direction * stepSize
+      if (statsEl.scrollLeft >= maxScroll) direction = -1
+      if (statsEl.scrollLeft <= 0) direction = 1
+    }
+
+    const intervalId = window.setInterval(updateScroll, 20)
+    return () => window.clearInterval(intervalId)
+  }, [])
+
   const popularChants = [
     { chant: CHANTS.find(c => c.id === 6)!, plays: '1.5Jt', tagLabel: 'Anthem Penutup', tagClass: 'tag-classic' },
     { chant: CHANTS.find(c => c.id === 1)!, plays: '892Rb', tagLabel: 'Chant Utama', tagClass: 'tag-anthem' },
@@ -432,7 +456,7 @@ function HomePage({
       {/* STATISTIK */}
       <section id="stats" className="stats-section" aria-label="Statistik">
         <div className="container">
-          <dl className="stats-grid">
+          <dl className="stats-grid" ref={statsRef}>
             {[
               { value: `${CHANTS.length}`, label: 'Chant Tersedia' },
               { value: '12K', label: 'Pendukung Aktif' },
