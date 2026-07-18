@@ -90,17 +90,7 @@ const IconArrowRight = () => (
   </svg>
 )
 
-const IconZap = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2" />
-  </svg>
-)
 
-const IconMapPin = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
-  </svg>
-)
 
 const IconTrophy = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -395,11 +385,9 @@ function PlayerBar({
 function HomePage({
   onPlayTrack,
   onNavigate,
-  onLaunchCrowdMode,
 }: {
   onPlayTrack: (chant: any) => void
   onNavigate: (page: string) => void
-  onLaunchCrowdMode: () => void
 }) {
   const popularChants = [
     { chant: CHANTS.find(c => c.id === 6)!, plays: '1.5Jt', tagLabel: 'Anthem Penutup', tagClass: 'tag-classic' },
@@ -519,40 +507,26 @@ function HomePage({
         </div>
       </section>
 
-      {/* MODE TRIBUN */}
-      <section id="crowd-mode" className="crowd-section" aria-label="Fitur Mode Tribun">
+      {/* MASCOT SECTION */}
+      <section id="mascot-intro" className="crowd-section" aria-label="Maskot Mokleters">
         <div className="crowd-bg-glow" aria-hidden="true" />
         <div className="container">
-          <div className="crowd-text-col">
-            
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(40px, 5vw, 64px)', fontWeight: 700, letterSpacing: '0.02em', textTransform: 'uppercase', color: 'var(--color-on-surface)', lineHeight: 1.0, marginTop: 20, marginBottom: 12 }}>
-              MASUK KE<br /><span style={{ color: 'var(--color-primary-bright)' }}>MODE TRIBUN</span>
+          <div className="crowd-text-col" style={{ flex: '1 1 55%', maxWidth: '650px' }}>
+            <p className="section-label" style={{ color: 'var(--color-primary-bright)', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase' }}>Maskot Mokleters</p>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(36px, 4.5vw, 56px)', fontWeight: 700, letterSpacing: '0.02em', textTransform: 'uppercase', color: 'var(--color-on-surface)', lineHeight: 1.1, marginTop: 12, marginBottom: 20 }}>
+              MEMPERKENALKAN<br /><span style={{ color: 'var(--color-primary-bright)' }}>BOMBI</span>
             </h2>
-            <p style={{ fontSize: 16, lineHeight: 1.7, color: 'var(--color-outline)', maxWidth: 400 }}>
-              Ubah ponsel Anda menjadi bagian dari koreografi stadion. Lirik kontras tinggi, pertunjukan cahaya yang sinkron, dan panduan chant waktu nyata untuk memimpin tribun Anda dengan presisi mutlak.
-            </p>
-            <ul className="crowd-features">
-              {[
-                { icon: <IconZap />, title: 'Tampilan Dinamis', sub: 'Lirik ukuran XL untuk keterbacaan di stadion' },
-                { icon: <IconList />, title: 'Sinkronisasi Multi-perangkat', sub: 'Sinkronisasi untuk chant massal yang kompak' },
-                { icon: <IconMapPin />, title: 'Pemetaan Sektor', sub: 'Tampilan layar untuk koreografi yang selaras dengan ketukan' },
-              ].map((f) => (
-                <li key={f.title} className="crowd-feature-item">
-                  <div className="crowd-feature-icon" aria-hidden="true">{f.icon}</div>
-                  <div className="crowd-feature-text"><strong>{f.title}</strong><span>{f.sub}</span></div>
-                </li>
-              ))}
-            </ul>
-            <button
-              id="crowd-mode-launch-btn"
-              className="btn btn-primary"
-              type="button"
-              onClick={onLaunchCrowdMode}
-            >
-              Buka Pemutar <IconZap />
-            </button>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+              <p style={{ fontSize: 15, lineHeight: 1.7, color: '#ffffff', fontWeight: 500, textAlign: 'justify' }}>
+                Bombi merupakan logo yang terbentuk berlandaskan kearifan lokal dengan menyiratkan perangai tokoh Gatotkaca sewaktu kecil bernama Tetuko. Tetuko adalah kesatria yang memiliki kesaktian paling sempurna, hebat di segala medan baik di darat maupun di udara. Mempunyai karakter tangkas, lincah, kuat, dan trengginas.
+              </p>
+              <div style={{ height: '1px', background: 'linear-gradient(90deg, var(--color-primary-bright), transparent)', width: '100%' }} />
+              <p style={{ fontSize: 13.5, lineHeight: 1.7, color: 'var(--color-outline)', textAlign: 'justify' }}>
+                Harapannya, dengan filosofi tersebut semua anak Moklet dapat memiliki karakter Tetuko. Tidak hanya memiliki kemampuan yang komplet di atas rata-rata akademis melainkan juga memiliki softskill dan hardskill. Hal ini bertujuan agar anak-anak Moklet yang hebat dapat berdaya saing dan disegani oleh sesama, seperti Tetuko (Gatot Kaca kecil). Jagoan-jagoan Moklet kelak akan terbang tinggi menjulang cakrawala, meraih kesuksesan, dan mengharumkan nama MOKLET tercinta.
+              </p>
+            </div>
           </div>
-          <div className="crowd-device-col">
+          <div className="crowd-device-col" style={{ flex: '1 1 40%', display: 'flex', justifyContent: 'center' }}>
             <div className="crowd-mascot-wrap">
               <img src={mokletsMascot} alt="Maskot Mokleters" className="crowd-mascot-img" />
               <div className="crowd-mascot-badge" role="status">
@@ -981,12 +955,6 @@ export default function App() {
           <HomePage
             onPlayTrack={playChant}
             onNavigate={handleNavClick}
-            onLaunchCrowdMode={() => {
-              if (playingChantId === null && CHANTS[0]) {
-                playChant(CHANTS[0])
-              }
-              setIsCrowdMode(true)
-            }}
           />
         )
     }
