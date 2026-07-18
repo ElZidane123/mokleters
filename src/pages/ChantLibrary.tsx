@@ -49,14 +49,6 @@ const IconRows = () => (
   </svg>
 )
 
-const IconSortDown = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M11 5h10M11 9h7M11 13h4" /><path d="m7 20 4-4-4-4" />
-  </svg>
-)
-
-const FILTERS = ['Semua Chant', 'Pembuka', 'Pertandingan', 'Kemenangan', 'Kebanggaan']
-
 type ChantType = ChantData
 
 /* =============================================
@@ -316,14 +308,12 @@ export default function ChantLibrary({
   search: string
   setSearch: (s: string) => void
 }) {
-  const [activeFilter, setActiveFilter] = useState('Semua Chant')
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
 
   const filtered = CHANTS.filter(c => {
-    const matchFilter = activeFilter === 'Semua Chant' || c.tag === activeFilter
     const matchSearch = c.title.toLowerCase().includes(search.toLowerCase()) ||
       c.category.toLowerCase().includes(search.toLowerCase())
-    return matchFilter && matchSearch
+    return matchSearch
   })
 
   return (
@@ -345,21 +335,6 @@ export default function ChantLibrary({
       {/* ── BILAH KONTROL ── */}
       <div className="chant-controls-bar">
         <div className="container chant-controls-inner">
-          <nav className="chant-filters" aria-label="Filter chant berdasarkan kategori">
-            {FILTERS.map(f => (
-              <button
-                key={f}
-                id={`filter-${f.toLowerCase().replace(/ /g, '-')}`}
-                className={`chant-filter-pill${activeFilter === f ? ' chant-filter-pill--active' : ''}`}
-                type="button"
-                onClick={() => setActiveFilter(f)}
-                aria-pressed={activeFilter === f}
-              >
-                {f.toUpperCase()}
-              </button>
-            ))}
-          </nav>
-
           <div className="chant-controls-right">
             <label className="chant-search-box" htmlFor="chant-search-input">
               <IconSearch />
@@ -372,11 +347,6 @@ export default function ChantLibrary({
                 aria-label="Cari chant"
               />
             </label>
-
-            <button className="chant-sort-btn" type="button" id="chant-sort-btn" aria-label="Urutkan chant">
-              <IconSortDown />
-              Urutkan
-            </button>
 
             <div className="chant-view-toggle" role="group" aria-label="Mode tampilan">
               <button id="view-grid-btn" className={`chant-view-btn${viewMode === 'grid' ? ' chant-view-btn--active' : ''}`} type="button" aria-label="Tampilan grid" aria-pressed={viewMode === 'grid'} onClick={() => setViewMode('grid')}><IconGrid /></button>
@@ -391,7 +361,7 @@ export default function ChantLibrary({
         {filtered.length === 0 ? (
           <div className="chant-empty" role="status">
             <p style={{ fontFamily: 'var(--font-display)', fontSize: 28, color: 'var(--color-outline)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Chant tidak ditemukan</p>
-            <p style={{ fontSize: 14, color: 'var(--color-outline)', marginTop: 8 }}>Coba gunakan filter atau kata kunci pencarian lainnya.</p>
+            <p style={{ fontSize: 14, color: 'var(--color-outline)', marginTop: 8 }}>Coba gunakan kata kunci pencarian lainnya.</p>
           </div>
         ) : viewMode === 'grid' ? (
           <>
