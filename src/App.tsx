@@ -508,9 +508,9 @@ function HomePage({
       </section>
 
       {/* MASCOT SECTION */}
-      <section id="mascot-intro" className="crowd-section" aria-label="Maskot Mokleters" style={{ padding: '80px 0' }}>
+      <section id="mascot-intro" className="mascot-section" aria-label="Maskot Mokleters" style={{ padding: '80px 0', position: 'relative', overflow: 'hidden' }}>
         <div className="crowd-bg-glow" aria-hidden="true" />
-        <div className="container">
+        <div className="container" style={{ display: 'block' }}>
           <div className="mascot-grand-card">
             <div className="crowd-text-col" style={{ flex: '1 1 55%', maxWidth: '600px' }}>
               <p className="section-label" style={{ color: 'var(--color-primary-bright)', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '8px' }}>Maskot Mokleters</p>
