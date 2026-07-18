@@ -966,6 +966,29 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   gap: 2px;
 }
 
+.stats-marquee {
+  overflow: hidden;
+  position: relative;
+}
+
+.stats-marquee-track {
+  display: inline-flex;
+  align-items: stretch;
+  gap: 2px;
+  animation: stats-marquee 22s linear infinite;
+  will-change: transform;
+}
+
+.stats-marquee-track .stats-grid {
+  min-width: max-content;
+  margin: 0;
+}
+
+@keyframes stats-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 .stat-item {
   text-align: center;
   padding: 24px;
