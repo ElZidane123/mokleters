@@ -60,6 +60,39 @@ const IconPalette = ({ size = 32 }: { size?: number }) => (
 )
 
 export default function AboutPage() {
+  const IconAward = () => (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 2 }}>
+      <circle cx="12" cy="8" r="7" /><polyline points="8.21,13.89 7,23 12,20 17,23 15.79,13.88" />
+    </svg>
+  )
+
+  const capos = [
+    {
+      period: '2024 - 2025',
+      name: 'Capo Utama Mokleters',
+      legacy: 'Mengorkestrasi koreografi kertas 3D raksasa dan memimpin gerakan bendera besar (giant flag) di sepanjang tribun olahraga.',
+      achievement: 'Suporter Terbaik Kompetisi DBL'
+    },
+    {
+      period: '2022 - 2023',
+      name: 'Capo Utama Mokleters',
+      legacy: 'Memperkenalkan aransemen perkusi tribun terkoordinasi dan menyatukan suara korsa lintas angkatan.',
+      achievement: 'Solidaritas Korsa Terbesar'
+    },
+    {
+      period: '2020 - 2021',
+      name: 'Capo Utama Mokleters',
+      legacy: 'Menduniakan nyala korsa digital dan merancang aransemen chant modern di masa pembatasan fisik.',
+      achievement: 'Inovasi Chant Era Baru'
+    },
+    {
+      period: '2018 - 2019',
+      name: 'Capo Utama Mokleters',
+      legacy: 'Memprakarsai aksi koreografi mosaik penuh warna pertama dan memperluas chant kebanggaan almamater.',
+      achievement: 'Pelopor Mosaik Warna'
+    }
+  ]
+
   const values = [
     {
       title: 'Solidaritas Korsa',
@@ -80,6 +113,73 @@ export default function AboutPage() {
 
   return (
     <div className="about-page" id="about-page">
+      <style>{`
+        .captains-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+          gap: 24px;
+          margin-top: 32px;
+          text-align: left;
+        }
+
+        .captain-card {
+          background: linear-gradient(145deg, rgba(255, 255, 255, 0.01) 0%, rgba(161, 15, 18, 0.02) 100%) !important;
+          border: 1px solid rgba(255, 255, 255, 0.05) !important;
+          border-radius: 20px !important;
+          padding: 24px !important;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+          transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+        }
+
+        .captain-card:hover {
+          transform: translateY(-5px) !important;
+          border-color: rgba(161, 15, 18, 0.3) !important;
+          box-shadow: 0 12px 30px rgba(161, 15, 18, 0.08) !important;
+          background: linear-gradient(145deg, rgba(255, 255, 255, 0.02) 0%, rgba(161, 15, 18, 0.05) 100%) !important;
+        }
+
+        .captain-period {
+          font-family: var(--font-display);
+          font-size: 11px;
+          font-weight: 800;
+          color: var(--color-primary-bright) !important;
+          letter-spacing: 0.1em;
+          background: rgba(161, 15, 18, 0.12) !important;
+          padding: 4px 12px !important;
+          border-radius: 6px;
+          align-self: flex-start;
+          border: 1px solid rgba(161, 15, 18, 0.25);
+        }
+
+        .captain-name {
+          font-size: 17px;
+          font-weight: 700;
+          color: #ffffff;
+          margin: 0;
+        }
+
+        .captain-legacy {
+          font-size: 13.5px;
+          line-height: 1.6;
+          color: var(--color-outline);
+          margin: 0;
+        }
+
+        .captain-achievement {
+          font-size: 11.5px;
+          font-weight: 700;
+          color: var(--color-primary-bright);
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          margin-top: auto;
+          border-top: 1px solid rgba(255, 255, 255, 0.06);
+          padding-top: 14px;
+        }
+      `}</style>
       {/* ── HEADER BANNER ── */}
       <div className="about-header">
         <div className="about-header-bg" aria-hidden="true" />
@@ -139,6 +239,27 @@ export default function AboutPage() {
                 <div className="about-value-icon">{v.icon}</div>
                 <h3 className="about-value-title">{v.title}</h3>
                 <p className="about-value-desc">{v.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ── CAPTAINS SECTION ── */}
+        <section className="about-captains-section" aria-label="Sejarah Kapten Suporter" style={{ marginTop: '64px', width: '100%' }}>
+          <h2 className="about-section-title" style={{ justifyContent: 'center', marginBottom: '8px' }}>Sejarah &amp; Mantan Kapten Tribun (Capo)</h2>
+          <p style={{ textAlign: 'center', color: 'var(--color-outline)', fontSize: '14px', maxWidth: '600px', margin: '0 auto 32px' }}>
+            Para ksatria pemandu sorak yang memimpin komando yel-yel, menjaga tertib barisan, dan membakar semangat korsa Mokleters dari masa ke masa.
+          </p>
+          <div className="captains-grid">
+            {capos.map((capo, i) => (
+              <div key={i} className="captain-card glass-1">
+                <span className="captain-period">{capo.period}</span>
+                <h3 className="captain-name">{capo.name}</h3>
+                <p className="captain-legacy">{capo.legacy}</p>
+                <div className="captain-achievement">
+                  <IconAward />
+                  {capo.achievement}
+                </div>
               </div>
             ))}
           </div>
