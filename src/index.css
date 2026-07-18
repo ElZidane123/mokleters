@@ -1636,14 +1636,18 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .chant-featured-label-row {
   display: flex;
   align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  margin-bottom: 8px;
 }
 
 .chant-featured-tag {
   font-family: var(--font-display);
-  font-size: 11px;
+  font-size: 16px;
   font-weight: 800;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.2em;
   color: var(--color-primary-bright);
+  text-shadow: 0 0 10px rgba(161, 15, 18, 0.4);
 }
 
 .chant-card--featured {

@@ -357,7 +357,7 @@ export default function ChantLibrary({
       </div>
 
       {/* ── GRID / LIST ── */}
-      <div className="container" style={{ paddingBottom: 100 }}>
+      <div className="container" style={{ paddingBottom: 220 }}>
         {filtered.length === 0 ? (
           <div className="chant-empty" role="status">
             <p style={{ fontFamily: 'var(--font-display)', fontSize: 28, color: 'var(--color-outline)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Chant tidak ditemukan</p>
