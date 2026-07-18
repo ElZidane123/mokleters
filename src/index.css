@@ -5172,3 +5172,90 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     display: none;
   }
 }
+
+/* =============================================
+   MASCOT GRAND CARD SHOWCASE
+   ============================================= */
+.mascot-grand-card {
+  display: flex;
+  gap: 48px;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(20, 20, 20, 0.75) 0%, rgba(161, 15, 18, 0.04) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 32px;
+  padding: 56px;
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  box-shadow: 
+    0 30px 80px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  width: 100%;
+}
+
+.mascot-grand-card:hover {
+  border-color: rgba(161, 15, 18, 0.25);
+  box-shadow: 
+    0 40px 100px rgba(161, 15, 18, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: translateY(-4px);
+}
+
+.mascot-grand-card::after {
+  content: '';
+  position: absolute;
+  bottom: -15%;
+  right: -15%;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(161, 15, 18, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.mascot-intro-primary {
+  font-size: 15.5px;
+  line-height: 1.8;
+  color: #ffffff;
+  font-weight: 500;
+  position: relative;
+  padding-left: 18px;
+  border-left: 3px solid var(--color-primary-bright);
+  text-align: justify;
+}
+
+.mascot-intro-secondary {
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--color-outline);
+  text-align: justify;
+}
+
+@media (max-width: 992px) {
+  .mascot-grand-card {
+    flex-direction: column-reverse;
+    padding: 40px 32px;
+    gap: 32px;
+    text-align: center;
+  }
+  .mascot-grand-card .crowd-text-col {
+    max-width: 100% !important;
+    text-align: center;
+  }
+  .mascot-intro-primary {
+    border-left: none;
+    border-top: 2px solid var(--color-primary-bright);
+    padding-left: 0;
+    padding-top: 14px;
+    text-align: center;
+  }
+  .mascot-intro-secondary {
+    text-align: center;
+  }
+  .mascot-grand-card .crowd-device-col {
+    width: 100%;
+  }
+}
+

@@ -508,29 +508,31 @@ function HomePage({
       </section>
 
       {/* MASCOT SECTION */}
-      <section id="mascot-intro" className="crowd-section" aria-label="Maskot Mokleters">
+      <section id="mascot-intro" className="crowd-section" aria-label="Maskot Mokleters" style={{ padding: '80px 0' }}>
         <div className="crowd-bg-glow" aria-hidden="true" />
         <div className="container">
-          <div className="crowd-text-col" style={{ flex: '1 1 55%', maxWidth: '650px' }}>
-            <p className="section-label" style={{ color: 'var(--color-primary-bright)', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase' }}>Maskot Mokleters</p>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(36px, 4.5vw, 56px)', fontWeight: 700, letterSpacing: '0.02em', textTransform: 'uppercase', color: 'var(--color-on-surface)', lineHeight: 1.1, marginTop: 12, marginBottom: 20 }}>
-              MEMPERKENALKAN<br /><span style={{ color: 'var(--color-primary-bright)' }}>BOMBI</span>
-            </h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-              <p style={{ fontSize: 15, lineHeight: 1.7, color: '#ffffff', fontWeight: 500, textAlign: 'justify' }}>
-                Bombi merupakan logo yang terbentuk berlandaskan kearifan lokal dengan menyiratkan perangai tokoh Gatotkaca sewaktu kecil bernama Tetuko. Tetuko adalah kesatria yang memiliki kesaktian paling sempurna, hebat di segala medan baik di darat maupun di udara. Mempunyai karakter tangkas, lincah, kuat, dan trengginas.
-              </p>
-              <div style={{ height: '1px', background: 'linear-gradient(90deg, var(--color-primary-bright), transparent)', width: '100%' }} />
-              <p style={{ fontSize: 13.5, lineHeight: 1.7, color: 'var(--color-outline)', textAlign: 'justify' }}>
-                Harapannya, dengan filosofi tersebut semua anak Moklet dapat memiliki karakter Tetuko. Tidak hanya memiliki kemampuan yang komplet di atas rata-rata akademis melainkan juga memiliki softskill dan hardskill. Hal ini bertujuan agar anak-anak Moklet yang hebat dapat berdaya saing dan disegani oleh sesama, seperti Tetuko (Gatot Kaca kecil). Jagoan-jagoan Moklet kelak akan terbang tinggi menjulang cakrawala, meraih kesuksesan, dan mengharumkan nama MOKLET tercinta.
-              </p>
+          <div className="mascot-grand-card">
+            <div className="crowd-text-col" style={{ flex: '1 1 55%', maxWidth: '600px' }}>
+              <p className="section-label" style={{ color: 'var(--color-primary-bright)', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '8px' }}>Maskot Mokleters</p>
+              <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(32px, 4vw, 52px)', fontWeight: 800, letterSpacing: '0.02em', textTransform: 'uppercase', color: 'var(--color-on-surface)', lineHeight: 1.1, margin: '8px 0 24px' }}>
+                MEMPERKENALKAN<br /><span style={{ color: 'var(--color-primary-bright)', textShadow: '0 0 15px rgba(215,38,46,0.3)' }}>BOMBI</span>
+              </h2>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+                <p className="mascot-intro-primary">
+                  Bombi merupakan logo yang terbentuk berlandaskan kearifan lokal dengan menyiratkan perangai tokoh Gatotkaca sewaktu kecil bernama Tetuko. Tetuko adalah kesatria yang memiliki kesaktian paling sempurna, hebat di segala medan baik di darat maupun di udara. Mempunyai karakter tangkas, lincah, kuat, dan trengginas.
+                </p>
+                <div style={{ height: '1px', background: 'linear-gradient(90deg, rgba(215, 38, 46, 0.4), transparent)', width: '100%' }} />
+                <p className="mascot-intro-secondary">
+                  Harapannya, dengan filosofi tersebut semua anak Moklet dapat memiliki karakter Tetuko. Tidak hanya memiliki kemampuan yang komplet di atas rata-rata akademis melainkan juga memiliki softskill dan hardskill. Hal ini bertujuan agar anak-anak Moklet yang hebat dapat berdaya saing dan disegani oleh sesama, seperti Tetuko (Gatot Kaca kecil). Jagoan-jagoan Moklet kelak akan terbang tinggi menjulang cakrawala, meraih kesuksesan, dan mengharumkan nama MOKLET tercinta.
+                </p>
+              </div>
             </div>
-          </div>
-          <div className="crowd-device-col" style={{ flex: '1 1 40%', display: 'flex', justifyContent: 'center' }}>
-            <div className="crowd-mascot-wrap">
-              <img src={mokletsMascot} alt="Maskot Mokleters" className="crowd-mascot-img" />
-              <div className="crowd-mascot-badge" role="status">
-                <span>Mokleters Maskot</span>
+            <div className="crowd-device-col" style={{ flex: '1 1 40%', display: 'flex', justifyContent: 'center', zIndex: 2 }}>
+              <div className="crowd-mascot-wrap" style={{ minHeight: 'auto' }}>
+                <img src={mokletsMascot} alt="Maskot Mokleters" className="crowd-mascot-img" />
+                <div className="crowd-mascot-badge" role="status">
+                  <span>Mokleters Maskot</span>
+                </div>
               </div>
             </div>
           </div>
