@@ -5,6 +5,7 @@ import PlaylistPage from './pages/PlaylistPage'
 import ChantDetailPage from './pages/ChantDetailPage'
 import AboutPage from './pages/AboutPage'
 import DeveloperPage from './pages/DeveloperPage'
+import GalleryPage from './pages/GalleryPage'
 import mokletersLogo from './assets/Mokleters logo.png'
 import mokletsMascot from './assets/mascot.png'
 import mokletsBombi from './assets/bombi.png'
@@ -372,6 +373,30 @@ function HomePage({
   onPlayTrack: (chant: any) => void
   onNavigate: (page: string) => void
 }) {
+  const statsRef = useRef<HTMLDListElement | null>(null)
+
+  useEffect(() => {
+    if (!statsRef.current) return
+    if (typeof window === 'undefined') return
+
+    const statsEl = statsRef.current
+    const stepSize = 1
+    let direction = 1
+
+    const updateScroll = () => {
+      if (!statsEl) return
+      const maxScroll = statsEl.scrollWidth - statsEl.clientWidth
+      if (maxScroll <= 0) return
+
+      statsEl.scrollLeft += direction * stepSize
+      if (statsEl.scrollLeft >= maxScroll) direction = -1
+      if (statsEl.scrollLeft <= 0) direction = 1
+    }
+
+    const intervalId = window.setInterval(updateScroll, 20)
+    return () => window.clearInterval(intervalId)
+  }, [])
+
   const popularChants = [
     { chant: CHANTS.find(c => c.id === 6)!, plays: '1.5Jt', tagLabel: 'Anthem Penutup', tagClass: 'tag-classic' },
     { chant: CHANTS.find(c => c.id === 1)!, plays: '892Rb', tagLabel: 'Chant Utama', tagClass: 'tag-anthem' },
@@ -413,25 +438,19 @@ function HomePage({
       {/* STATISTIK */}
       <section id="stats" className="stats-section" aria-label="Statistik">
         <div className="container">
-          <div className="stats-marquee" role="group" aria-label="Statistik bergerak">
-            <div className="stats-marquee-track" role="list" aria-hidden="false">
-              {[0, 1].map((repeat) => (
-                <div key={repeat} className="stats-grid" aria-hidden={repeat > 0}>
-                  {[
-                    { value: `${CHANTS.length}`, label: 'Chant Tersedia' },
-                    { value: '12K', label: 'Pendukung Aktif' },
-                    { value: '94', label: 'Pertandingan Diliput' },
-                    { value: '3.2Jt', label: 'Total Putaran' },
-                  ].map((stat) => (
-                    <div key={`${repeat}-${stat.label}`} className="stat-item" role="listitem">
-                      <div className="stat-number">{stat.value}</div>
-                      <div className="stat-label">{stat.label}</div>
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
+          <dl className="stats-grid" ref={statsRef}>
+            {[
+              { value: `${CHANTS.length}`, label: 'Chant Tersedia' },
+              { value: '12K', label: 'Pendukung Aktif' },
+              { value: '94', label: 'Pertandingan Diliput' },
+              { value: '3.2Jt', label: 'Total Putaran' },
+            ].map((stat) => (
+              <div key={stat.label} className="stat-item">
+                <dt className="stat-number">{stat.value}</dt>
+                <dd className="stat-label">{stat.label}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
 
@@ -668,7 +687,7 @@ export default function App() {
   // ── Derived progress ──
   const progress = duration > 0 ? (elapsed / duration) * 100 : 0
 
-  const navLinks = ['Beranda', 'Chant', 'Playlist', 'Tentang']
+  const navLinks = ['Beranda', 'Chant', ,'Galeri', 'Tentang']
 
   // ── Stop & cleanup audio ──
   const stopAudio = useCallback(() => {
@@ -900,6 +919,8 @@ export default function App() {
         )
       case 'Tentang':
         return <AboutPage />
+      case 'Galeri':
+        return <GalleryPage />
       case 'Developer':
         return <DeveloperPage />
       default:
