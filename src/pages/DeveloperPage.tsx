@@ -1,6 +1,7 @@
 import ProfileCard from '../components/ProfileCard'
 import nabilPhoto from '../assets/nabil.jpg'
 import elzidanePhoto from '../assets/elzidane.jpg'
+import mokletersLogo from '../assets/Mokleters logo.png'
 
 export default function DeveloperPage() {
   const developers = [
@@ -53,6 +54,7 @@ export default function DeveloperPage() {
                 status={dev.team}
                 contactText="Lihat GitHub"
                 avatarUrl={dev.avatar}
+                iconUrl={mokletersLogo}
                 showUserInfo={true}
                 enableTilt={true}
                 enableMobileTilt={true}
