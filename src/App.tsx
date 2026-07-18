@@ -446,7 +446,7 @@ function HomePage({ onPlay }: { onPlay: () => void }) {
         <div className="crowd-bg-glow" aria-hidden="true" />
         <div className="container">
           <div className="crowd-text-col">
-            <div className="live-badge"><span className="live-dot" aria-hidden="true" />LANGSUNG — 12 PENDUKUNG</div>
+            
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(40px, 5vw, 64px)', fontWeight: 700, letterSpacing: '0.02em', textTransform: 'uppercase', color: 'var(--color-on-surface)', lineHeight: 1.0, marginTop: 20, marginBottom: 12 }}>
               MASUK KE<br /><span style={{ color: 'var(--color-primary-bright)' }}>MODE TRIBUN</span>
             </h2>
