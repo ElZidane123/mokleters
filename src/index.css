@@ -1103,10 +1103,28 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   padding-bottom: calc(12px + env(safe-area-inset-bottom, 10px));
 }
 
+.player-bar-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
 .player-track-info {
   display: flex;
   align-items: center;
   gap: 14px;
+  cursor: pointer;
+}
+
+.player-track-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.player-mobile-play-btn,
+.player-mobile-progress-line,
+.player-bar-top .player-close-btn {
+  display: none;
 }
 
 .player-thumb {
@@ -1318,6 +1336,11 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   grid-template-columns: 1.5fr repeat(3, 1fr) 1.5fr;
   gap: 48px;
   margin-bottom: 48px;
+}
+
+/* On desktop, footer-links-row is invisible — its children slot into the grid naturally */
+.footer-links-row {
+  display: contents;
 }
 
 .footer-brand-name {
@@ -4120,67 +4143,224 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .leaderboard-thumb { width: 36px; height: 36px; border-radius: 8px; }
   .leaderboard-name { font-size: 13px; }
 
-  /* â”€â”€ PLAYER BAR â”€â”€ */
+  /* ── PLAYER BAR — premium floating mobile layout ── */
   .player-bar {
-    padding: 0 12px;
-    height: 70px;
-    gap: 8px;
-  }
-  /* Track info: show thumb + title only */
-  .player-track-info { gap: 8px; flex: 0 0 auto; min-width: 0; max-width: 130px; }
-  .player-track-name { font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .player-track-artist { display: none; }
-  .player-track-like { display: none; }
-  .player-thumb { width: 36px; height: 36px; border-radius: 6px; }
-
-  /* Controls: keep prev, play, next only */
-  .player-controls-col { flex: 1; min-width: 0; }
-  .player-control-btns { gap: 4px; }
-  #player-shuffle-btn { display: none; }
-  #player-repeat-btn { display: none; }
-  .ctrl-btn { width: 30px; height: 30px; }
-  .ctrl-btn-play { width: 42px !important; height: 42px !important; }
-  .player-progress { gap: 4px; }
-  .player-time { font-size: 9px; }
-
-  /* Right controls: show only close button */
-  .player-right-controls {
+    position: fixed;
+    bottom: 24px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    height: 64px;
+    border-radius: 18px;
+    padding: 0 16px;
     display: flex;
-    gap: 10px;
-    justify-content: flex-end;
-    min-width: 0;
-    position: relative;
-  }
-  .player-right-controls > * {
-    display: none;
-  }
-  .player-right-controls > .player-close-btn {
-    display: inline-flex;
-  }
-  .player-close-btn {
-    width: 36px;
-    height: 36px;
-    font-size: 18px;
-    background: rgba(255,255,255,0.18);
-    border-color: rgba(255,255,255,0.22);
-    color: #ffffff;
-  }
-  .player-close-btn:hover {
-    background: rgba(255,255,255,0.28);
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(15, 12, 12, 0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 
+      0 12px 36px rgba(0, 0, 0, 0.7),
+      0 0 0 1px rgba(161, 15, 18, 0.25);
+    z-index: 1000;
+    overflow: hidden;
+    animation: player-float-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   }
 
-  /* â”€â”€ FOOTER â”€â”€ */
-  .footer { padding: 40px 0 90px; }
-  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
-  .footer-brand-name { font-size: 18px; }
-  .footer-brand-desc { font-size: 12px; line-height: 1.6; }
+  @keyframes player-float-in {
+    from {
+      opacity: 0;
+      transform: translateY(24px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .player-bar-top {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 12px;
+  }
+
+  /* Info lagu */
+  .player-track-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+    cursor: pointer;
+  }
+
+  .player-thumb {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .player-track-meta {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .player-track-name {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #fff;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .player-track-artist {
+    display: block;
+    font-size: 11px;
+    color: var(--color-outline);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Buttons */
+  .player-track-like {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-outline);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 8px;
+    flex-shrink: 0;
+  }
+  .player-track-like.liked {
+    color: var(--color-primary-bright);
+  }
+
+  /* Mobile play/pause: small circular premium button next to close */
+  .player-mobile-play-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(161, 15, 18, 0.4);
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-left: 4px;
+  }
+  .player-mobile-play-btn:active {
+    transform: scale(0.95);
+  }
+
+  /* Close button with IconX */
+  .player-bar-top .player-close-btn {
+    display: inline-flex;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.7);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-left: 6px;
+    transition: all 0.2s ease;
+  }
+  .player-bar-top .player-close-btn:hover,
+  .player-bar-top .player-close-btn:active {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.25);
+    color: #fff;
+    transform: scale(1.05);
+  }
+
+  /* Hide Desktop sections */
+  .player-controls-col,
+  .player-right-controls {
+    display: none !important;
+  }
+
+  /* Floating progress line at the bottom of the card */
+  .player-mobile-progress-line {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    z-index: 10;
+  }
+  .player-mobile-progress-fill {
+    height: 100%;
+    background: linear-gradient(to right, var(--color-primary-dark), var(--color-primary-bright));
+    border-radius: 0 2px 2px 0;
+    transition: width 0.1s linear;
+  }
+
+  /* ── FOOTER mobile ── */
+  .footer {
+    padding: 40px 0 100px;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .footer-grid > div:first-child {
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    margin-bottom: 24px;
+  }
+  .footer-brand-name { font-size: 18px; margin-bottom: 8px; }
+  .footer-brand-desc { font-size: 12.5px; line-height: 1.65; }
+  .footer-logo-img { height: 28px; margin-bottom: 8px; }
+  .footer-links-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    margin-bottom: 24px;
+  }
   .footer-col-title { font-size: 11px; margin-bottom: 10px; }
-  .footer-links li a { font-size: 13px; padding: 4px 0; }
+  .footer-links { gap: 8px; }
+  .footer-links li a { font-size: 13px; padding: 3px 0; display: inline-block; }
   .footer-newsletter-form { flex-direction: column; gap: 8px; }
-  .footer-input { width: 100%; }
-  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; font-size: 11px; }
+  .footer-input { width: 100%; box-sizing: border-box; font-size: 14px; padding: 12px 14px; }
+  .footer-bottom {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    font-size: 11.5px;
+  }
+  .footer-bottom > div {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
   .footer-graffiti-wrap { display: none; }
-  .footer-logo-img { height: 28px; }
 
   /* â”€â”€ CHANT LIBRARY â”€â”€ */
   .cl-page { padding-top: 80px; padding-bottom: 90px; }

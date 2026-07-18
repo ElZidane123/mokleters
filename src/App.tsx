@@ -112,6 +112,12 @@ const IconQueue = () => (
   </svg>
 )
 
+const IconX = ({ size = 16 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+  </svg>
+)
+
 /* =============================================
    DATA
    ============================================= */
@@ -201,13 +207,18 @@ function PlayerBar({
 
   return (
     <div className="player-bar" role="region" aria-label="Pemutar musik" id="player-bar">
-      {/* Info lagu */}
-      <div className="player-track-info" style={{ cursor: 'pointer' }} onClick={onOpenDetail} title="Lihat detail & lirik">
-        <img src={track.img} alt={track.title} className="player-thumb" />
-        <div>
-          <p className="player-track-name">{track.title}</p>
-          <p className="player-track-artist">{track.artist}</p>
+      {/* ── Baris Utama (Desktop: Kiri, Mobile: Satu-satunya baris) ── */}
+      <div className="player-bar-top">
+        {/* Info lagu */}
+        <div className="player-track-info" onClick={onOpenDetail} title="Lihat detail & lirik">
+          <img src={track.img} alt={track.title} className="player-thumb" />
+          <div className="player-track-meta">
+            <p className="player-track-name">{track.title}</p>
+            <p className="player-track-artist">{track.artist}</p>
+          </div>
         </div>
+
+        {/* Tombol Sukai */}
         <button
           id="player-like-btn"
           className={`player-track-like${isLiked ? ' liked' : ''}`}
@@ -218,9 +229,33 @@ function PlayerBar({
         >
           <IconHeart filled={isLiked} />
         </button>
+
+        {/* Tombol Play/Pause Mobile (Hanya muncul di mobile) */}
+        <button
+          className="ctrl-btn ctrl-btn-play player-mobile-play-btn"
+          type="button"
+          aria-label={isPlaying ? 'Jeda' : 'Putar'}
+          onClick={e => { e.stopPropagation(); onPlayPause() }}
+        >
+          {isPlaying ? <IconPause size={16} /> : <IconPlay size={16} />}
+        </button>
+
+        {/* Tombol Tutup */}
+        <button
+          id="player-close-btn"
+          className="player-close-btn"
+          type="button"
+          aria-label="Tutup pemutar"
+          onClick={(e) => {
+            e.stopPropagation()
+            onClose()
+          }}
+        >
+          <IconX size={12} />
+        </button>
       </div>
 
-      {/* Tengah: kontrol + kemajuan */}
+      {/* ── Tengah: Kontrol & Progress (Desktop Only) ── */}
       <div className="player-controls-col">
         <div className="player-control-btns" role="group" aria-label="Kontrol pemutaran">
           <button
@@ -238,7 +273,7 @@ function PlayerBar({
           </button>
           <button
             id="player-play-btn"
-            className="ctrl-btn ctrl-btn-play"
+            className="ctrl-btn ctrl-btn-play player-desktop-play-btn"
             type="button"
             aria-label={isPlaying ? 'Jeda' : 'Putar'}
             aria-pressed={isPlaying}
@@ -280,20 +315,8 @@ function PlayerBar({
         </div>
       </div>
 
-      {/* Kontrol kanan */}
+      {/* ── Kanan: Volume & Layar Penuh (Desktop Only) ── */}
       <div className="player-right-controls">
-        <button
-          id="player-close-btn"
-          className="player-close-btn"
-          type="button"
-          aria-label="Tutup pemutar"
-          onClick={(e) => {
-            e.stopPropagation()
-            onClose()
-          }}
-        >
-          ×
-        </button>
         <button
           id="player-queue-btn"
           className="ctrl-btn"
@@ -358,6 +381,11 @@ function PlayerBar({
         >
           <IconMaximize />
         </button>
+      </div>
+
+      {/* ── Progress Line Mengambang di Dasar Card (Mobile Only) ── */}
+      <div className="player-mobile-progress-line" onClick={handleProgressClick}>
+        <div className="player-mobile-progress-fill" style={{ width: `${track.progress}%` }} />
       </div>
     </div>
   )
@@ -590,37 +618,39 @@ function HomePage({
               <p className="footer-brand-name">MOKLETERS</p>
               <p className="footer-brand-desc">Detak jantung pendukung SMK Telkom Malang. Kami adalah suara yang tak pernah padam, dan api yang tak pernah mati.</p>
             </div>
-            <div>
-              <p className="footer-col-title">Platform</p>
-              <ul className="footer-links">
-                <li>
-                  <a href="#" onClick={e => {
-                    e.preventDefault();
-                    const el = document.getElementById('leaderboard');
-                    if (el) el.scrollIntoView({ behavior: 'smooth' });
-                  }}>Chant Teratas</a>
-                </li>
-                <li>
-                  <a href="#" onClick={e => { e.preventDefault(); onNavigate('Chant'); }}>Lagu Sekolah</a>
-                </li>
-                <li>
-                  <a href="#" onClick={e => { e.preventDefault(); onNavigate('Chant'); }}>Galeri Media</a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <p className="footer-col-title">Indeks Situs</p>
-              <ul className="footer-links">
-                <li>
-                  <a href="#" onClick={e => { e.preventDefault(); onNavigate('Tentang'); }}>Tentang Kami</a>
-                </li>
-                <li>
-                  <a href="#" onClick={e => { e.preventDefault(); onNavigate('Tentang'); }}>Sejarah Sekolah</a>
-                </li>
-                <li>
-                  <a href="#" onClick={e => { e.preventDefault(); onNavigate('Developer'); }}>Dukungan Konten</a>
-                </li>
-              </ul>
+            <div className="footer-links-row">
+              <div>
+                <p className="footer-col-title">Platform</p>
+                <ul className="footer-links">
+                  <li>
+                    <a href="#" onClick={e => {
+                      e.preventDefault();
+                      const el = document.getElementById('leaderboard');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }}>Chant Teratas</a>
+                  </li>
+                  <li>
+                    <a href="#" onClick={e => { e.preventDefault(); onNavigate('Chant'); }}>Lagu Sekolah</a>
+                  </li>
+                  <li>
+                    <a href="#" onClick={e => { e.preventDefault(); onNavigate('Galeri'); }}>Galeri Media</a>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <p className="footer-col-title">Indeks Situs</p>
+                <ul className="footer-links">
+                  <li>
+                    <a href="#" onClick={e => { e.preventDefault(); onNavigate('Tentang'); }}>Tentang Kami</a>
+                  </li>
+                  <li>
+                    <a href="#" onClick={e => { e.preventDefault(); onNavigate('Tentang'); }}>Sejarah Sekolah</a>
+                  </li>
+                  <li>
+                    <a href="#" onClick={e => { e.preventDefault(); onNavigate('Developer'); }}>Dukungan Konten</a>
+                  </li>
+                </ul>
+              </div>
             </div>
             <div>
               <p className="footer-col-title">Buletin</p>
@@ -687,7 +717,7 @@ export default function App() {
   // ── Derived progress ──
   const progress = duration > 0 ? (elapsed / duration) * 100 : 0
 
-  const navLinks = ['Beranda', 'Chant', ,'Galeri', 'Tentang']
+  const navLinks = ['Beranda', 'Chant', 'Galeri', 'Tentang']
 
   // ── Stop & cleanup audio ──
   const stopAudio = useCallback(() => {
