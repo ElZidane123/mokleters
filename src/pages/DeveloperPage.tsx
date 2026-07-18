@@ -1,12 +1,12 @@
 import ProfileCard from '../components/ProfileCard'
 import nabilPhoto from '../assets/nabil.jpg'
 import elzidanePhoto from '../assets/elzidane.jpg'
-import mokletersLogo from '../assets/Mokleters logo.png'
+import iconPattern from '../assets/iconpattern.svg'
 
 export default function DeveloperPage() {
   const developers = [
     {
-      name: 'M. Nabil A. Kencana',
+      name: 'M. Nabil Anwar K.',
       role: 'Lead Developer & UI Architect',
       team: 'Mokleters Dev Team 2025',
       handle: 'nabilkencana',
@@ -54,7 +54,7 @@ export default function DeveloperPage() {
                 status={dev.team}
                 contactText="Lihat GitHub"
                 avatarUrl={dev.avatar}
-                iconUrl={mokletersLogo}
+                iconUrl={iconPattern}
                 showUserInfo={true}
                 enableTilt={true}
                 enableMobileTilt={true}

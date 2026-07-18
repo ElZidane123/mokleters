@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <style>
+    .sym { font-family: 'Consolas', 'Courier New', monospace; font-weight: bold; fill: #ffffff; }
+  </style>
+  <text x="15" y="30" class="sym" font-size="15" opacity="0.3" transform="rotate(-15 15 30)">{</text>
+  <text x="32" y="32" class="sym" font-size="15" opacity="0.3" transform="rotate(-15 32 32)">}</text>
+
+  <text x="80" y="45" class="sym" font-size="13" opacity="0.2" transform="rotate(20 80 45)">{</text>
+  <text x="94" y="43" class="sym" font-size="13" opacity="0.2" transform="rotate(20 94 43)">}</text>
+
+  <text x="25" y="95" class="sym" font-size="14" opacity="0.35" transform="rotate(10 25 95)">{</text>
+  <text x="40" y="97" class="sym" font-size="14" opacity="0.35" transform="rotate(10 40 97)">}</text>
+
+  <text x="75" y="90" class="sym" font-size="16" opacity="0.25" transform="rotate(-30 75 90)">{</text>
+  <text x="91" y="85" class="sym" font-size="16" opacity="0.25" transform="rotate(-30 91 85)">}</text>
+
+  <!-- Crosshairs / Dots -->
+  <path d="M 55,20 L 65,20 M 60,15 L 60,25" stroke="#ffffff" stroke-width="1.2" opacity="0.25" />
+  <path d="M 10,65 L 20,65 M 15,60 L 15,70" stroke="#ffffff" stroke-width="1.2" opacity="0.3" />
+  <path d="M 100,105 L 110,105 M 105,100 L 105,110" stroke="#ffffff" stroke-width="1.2" opacity="0.2" />
+</svg>
