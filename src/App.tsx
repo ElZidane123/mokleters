@@ -3,6 +3,7 @@ import './index.css'
 import ChantLibrary from './pages/ChantLibrary'
 import PlaylistPage from './pages/PlaylistPage'
 import ChantDetailPage from './pages/ChantDetailPage'
+import AboutPage from './pages/AboutPage'
 import mokletersLogo from './assets/Mokleters logo.png'
 import mokletsMascot from './assets/mascot.png'
 import mokletersGraffiti from './assets/Group 1261154060 (1).png'
@@ -804,6 +805,8 @@ export default function App() {
             onVolume={handleVolume}
           />
         )
+      case 'Tentang':
+        return <AboutPage />
       default:
         return <HomePage onPlay={() => {
           if (CHANTS[0]) playChant(CHANTS[0])
