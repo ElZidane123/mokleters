@@ -319,6 +319,50 @@ export default function ChantLibrary({
   const [activeFilter, setActiveFilter] = useState('Semua Chant')
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
 
+  const matchFlowPhases = [
+    {
+      phase: 'PRE-MATCH / INTRO',
+      sub: 'Intro Panjang Baru (6 Menit)',
+      chants: [
+        { id: 4, num: '1', note: 'Mokleters Mokleters wikusama' },
+        { id: 7, num: '2', note: 'Hey Forza Moklet (Clap 4x)' },
+      ]
+    },
+    {
+      phase: 'QUARTER 1 ➔ 2',
+      sub: 'Istirahat Quarter 1 (Intro Pendek)',
+      chants: [
+        { id: 1, num: '3', note: 'Kami datang lagi' },
+        { id: 2, num: '5', note: 'SMK Telkom Malang Kami Datang (Clap 4x)' },
+      ]
+    },
+    {
+      phase: 'QUARTER 2',
+      sub: 'Selama Kuarter 2',
+      chants: [
+        { id: 3, num: '10', note: 'Buka lah Matamu' },
+        { id: 11, num: '11', note: 'Hari ini kutinggalkan Pelajaran (Clap 4x)' },
+        { id: 8, num: '12', note: 'Bret (Oooooooooooo bret)' },
+      ]
+    },
+    {
+      phase: 'QUARTER 2 ➔ 3',
+      sub: 'Quarter 2 ke 3 (Intro Panjang Lawas)',
+      chants: [
+        { id: 5, num: '14', note: 'Kami pendukung Telkom Malang' },
+        { id: 10, num: '17', note: 'Warna merah kebanggaan kami' },
+      ]
+    },
+    {
+      phase: 'QUARTER 3 ➔ 4 & ANTHEM',
+      sub: 'Quarter 3 ke 4 & Penutup Laga',
+      chants: [
+        { id: 9, num: '17', note: 'Yeyeye happy yayaya' },
+        { id: 6, num: 'ANTHEM', note: 'Loyalitas Tanpa Batas Mokleters' },
+      ]
+    }
+  ]
+
   const filtered = CHANTS.filter(c => {
     const matchFilter = activeFilter === 'Semua Chant' || c.tag === activeFilter
     const matchSearch = c.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -387,7 +431,7 @@ export default function ChantLibrary({
       </div>
 
       {/* ── GRID / LIST ── */}
-      <div className="container" style={{ paddingBottom: 220 }}>
+      <div className="container" style={{ paddingBottom: 60 }}>
         {filtered.length === 0 ? (
           <div className="chant-empty" role="status">
             <p style={{ fontFamily: 'var(--font-display)', fontSize: 28, color: 'var(--color-outline)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Chant tidak ditemukan</p>
@@ -446,6 +490,51 @@ export default function ChantLibrary({
           </div>
         )}
       </div>
+
+      {/* ── SIDELIST / URUTAN CHANT (MATCH FLOW) ── */}
+      <section className="container" style={{ paddingBottom: 180, borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 50 }}>
+        <header style={{ marginBottom: 32 }}>
+          <span className="section-label" style={{ color: 'var(--color-primary-bright)', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase' }}>Panduan Tribun</span>
+          <h2 className="section-title" style={{ marginTop: 8, fontSize: 'clamp(24px, 3.5vw, 36px)', fontFamily: 'var(--font-display)', textTransform: 'uppercase', color: '#ffffff' }}>Urutan Chant (Match Flow)</h2>
+          <p style={{ fontSize: 14, color: 'var(--color-outline)', marginTop: 6 }}>Berikut adalah tata urutan menyanyikan chant di tribun utara dari sebelum kick-off hingga akhir laga.</p>
+        </header>
+
+        <div className="match-flow-timeline">
+          {matchFlowPhases.map((phaseItem, pIdx) => (
+            <div key={pIdx} className="match-flow-phase-card">
+              <div className="match-flow-phase-header">
+                <p className="match-flow-phase-title">{phaseItem.phase}</p>
+                <p className="match-flow-phase-sub">{phaseItem.sub}</p>
+              </div>
+              <div className="match-flow-chant-list">
+                {phaseItem.chants.map((item) => {
+                  const ch = CHANTS.find(c => c.id === item.id);
+                  if (!ch) return null;
+                  const isPlayingCurrent = playingChantId === ch.id && isPlaying;
+                  return (
+                    <div
+                      key={item.id}
+                      className={`match-flow-chant-item${isPlayingCurrent ? ' match-flow-chant-item--playing' : ''}`}
+                      onClick={() => onCardClick(ch)}
+                      role="button"
+                      aria-label={`Putar ${ch.title}`}
+                    >
+                      <span className="match-flow-badge">{item.num}</span>
+                      <div className="match-flow-chant-info">
+                        <p className="match-flow-chant-title" style={{ color: isPlayingCurrent ? 'var(--color-primary-bright)' : '#ffffff' }}>{ch.title}</p>
+                        <p className="match-flow-chant-note">{item.note}</p>
+                      </div>
+                      <div className="match-flow-play-btn">
+                        {isPlayingCurrent ? <IconPause size={10} /> : <IconPlay size={10} />}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   )
 }
