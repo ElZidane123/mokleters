@@ -73,11 +73,7 @@ const IconVolume = () => (
   </svg>
 )
 
-const IconMic = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" /><path d="M19 10v2a7 7 0 0 1-14 0v-2" /><line x1="12" y1="19" x2="12" y2="23" /><line x1="8" y1="23" x2="16" y2="23" />
-  </svg>
-)
+
 
 const IconList = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -168,7 +164,6 @@ function PlayerBar({
   onSeek,
   onVolume,
   onOpenDetail,
-  onToggleCrowdMode,
   onToggleQueue,
   onOpenPlaylist,
   onClose,
@@ -188,7 +183,6 @@ function PlayerBar({
   onSeek: (pct: number) => void
   onVolume: (v: number) => void
   onOpenDetail: () => void
-  onToggleCrowdMode: () => void
   onToggleQueue: () => void
   onOpenPlaylist: () => void
   onClose: () => void
@@ -298,19 +292,6 @@ function PlayerBar({
           }}
         >
           ×
-        </button>
-        <button
-          id="player-crowd-mode-btn"
-          className="player-crowd-mode"
-          type="button"
-          aria-label="Lirik Mode Tribun"
-          onClick={(e) => {
-            e.stopPropagation()
-            onToggleCrowdMode()
-          }}
-        >
-          <IconMic />
-          Mode Tribun
         </button>
         <button
           id="player-queue-btn"
@@ -680,7 +661,6 @@ export default function App() {
   const [isLiked, setIsLiked] = useState(false)
   const [currentTrack, setCurrentTrack] = useState<PlayerTrack>(defaultTrack)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [isCrowdMode, setIsCrowdMode] = useState(false)
   const [isQueueOpen, setIsQueueOpen] = useState(false)
   const [isPlayerVisible, setIsPlayerVisible] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
@@ -705,77 +685,7 @@ export default function App() {
     setDuration(0)
   }, [])
 
-  // ── Web Audio Synth for Live Crowd Effects ──
-  const playTribunSound = (type: 'genderang' | 'terompet' | 'sorakan') => {
-    try {
-      const ctx = new (window.AudioContext || (window as any).webkitAudioContext)()
-      if (type === 'genderang') {
-        const osc = ctx.createOscillator()
-        const gain = ctx.createGain()
-        osc.connect(gain)
-        gain.connect(ctx.destination)
-        
-        osc.frequency.setValueAtTime(120, ctx.currentTime)
-        osc.frequency.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4)
-        
-        gain.gain.setValueAtTime(1.2, ctx.currentTime)
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4)
-        
-        osc.start()
-        osc.stop(ctx.currentTime + 0.4)
-      } else if (type === 'terompet') {
-        const osc1 = ctx.createOscillator()
-        const osc2 = ctx.createOscillator()
-        const gain = ctx.createGain()
-        
-        osc1.type = 'sawtooth'
-        osc2.type = 'sawtooth'
-        
-        osc1.frequency.setValueAtTime(294, ctx.currentTime)
-        osc2.frequency.setValueAtTime(296, ctx.currentTime)
-        
-        osc1.connect(gain)
-        osc2.connect(gain)
-        gain.connect(ctx.destination)
-        
-        gain.gain.setValueAtTime(0.25, ctx.currentTime)
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.6)
-        
-        osc1.start()
-        osc2.start()
-        osc1.stop(ctx.currentTime + 0.6)
-        osc2.stop(ctx.currentTime + 0.6)
-      } else if (type === 'sorakan') {
-        const bufferSize = ctx.sampleRate * 1.5
-        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate)
-        const data = buffer.getChannelData(0)
-        for (let i = 0; i < bufferSize; i++) {
-          data[i] = Math.random() * 2 - 1
-        }
-        
-        const noise = ctx.createBufferSource()
-        noise.buffer = buffer
-        
-        const filter = ctx.createBiquadFilter()
-        filter.type = 'bandpass'
-        filter.frequency.value = 850
-        filter.Q.value = 1.2
-        
-        const gain = ctx.createGain()
-        
-        noise.connect(filter)
-        filter.connect(gain)
-        gain.connect(ctx.destination)
-        
-        gain.gain.setValueAtTime(0.35, ctx.currentTime)
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1.2)
-        
-        noise.start()
-      }
-    } catch (err) {
-      console.warn('AudioContext not allowed or supported', err)
-    }
-  }
+
 
   const handleNavClick = (link: string) => {
     setActiveNav(link)
@@ -1143,7 +1053,6 @@ export default function App() {
           onSeek={handleSeek}
           onVolume={handleVolume}
           onOpenDetail={handleOpenDetail}
-          onToggleCrowdMode={() => setIsCrowdMode(prev => !prev)}
           onToggleQueue={() => setIsQueueOpen(prev => !prev)}
           onOpenPlaylist={() => setActiveNav('Playlist')}
           onClose={() => {
@@ -1153,42 +1062,6 @@ export default function App() {
           }}
         />
       )}
-
-      {/* CROWD MODE SCREEN OVERLAY (MODE TRIBUN) */}
-      {isCrowdMode && playingChantId !== null && (() => {
-        const chant = CHANTS.find(c => c.id === playingChantId)
-        let currentText = 'MOKLETERS!'
-        if (chant) {
-          const idx = [...chant.lyrics].reverse().findIndex(l => (elapsed + 1.2) >= l.time)
-          if (idx >= 0) {
-            currentText = chant.lyrics[chant.lyrics.length - 1 - idx].text
-          }
-        }
-        return (
-          <div className="crowd-mode-overlay" onClick={() => setIsCrowdMode(false)}>
-            <button
-              type="button"
-              className="crowd-mode-close"
-              onClick={e => { e.stopPropagation(); setIsCrowdMode(false) }}
-              aria-label="Tutup mode tribun"
-            >
-              <span aria-hidden="true">×</span>
-              <span className="crowd-mode-close-label">Tutup</span>
-            </button>
-            <div className="crowd-mode-content">
-              <span className="crowd-mode-chant-title">{chant?.title}</span>
-              <h2 className="crowd-mode-big-lyric">{currentText.toUpperCase()}</h2>
-              <div className="crowd-mode-instructions">Arahkan layar ponsel Anda ke lapangan / panggung!</div>
-              
-              <div className="crowd-mode-sound-triggers" onClick={e => e.stopPropagation()}>
-                <button className="btn crowd-trigger-btn" onClick={() => playTribunSound('genderang')}>🥁 Genderang</button>
-                <button className="btn crowd-trigger-btn" onClick={() => playTribunSound('terompet')}>🎺 Terompet</button>
-                <button className="btn crowd-trigger-btn" onClick={() => playTribunSound('sorakan')}>🔥 Sorakan</button>
-              </div>
-            </div>
-          </div>
-        )
-      })()}
 
       {/* QUEUE POPUP PANEL */}
       {isQueueOpen && (

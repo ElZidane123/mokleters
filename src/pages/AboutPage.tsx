@@ -1,85 +1,202 @@
 import mokletsMascot from '../assets/bombi.png'
 import mokletersLogo from '../assets/Mokleters logo.png'
+import nabilPhoto from '../assets/nabil.jpg'
+import elzidanePhoto from '../assets/elzidane.jpg'
+import mascotPhoto from '../assets/mascot.png'
 
 /* =============================================
    LUCIDE-STYLE SVG ICONS
    ============================================= */
-const IconUsers = ({ size = 32 }: { size?: number }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    style={{ color: 'var(--color-primary-bright)' }}
-  >
-    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-    <circle cx="9" cy="7" r="4" />
-    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-  </svg>
-)
-
-const IconFlame = ({ size = 32 }: { size?: number }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    style={{ color: 'var(--color-primary-bright)' }}
-  >
-    <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
-  </svg>
-)
-
-const IconPalette = ({ size = 32 }: { size?: number }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    style={{ color: 'var(--color-primary-bright)' }}
-  >
-    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 14.7255 3.09032 17.1962 4.85857 19C5.03457 19.176 5.0977 19.4357 5.01804 19.675C4.84687 20.1884 4.75 20.7334 4.75 21.3C4.75 21.6866 5.0634 22 5.45 22H12Z" />
-    <circle cx="7.5" cy="10.5" r="1.5" fill="currentColor" />
-    <circle cx="11.5" cy="7.5" r="1.5" fill="currentColor" />
-    <circle cx="16.5" cy="9.5" r="1.5" fill="currentColor" />
-    <circle cx="15.5" cy="14.5" r="1.5" fill="currentColor" />
-  </svg>
-)
 
 export default function AboutPage() {
-  const values = [
+  const IconGraduation = () => (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 4 }}>
+      <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+      <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5" />
+    </svg>
+  )
+
+  const IconCaptainPlaceholder = () => (
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </svg>
+  )
+
+  const capos = [
     {
-      title: 'Solidaritas Korsa',
-      desc: 'Satu suara, satu jiwa. Kebersamaan di tribun utara maupun luar lapangan yang mengakar erat di sanubari setiap siswa SMK Telkom Malang.',
-      icon: <IconUsers />
+      period: '2024 - 2025',
+      name: 'Capo Utama Mokleters',
+      legacy: 'Mengorkestrasi koreografi kertas 3D raksasa dan memimpin gerakan bendera besar (giant flag) di sepanjang tribun olahraga.',
+      angkatan: 'Angkatan 33',
+      image: mascotPhoto
     },
     {
-      title: 'Loyalitas Tanpa Batas',
-      desc: 'Mendukung Wikusama berjuang hingga detik terakhir pertandingan. Kemenangan disambut, kekalahan tetap dikawal.',
-      icon: <IconFlame />
+      period: '2022 - 2023',
+      name: 'Capo Utama Mokleters',
+      legacy: 'Memperkenalkan aransemen perkusi tribun terkoordinasi dan menyatukan suara korsa lintas angkatan.',
+      angkatan: 'Angkatan 31',
+      image: nabilPhoto
     },
     {
-      title: 'Kreativitas Tribun',
-      desc: 'Melodi chant baru, koreografi kertas, hingga bendera raksasa (giant flag) digarap mandiri demi menghidupkan stadion.',
-      icon: <IconPalette />
+      period: '2020 - 2021',
+      name: 'Capo Utama Mokleters',
+      legacy: 'Menduniakan nyala korsa digital dan merancang aransemen chant modern di masa pembatasan fisik.',
+      angkatan: 'Angkatan 29',
+      image: elzidanePhoto
+    },
+    {
+      period: '2018 - 2019',
+      name: 'Capo Utama Mokleters',
+      legacy: 'Memprakarsai aksi koreografi mosaik penuh warna pertama dan memperluas chant kebanggaan almamater.',
+      angkatan: 'Angkatan 27',
+      image: mokletsMascot
     }
   ]
 
+
+
   return (
     <div className="about-page" id="about-page">
+      <style>{`
+        .captains-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+          gap: 24px;
+          margin-top: 32px;
+          text-align: left;
+        }
+
+        .captain-card {
+          position: relative !important;
+          background: #0d0e12 !important;
+          border: 1px solid rgba(255, 255, 255, 0.05) !important;
+          border-radius: 20px !important;
+          padding: 24px !important;
+          overflow: hidden !important;
+          display: flex !important;
+          flex-direction: column !important;
+          min-height: 360px !important;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+          transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+          justify-content: flex-end !important;
+        }
+
+        .captain-card:hover {
+          transform: translateY(-5px) !important;
+          border-color: rgba(161, 15, 18, 0.35) !important;
+          box-shadow: 0 12px 30px rgba(161, 15, 18, 0.12) !important;
+        }
+
+        .captain-bg-wrap {
+          position: absolute !important;
+          inset: 0 !important;
+          width: 100% !important;
+          height: 100% !important;
+          z-index: 1 !important;
+          overflow: hidden !important;
+        }
+
+        .captain-bg-image {
+          width: 100% !important;
+          height: 100% !important;
+          object-fit: cover !important;
+          transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+        }
+
+        .captain-card:hover .captain-bg-image {
+          transform: scale(1.06) !important;
+        }
+
+        .captain-bg-placeholder {
+          width: 100% !important;
+          height: 100% !important;
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: center !important;
+          justify-content: center !important;
+          gap: 8px !important;
+          color: rgba(255, 255, 255, 0.15) !important;
+          background: radial-gradient(circle, rgba(161, 15, 18, 0.04) 0%, rgba(10, 10, 12, 0.98) 100%) !important;
+          transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+        }
+
+        .captain-card:hover .captain-bg-placeholder {
+          transform: scale(1.06) !important;
+        }
+
+        .captain-bg-placeholder svg {
+          opacity: 0.25 !important;
+          color: var(--color-primary-bright) !important;
+        }
+
+        .placeholder-text {
+          font-size: 11px !important;
+          font-weight: 700 !important;
+          letter-spacing: 0.08em !important;
+          text-transform: uppercase !important;
+          opacity: 0.35 !important;
+        }
+
+        .captain-bg-overlay {
+          position: absolute !important;
+          inset: 0 !important;
+          background: linear-gradient(180deg, rgba(10, 10, 12, 0.1) 0%, rgba(10, 10, 12, 0.6) 45%, rgba(6, 6, 8, 0.96) 100%) !important;
+          z-index: 2 !important;
+        }
+
+        .captain-card-content {
+          position: relative !important;
+          z-index: 3 !important;
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 12px !important;
+          width: 100% !important;
+        }
+
+        .captain-period {
+          font-family: var(--font-display);
+          font-size: 10.5px !important;
+          font-weight: 800 !important;
+          color: var(--color-primary-bright) !important;
+          letter-spacing: 0.1em !important;
+          background: rgba(161, 15, 18, 0.25) !important;
+          padding: 4px 12px !important;
+          border-radius: 6px !important;
+          align-self: flex-start !important;
+          border: 1px solid rgba(161, 15, 18, 0.4) !important;
+          backdrop-filter: blur(4px) !important;
+          -webkit-backdrop-filter: blur(4px) !important;
+        }
+
+        .captain-name {
+          font-size: 18px !important;
+          font-weight: 800 !important;
+          color: #ffffff !important;
+          margin: 0 !important;
+          text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important;
+        }
+
+        .captain-legacy {
+          font-size: 13px !important;
+          line-height: 1.6 !important;
+          color: rgba(255, 255, 255, 0.7) !important;
+          margin: 0 !important;
+          text-shadow: 0 1px 3px rgba(0,0,0,0.5) !important;
+        }
+
+        .captain-achievement {
+          font-size: 11.5px !important;
+          font-weight: 700 !important;
+          color: var(--color-primary-bright) !important;
+          display: flex !important;
+          align-items: center !important;
+          gap: 6px !important;
+          margin-top: 4px !important;
+          border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+          padding-top: 12px !important;
+        }
+      `}</style>
       {/* ── HEADER BANNER ── */}
       <div className="about-header">
         <div className="about-header-bg" aria-hidden="true" />
@@ -93,7 +210,7 @@ export default function AboutPage() {
       </div>
 
       <div className="container about-content-layout">
-        
+
         {/* ── PROFILE SECTION ── */}
         <section className="about-profile-section glass-1" aria-label="Profil Komunitas">
           <div className="about-profile-grid">
@@ -116,9 +233,9 @@ export default function AboutPage() {
               </p>
             </div>
           </div>
-          
+
           <div style={{ margin: '40px 0', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.08) 50%, transparent)' }} />
-          
+
           <div className="about-who-we-are" style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
             <h2 className="about-section-title" style={{ justifyContent: 'center', marginBottom: '20px' }}>Siapa Kami?</h2>
             <p className="about-paragraph" style={{ fontSize: '15.5px', lineHeight: '1.85' }}>
@@ -130,15 +247,39 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* ── VALUES SECTION ── */}
-        <section className="about-values-section" aria-label="Nilai-nilai Utama">
-          <h2 className="about-section-title" style={{ textAlign: 'center', marginBottom: '32px' }}>Nilai Utama Kami</h2>
-          <div className="about-values-grid">
-            {values.map((v, i) => (
-              <div key={i} className="about-value-card glass-1">
-                <div className="about-value-icon">{v.icon}</div>
-                <h3 className="about-value-title">{v.title}</h3>
-                <p className="about-value-desc">{v.desc}</p>
+        {/* ── CAPTAINS SECTION ── */}
+        <section className="about-captains-section" aria-label="Sejarah Kapten Suporter" style={{ marginTop: '64px', width: '100%' }}>
+          <h2 className="about-section-title" style={{ justifyContent: 'center', marginBottom: '8px' }}>Sejarah &amp; Mantan Kapten Tribun (Capo)</h2>
+          <p style={{ textAlign: 'center', color: 'var(--color-outline)', fontSize: '14px', maxWidth: '600px', margin: '0 auto 32px' }}>
+            Para ksatria pemandu sorak yang memimpin komando yel-yel, menjaga tertib barisan, dan membakar semangat korsa Mokleters dari masa ke masa.
+          </p>
+          <div className="captains-grid">
+            {capos.map((capo, i) => (
+              <div key={i} className="captain-card glass-1">
+                {/* Background Image / Placeholder */}
+                <div className="captain-bg-wrap">
+                  {capo.image ? (
+                    <img src={capo.image} alt={capo.name} className="captain-bg-image" />
+                  ) : (
+                    <div className="captain-bg-placeholder">
+                      <IconCaptainPlaceholder />
+                      <span className="placeholder-text">Foto Belum Tersedia</span>
+                    </div>
+                  )}
+                  {/* Gradient Overlay for text readability */}
+                  <div className="captain-bg-overlay" />
+                </div>
+
+                {/* Content Overlay */}
+                <div className="captain-card-content">
+                  <span className="captain-period">{capo.period}</span>
+                  <h3 className="captain-name">{capo.name}</h3>
+                  <p className="captain-legacy">{capo.legacy}</p>
+                  <div className="captain-achievement">
+                    <IconGraduation />
+                    {capo.angkatan}
+                  </div>
+                </div>
               </div>
             ))}
           </div>
