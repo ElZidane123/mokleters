@@ -5216,7 +5216,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 
 @media (max-width: 640px) {
-  .dev-profile-btn {
+  .navbar-actions .dev-profile-btn {
     display: none;
   }
 }

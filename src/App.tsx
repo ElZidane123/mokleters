@@ -1077,6 +1077,19 @@ export default function App() {
               </li>
             ))}
           </ul>
+          <div style={{ padding: '0 16px', marginTop: '16px', marginBottom: '16px', display: 'flex', justifyContent: 'center' }}>
+            <button
+              className="dev-profile-btn"
+              type="button"
+              style={{ width: '100%', maxWidth: '280px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '42px' }}
+              onClick={() => {
+                handleNavClick('Developer')
+                setDetailChant(null)
+              }}
+            >
+              Developer
+            </button>
+          </div>
           <label className="mobile-search" htmlFor="mobile-search-input">
             <IconSearch />
             <input
