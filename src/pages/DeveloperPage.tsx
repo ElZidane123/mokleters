@@ -63,8 +63,8 @@ export default function DeveloperPage() {
                 behindGlowColor={dev.glow}
                 innerGradient={dev.gradient}
               />
-              <div className="dev-card-extra glass-1" style={{ marginTop: '16px', padding: '20px', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                <p className="dev-bio" style={{ margin: 0, fontSize: '13px', lineHeight: '1.6', color: 'var(--color-outline)' }}>
+              <div className="dev-card-extra">
+                <p className="dev-bio">
                   {dev.bio}
                 </p>
               </div>
