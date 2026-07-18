@@ -734,6 +734,21 @@ export default function App() {
     }
   }, [playingChantId, activeNav])
 
+  // ── High frequency elapsed sync (bypasses slow ontimeupdate) ──
+  useEffect(() => {
+    let intervalId: ReturnType<typeof setInterval> | null = null
+    if (isPlaying && audioRef.current) {
+      intervalId = setInterval(() => {
+        if (audioRef.current) {
+          setElapsed(audioRef.current.currentTime)
+        }
+      }, 100) // update every 100ms
+    }
+    return () => {
+      if (intervalId) clearInterval(intervalId)
+    }
+  }, [isPlaying])
+
   // ── Cleanup ──
   useEffect(() => () => stopAudio(), [stopAudio])
 

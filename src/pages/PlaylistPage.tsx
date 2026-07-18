@@ -103,7 +103,7 @@ export default function PlaylistPage({
 
   // Sync lyric to elapsed time
   useEffect(() => {
-    const idx = [...activeChant.lyrics].reverse().findIndex(l => (elapsed + 0.6) >= l.time)
+    const idx = [...activeChant.lyrics].reverse().findIndex(l => (elapsed + 1.2) >= l.time)
     if (idx >= 0) {
       setActiveLyricIdx(activeChant.lyrics.length - 1 - idx)
     } else {
@@ -145,99 +145,12 @@ export default function PlaylistPage({
             {isPlaying && (
               <div className="pl-artwork-glow" aria-hidden="true" />
             )}
-            {/* Overlay Spotify + putar */}
-            <div className="pl-artwork-badges" aria-hidden="true">
-              <div className="pl-artwork-badge">
-                <IconSpotify />
-              </div>
-              <div className="pl-artwork-badge pl-artwork-badge--play" onClick={onPlayPause}>
-                {isPlaying ? <IconPause size={16} /> : <IconPlay size={16} />}
-              </div>
-            </div>
           </div>
 
           {/* Info Lagu */}
           <div className="pl-track-info">
             <p className="pl-track-title">{activeChant.title}</p>
             <p className="pl-track-artist">{activeChant.category} • {activeChant.artist}</p>
-          </div>
-
-          {/* Bilah Kemajuan */}
-          <div className="pl-progress-section">
-            <div
-              className="pl-progress-track"
-              id="playlist-progress-bar"
-              role="progressbar"
-              aria-valuemin={0}
-              aria-valuemax={100}
-              aria-valuenow={Math.round(progress)}
-              aria-label="Kemajuan lagu"
-              onClick={handleProgressClick}
-            >
-              <div className="pl-progress-fill" style={{ width: `${progress}%` }}>
-                <div className="pl-progress-thumb" aria-hidden="true" />
-              </div>
-            </div>
-            <div className="pl-progress-times">
-              <span id="pl-current-time">{formatTime(elapsed)}</span>
-              <span id="pl-total-time">{activeChant.duration}</span>
-            </div>
-          </div>
-
-          {/* Kontrol Pemutaran */}
-          <div className="pl-controls" role="group" aria-label="Kontrol pemutaran">
-            <button
-              id="pl-shuffle-btn"
-              className={`pl-ctrl-btn${isShuffle ? ' pl-ctrl-btn--active' : ''}`}
-              type="button"
-              aria-label="Acak"
-              aria-pressed={isShuffle}
-              onClick={onShuffle}
-            >
-              <IconShuffle />
-            </button>
-
-            <button
-              id="pl-prev-btn"
-              className="pl-ctrl-btn"
-              type="button"
-              aria-label="Lagu sebelumnya"
-              onClick={onPrev}
-            >
-              <IconSkipBack />
-            </button>
-
-            <button
-              id="pl-play-btn"
-              className="pl-play-btn"
-              type="button"
-              aria-label={isPlaying ? 'Jeda' : 'Putar'}
-              aria-pressed={isPlaying}
-              onClick={onPlayPause}
-            >
-              {isPlaying ? <IconPause size={28} /> : <IconPlay size={28} />}
-            </button>
-
-            <button
-              id="pl-next-btn"
-              className="pl-ctrl-btn"
-              type="button"
-              aria-label="Lagu berikutnya"
-              onClick={onNext}
-            >
-              <IconSkipForward />
-            </button>
-
-            <button
-              id="pl-repeat-btn"
-              className={`pl-ctrl-btn${isRepeat ? ' pl-ctrl-btn--active' : ''}`}
-              type="button"
-              aria-label="Ulangi"
-              aria-pressed={isRepeat}
-              onClick={onRepeat}
-            >
-              <IconRepeat />
-            </button>
           </div>
         </section>
 
