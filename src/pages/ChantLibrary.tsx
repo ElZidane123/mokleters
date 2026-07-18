@@ -379,6 +379,236 @@ export default function ChantLibrary({
 
   return (
     <div className="chant-library" id="chant-library">
+      <style>{`
+        .match-flow-vertical-list {
+          display: flex;
+          flex-direction: column;
+          gap: 32px;
+          max-width: 800px;
+          margin: 40px auto 0;
+          position: relative;
+          width: 100%;
+          text-align: left;
+        }
+
+        .match-flow-vertical-list::before {
+          content: '';
+          position: absolute;
+          left: 9px;
+          top: 10px;
+          bottom: 10px;
+          width: 2px;
+          background: linear-gradient(180deg, var(--color-primary-bright) 0%, rgba(255,255,255,0.06) 100%);
+          z-index: 1;
+        }
+
+        .match-flow-vertical-phase {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          position: relative;
+          z-index: 2;
+        }
+
+        .match-flow-vertical-header {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          padding-left: 2px;
+        }
+
+        .match-flow-header-dot {
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          background: var(--color-primary-bright);
+          border: 4px solid #0b0c10;
+          box-shadow: 0 0 10px var(--color-primary-bright);
+          flex-shrink: 0;
+        }
+
+        .match-flow-header-title {
+          font-family: var(--font-display);
+          font-size: 14px;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+          color: var(--color-primary-bright);
+          text-transform: uppercase;
+          margin: 0;
+        }
+
+        .match-flow-header-sub {
+          font-size: 11px;
+          color: var(--color-outline);
+          margin-top: 2px;
+          margin-bottom: 0;
+        }
+
+        .match-flow-vertical-chants {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          padding-left: 36px;
+        }
+
+        .match-flow-vertical-item-wrap {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+        }
+
+        .match-flow-vertical-item {
+          display: flex !important;
+          flex-direction: row !important;
+          align-items: center !important;
+          gap: 16px;
+          padding: 14px 20px;
+          background: rgba(255, 255, 255, 0.02) !important;
+          border: 1px solid rgba(255, 255, 255, 0.05) !important;
+          border-radius: 16px !important;
+          cursor: pointer;
+          transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+          width: 100%;
+          box-sizing: border-box;
+          text-align: left;
+        }
+
+        .match-flow-vertical-item:hover {
+          background: rgba(161, 15, 18, 0.05) !important;
+          border-color: rgba(161, 15, 18, 0.3) !important;
+          transform: translateX(4px);
+        }
+
+        .match-flow-vertical-item--playing {
+          background: rgba(161, 15, 18, 0.12) !important;
+          border-color: rgba(161, 15, 18, 0.45) !important;
+          box-shadow: 0 4px 20px rgba(161, 15, 18, 0.1) !important;
+        }
+
+        .match-flow-vertical-item--expanded {
+          border-bottom-left-radius: 0px !important;
+          border-bottom-right-radius: 0px !important;
+          border-bottom-color: transparent !important;
+          background: rgba(255, 255, 255, 0.03) !important;
+        }
+
+        .match-flow-badge {
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          width: 24px;
+          height: 24px;
+          border-radius: 6px;
+          background: rgba(161, 15, 18, 0.15) !important;
+          border: 1px solid rgba(161, 15, 18, 0.35) !important;
+          font-size: 10px;
+          font-weight: 800;
+          color: var(--color-primary-bright) !important;
+          flex-shrink: 0;
+        }
+
+        .match-flow-chant-info {
+          flex-grow: 1;
+          min-width: 0;
+          text-align: left;
+        }
+
+        .match-flow-chant-title {
+          font-size: 13.5px;
+          font-weight: 600;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          margin: 0;
+          padding: 0;
+        }
+
+        .match-flow-chant-note {
+          font-size: 10.5px;
+          color: var(--color-outline);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          margin-top: 3px;
+          margin-bottom: 0;
+        }
+
+        .match-flow-play-btn {
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          width: 26px;
+          height: 26px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.05);
+          border: none;
+          color: #ffffff;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          flex-shrink: 0;
+        }
+
+        .match-flow-vertical-item:hover .match-flow-play-btn {
+          background: var(--color-primary);
+          color: #ffffff;
+          transform: scale(1.1);
+        }
+
+        .match-flow-vertical-item--playing .match-flow-play-btn {
+          background: var(--color-primary-bright);
+          color: #ffffff;
+          transform: scale(1.1);
+        }
+
+        .match-flow-lyrics-panel {
+          background: rgba(10, 10, 12, 0.95) !important;
+          border: 1px solid rgba(255, 255, 255, 0.05) !important;
+          border-top: none !important;
+          border-bottom-left-radius: 16px !important;
+          border-bottom-right-radius: 16px !important;
+          padding: 20px 24px !important;
+          box-shadow: inset 0 8px 24px rgba(0, 0, 0, 0.9) !important;
+          animation: slideDownFade 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+          overflow: hidden;
+          width: 100%;
+          box-sizing: border-box;
+          text-align: left;
+        }
+
+        .match-flow-lyrics-content {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          max-height: 220px;
+          overflow-y: auto;
+          padding-right: 8px;
+        }
+
+        .match-flow-lyric-line {
+          font-size: 13.5px;
+          line-height: 1.6;
+          color: rgba(255, 255, 255, 0.8);
+          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+          font-weight: 500;
+          margin: 0;
+        }
+
+        @media (max-width: 768px) {
+          .match-flow-vertical-list::before {
+            left: 9px;
+          }
+          .match-flow-vertical-chants {
+            padding-left: 24px;
+          }
+          .match-flow-vertical-item {
+            padding: 12px 16px !important;
+            gap: 12px;
+          }
+          .match-flow-vertical-list {
+            gap: 24px;
+          }
+        }
+      `}</style>
       {/* ── HEADER HALAMAN ── */}
       <div className="chant-library-header">
         <div className="chant-library-header-bg" aria-hidden="true" />
