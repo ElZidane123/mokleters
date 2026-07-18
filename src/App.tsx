@@ -471,8 +471,7 @@ function HomePage({ onPlay }: { onPlay: () => void }) {
             <div className="crowd-mascot-wrap">
               <img src={mokletsMascot} alt="Maskot Mokleters" className="crowd-mascot-img" />
               <div className="crowd-mascot-badge" role="status">
-                <span className="live-dot" aria-hidden="true" />
-                <span>12 PENDUKUNG AKTIF</span>
+                <span>Mokleters Maskot</span>
               </div>
             </div>
           </div>
