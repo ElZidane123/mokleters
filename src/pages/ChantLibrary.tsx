@@ -318,6 +318,7 @@ export default function ChantLibrary({
 }) {
   const [activeFilter, setActiveFilter] = useState('Semua Chant')
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
+  const [expandedChantId, setExpandedChantId] = useState<number | null>(null)
 
   const matchFlowPhases = [
     {
@@ -499,40 +500,73 @@ export default function ChantLibrary({
 
       {/* ── SIDELIST / URUTAN CHANT (MATCH FLOW) ── */}
       <section className="container" style={{ paddingBottom: 180, borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 50 }}>
-        <header style={{ marginBottom: 32 }}>
+        <header style={{ marginBottom: 40, textAlign: 'center' }}>
           <span className="section-label" style={{ color: 'var(--color-primary-bright)', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase' }}>Panduan Tribun</span>
-          <h2 className="section-title" style={{ marginTop: 8, fontSize: 'clamp(24px, 3.5vw, 36px)', fontFamily: 'var(--font-display)', textTransform: 'uppercase', color: '#ffffff' }}>Urutan Chant (Match Flow)</h2>
-          <p style={{ fontSize: 14, color: 'var(--color-outline)', marginTop: 6 }}>Berikut adalah tata urutan menyanyikan chant di tribun utara dari sebelum kick-off hingga akhir laga.</p>
+          <h2 className="section-title" style={{ marginTop: 8, fontSize: 'clamp(24px, 3.5vw, 36px)', fontFamily: 'var(--font-display)', textTransform: 'uppercase', color: '#ffffff', justifyContent: 'center' }}>Urutan Chant (Match Flow)</h2>
+          <p style={{ fontSize: 14, color: 'var(--color-outline)', marginTop: 6, maxWidth: 600, margin: '6px auto 0' }}>Berikut adalah tata urutan menyanyikan chant di tribun utara dari sebelum kick-off hingga akhir laga. Klik lagu untuk memutar &amp; menampilkan lirik.</p>
         </header>
 
-        <div className="match-flow-timeline">
+        <div className="match-flow-vertical-list">
           {matchFlowPhases.map((phaseItem, pIdx) => (
-            <div key={pIdx} className="match-flow-phase-card">
-              <div className="match-flow-phase-header">
-                <p className="match-flow-phase-title">{phaseItem.phase}</p>
-                <p className="match-flow-phase-sub">{phaseItem.sub}</p>
+            <div key={pIdx} className="match-flow-vertical-phase">
+              {/* Phase Header */}
+              <div className="match-flow-vertical-header">
+                <div className="match-flow-header-dot" />
+                <div>
+                  <h4 className="match-flow-header-title">{phaseItem.phase}</h4>
+                  <p className="match-flow-header-sub">{phaseItem.sub}</p>
+                </div>
               </div>
-              <div className="match-flow-chant-list">
+
+              {/* Phase Chants List */}
+              <div className="match-flow-vertical-chants">
                 {phaseItem.chants.map((item) => {
                   const ch = CHANTS.find(c => c.id === item.id);
                   if (!ch) return null;
                   const isPlayingCurrent = playingChantId === ch.id && isPlaying;
+                  const isExpanded = expandedChantId === ch.id;
+
                   return (
-                    <div
-                      key={item.id}
-                      className={`match-flow-chant-item${isPlayingCurrent ? ' match-flow-chant-item--playing' : ''}`}
-                      onClick={() => onCardClick(ch)}
-                      role="button"
-                      aria-label={`Putar ${ch.title}`}
-                    >
-                      <span className="match-flow-badge">{item.num}</span>
-                      <div className="match-flow-chant-info">
-                        <p className="match-flow-chant-title" style={{ color: isPlayingCurrent ? 'var(--color-primary-bright)' : '#ffffff' }}>{ch.title}</p>
-                        <p className="match-flow-chant-note">{item.note}</p>
+                    <div key={item.id} className="match-flow-vertical-item-wrap">
+                      <div
+                        className={`match-flow-vertical-item${isPlayingCurrent ? ' match-flow-vertical-item--playing' : ''}${isExpanded ? ' match-flow-vertical-item--expanded' : ''}`}
+                        onClick={() => {
+                          onCardClick(ch);
+                          setExpandedChantId(prev => prev === ch.id ? null : ch.id);
+                        }}
+                        role="button"
+                        aria-expanded={isExpanded}
+                        aria-label={`Putar dan buka lirik ${ch.title}`}
+                      >
+                        <span className="match-flow-badge">{item.num}</span>
+                        <div className="match-flow-chant-info">
+                          <p className="match-flow-chant-title" style={{ color: isPlayingCurrent ? 'var(--color-primary-bright)' : '#ffffff' }}>{item.title}</p>
+                          <p className="match-flow-chant-note">{item.note}</p>
+                        </div>
+                        <button
+                          className="match-flow-play-btn"
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onCardClick(ch);
+                            setExpandedChantId(ch.id);
+                          }}
+                          aria-label={isPlayingCurrent ? 'Pause' : 'Play'}
+                        >
+                          {isPlayingCurrent ? <IconPause size={10} /> : <IconPlay size={10} />}
+                        </button>
                       </div>
-                      <div className="match-flow-play-btn">
-                        {isPlayingCurrent ? <IconPause size={10} /> : <IconPlay size={10} />}
-                      </div>
+
+                      {/* Expandable Lyrics Area */}
+                      {isExpanded && (
+                        <div className="match-flow-lyrics-panel">
+                          <div className="match-flow-lyrics-content">
+                            {ch.lyrics.map((line, lIdx) => (
+                              <p key={lIdx} className="match-flow-lyric-line">{line.text}</p>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   );
                 })}
