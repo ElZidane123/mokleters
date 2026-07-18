@@ -126,13 +126,6 @@ const IconQueue = () => (
 /* =============================================
    DATA
    ============================================= */
-const anthemData = [
-  { id: 1, title: 'Merah Putih Kebanggaan', tag: 'classic', tagLabel: 'Klasik', plays: '1.5Jt', desc: 'Anthem utama SMK Telkom Malang. Dinyanyikan dengan bangga sebelum setiap pertandingan dimulai.', img: '/anthem1.png' },
-  { id: 2, title: 'Sabit Utara', tag: 'anthem', tagLabel: 'Anthem', plays: '892Rb', desc: 'Chant membakar semangat dari Tribun Utara.', img: '/anthem2.png' },
-  { id: 3, title: 'Ritme Telkom', tag: 'top10', tagLabel: 'Top 10', plays: '740Rb', desc: 'Anthem berirama yang dipimpin oleh perkusi.', img: '/anthem3.png' },
-  { id: 4, title: 'Braket Gelora', tag: 'anthem', tagLabel: 'Anthem', plays: '612Rb', desc: 'Melodi klasik penuh pengabdian untuk generasi baru.', img: '/anthem1.png' },
-]
-
 const leaderboardData = [
   { rank: 1, title: 'Kami Datang Lagi', artist: 'Chant Mokleters', plays: '1.5Jt putaran', img: '/anthem1.png' },
   { rank: 2, title: 'SMK Telkom Malang Kami Datang', artist: 'Anthem Pembuka', plays: '892Rb putaran', img: '/anthem2.png' },
@@ -140,8 +133,6 @@ const leaderboardData = [
   { rank: 4, title: 'Mokleters Mokleters Wikusama', artist: 'Chant Kebanggaan', plays: '612Rb putaran', img: '/anthem1.png' },
   { rank: 5, title: 'Kami Pendukung Telkom Malang', artist: 'Tempo Pertandingan', plays: '541Rb putaran', img: '/anthem2.png' },
 ]
-
-const tagClass: Record<string, string> = { classic: 'tag-classic', anthem: 'tag-anthem', top10: 'tag-top10' }
 
 /* =============================================
    PLAYER STATE (shared across pages)
@@ -410,13 +401,16 @@ function HomePage({
   onNavigate: (page: string) => void
   onLaunchCrowdMode: () => void
 }) {
-  const getCorrespondingChant = (anthemId: number) => {
-    if (anthemId === 1) return CHANTS.find(c => c.id === 6);
-    if (anthemId === 2) return CHANTS.find(c => c.id === 2);
-    if (anthemId === 3) return CHANTS.find(c => c.id === 3);
-    if (anthemId === 4) return CHANTS.find(c => c.id === 4);
-    return null;
-  }
+  const popularChants = [
+    { chant: CHANTS.find(c => c.id === 6)!, plays: '1.5Jt', tagLabel: 'Anthem Penutup', tagClass: 'tag-classic' },
+    { chant: CHANTS.find(c => c.id === 1)!, plays: '892Rb', tagLabel: 'Chant Utama', tagClass: 'tag-anthem' },
+    { chant: CHANTS.find(c => c.id === 2)!, plays: '740Rb', tagLabel: 'Anthem Pembuka', tagClass: 'tag-top10' },
+    { chant: CHANTS.find(c => c.id === 4)!, plays: '612Rb', tagLabel: 'Chant Kebanggaan', tagClass: 'tag-anthem' },
+  ].filter(item => item.chant !== undefined);
+
+  const featured = popularChants[0];
+  const sideChants = [popularChants[1], popularChants[2]];
+  const bottomChant = popularChants[3];
 
   return (
     <>
@@ -475,56 +469,53 @@ function HomePage({
             </div>
             <a href="#" id="view-all-anthems" className="section-view-all" onClick={e => { e.preventDefault(); onNavigate('Chant'); }}>Lihat Semua <IconArrowRight /></a>
           </header>
-          <div className="anthems-grid">
-            <article className="anthem-featured" id="anthem-featured-card">
-              <div className="playlist-card">
-                <img src={anthemData[0].img} alt={anthemData[0].title} className="playlist-card-img" />
-                <div className="playlist-card-vignette" aria-hidden="true" />
-                <div className="playlist-card-content">
-                  <span className={`playlist-card-tag ${tagClass[anthemData[0].tag]}`}>{anthemData[0].tagLabel}</span>
-                  <h3 className="playlist-card-title">{anthemData[0].title}</h3>
-                  <p className="playlist-card-meta">{anthemData[0].plays} putaran</p>
-                  <p style={{ fontSize: 13, color: 'rgba(229,226,225,0.60)', marginTop: 6, lineHeight: 1.5 }}>{anthemData[0].desc}</p>
-                  <button id="featured-play-btn" className="playlist-card-play" type="button" aria-label={`Putar ${anthemData[0].title}`} onClick={() => {
-                    const ch = getCorrespondingChant(1);
-                    if (ch) onPlayTrack(ch);
-                  }}>
-                    <IconPlay size={18} />
-                  </button>
+          {featured && (
+            <div className="anthems-grid">
+              <article className="anthem-featured" id="anthem-featured-card">
+                <div className="playlist-card">
+                  <img src={featured.chant.img} alt={featured.chant.title} className="playlist-card-img" />
+                  <div className="playlist-card-vignette" aria-hidden="true" />
+                  <div className="playlist-card-content">
+                    <span className={`playlist-card-tag ${featured.tagClass}`}>{featured.tagLabel}</span>
+                    <h3 className="playlist-card-title">{featured.chant.title}</h3>
+                    <p className="playlist-card-meta">{featured.plays} putaran</p>
+                    <p style={{ fontSize: 13, color: 'rgba(229,226,225,0.60)', marginTop: 6, lineHeight: 1.5 }}>
+                      Lirik: {featured.chant.lyrics.slice(0, 3).map(l => l.text).join(', ')}...
+                    </p>
+                    <button id="featured-play-btn" className="playlist-card-play" type="button" aria-label={`Putar ${featured.chant.title}`} onClick={() => onPlayTrack(featured.chant)}>
+                      <IconPlay size={18} />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </article>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              {[1, 2].map((i) => {
-                const ch = getCorrespondingChant(i + 1);
-                return (
-                  <div key={i} className="anthem-side" style={{ cursor: 'pointer' }} onClick={() => ch && onPlayTrack(ch)}>
+              </article>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                {sideChants.map((item, idx) => item && (
+                  <div key={idx} className="anthem-side" style={{ cursor: 'pointer' }} onClick={() => onPlayTrack(item.chant)}>
                     <div className="playlist-card">
-                      <img src={anthemData[i].img} alt={anthemData[i].title} className="playlist-card-img" />
+                      <img src={item.chant.img} alt={item.chant.title} className="playlist-card-img" />
                       <div className="playlist-card-vignette" aria-hidden="true" />
                       <div className="playlist-card-content">
-                        <span className={`playlist-card-tag ${tagClass[anthemData[i].tag]}`}>{anthemData[i].tagLabel}</span>
-                        <h3 className="playlist-card-title">{anthemData[i].title}</h3>
-                        <p className="playlist-card-meta">{anthemData[i].plays} putaran</p>
+                        <span className={`playlist-card-tag ${item.tagClass}`}>{item.tagLabel}</span>
+                        <h3 className="playlist-card-title">{item.chant.title}</h3>
+                        <p className="playlist-card-meta">{item.plays} putaran</p>
                       </div>
                     </div>
                   </div>
-                );
-              })}
-              <div className="anthem-side-inner" id="anthem-braket-row" role="article">
-                <img src={anthemData[3].img} alt={anthemData[3].title} className="anthem-side-thumb" />
-                <div className="anthem-side-info">
-                  <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-primary-container)', marginBottom: 4 }}>{anthemData[3].tagLabel}</p>
-                  <p className="anthem-side-title">{anthemData[3].title}</p>
-                  <p className="anthem-side-sub">{anthemData[3].desc}</p>
-                </div>
-                <button id="anthem-braket-play" className="anthem-side-btn" type="button" onClick={() => {
-                  const ch = getCorrespondingChant(4);
-                  if (ch) onPlayTrack(ch);
-                }}>Dengar Sekarang <IconArrowRight /></button>
+                ))}
+                {bottomChant && (
+                  <div className="anthem-side-inner" id="anthem-braket-row" role="article">
+                    <img src={bottomChant.chant.img} alt={bottomChant.chant.title} className="anthem-side-thumb" />
+                    <div className="anthem-side-info">
+                      <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-primary-container)', marginBottom: 4 }}>{bottomChant.tagLabel}</p>
+                      <p className="anthem-side-title">{bottomChant.chant.title}</p>
+                      <p className="anthem-side-sub">Lirik: {bottomChant.chant.lyrics[0]?.text}...</p>
+                    </div>
+                    <button id="anthem-braket-play" className="anthem-side-btn" type="button" onClick={() => onPlayTrack(bottomChant.chant)}>Dengar Sekarang <IconArrowRight /></button>
+                  </div>
+                )}
               </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 
