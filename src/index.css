@@ -4273,7 +4273,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .player-track-info { max-width: 80px; }
   .cl-grid { grid-template-columns: 1fr; }
   .stat-number { font-size: 24px; }
-=======
+}
+
 /* =============================================
    ABOUT PAGE
    ============================================= */
@@ -4539,7 +4540,6 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
->>>>>>> ea9b5ad074cffed2c4530d4906b8ace977a8769b
 }
 
 /* =============================================
