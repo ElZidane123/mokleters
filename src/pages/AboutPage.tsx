@@ -4,60 +4,6 @@ import mokletersLogo from '../assets/Mokleters logo.png'
 /* =============================================
    LUCIDE-STYLE SVG ICONS
    ============================================= */
-const IconUsers = ({ size = 32 }: { size?: number }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    style={{ color: 'var(--color-primary-bright)' }}
-  >
-    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-    <circle cx="9" cy="7" r="4" />
-    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-  </svg>
-)
-
-const IconFlame = ({ size = 32 }: { size?: number }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    style={{ color: 'var(--color-primary-bright)' }}
-  >
-    <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
-  </svg>
-)
-
-const IconPalette = ({ size = 32 }: { size?: number }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    style={{ color: 'var(--color-primary-bright)' }}
-  >
-    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 14.7255 3.09032 17.1962 4.85857 19C5.03457 19.176 5.0977 19.4357 5.01804 19.675C4.84687 20.1884 4.75 20.7334 4.75 21.3C4.75 21.6866 5.0634 22 5.45 22H12Z" />
-    <circle cx="7.5" cy="10.5" r="1.5" fill="currentColor" />
-    <circle cx="11.5" cy="7.5" r="1.5" fill="currentColor" />
-    <circle cx="16.5" cy="9.5" r="1.5" fill="currentColor" />
-    <circle cx="15.5" cy="14.5" r="1.5" fill="currentColor" />
-  </svg>
-)
 
 export default function AboutPage() {
   const IconAward = () => (
@@ -66,50 +12,45 @@ export default function AboutPage() {
     </svg>
   )
 
+  const IconCaptainPlaceholder = () => (
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </svg>
+  )
+
   const capos = [
     {
       period: '2024 - 2025',
       name: 'Capo Utama Mokleters',
       legacy: 'Mengorkestrasi koreografi kertas 3D raksasa dan memimpin gerakan bendera besar (giant flag) di sepanjang tribun olahraga.',
-      achievement: 'Suporter Terbaik Kompetisi DBL'
+      achievement: 'Suporter Terbaik Kompetisi DBL',
+      image: ''
     },
     {
       period: '2022 - 2023',
       name: 'Capo Utama Mokleters',
       legacy: 'Memperkenalkan aransemen perkusi tribun terkoordinasi dan menyatukan suara korsa lintas angkatan.',
-      achievement: 'Solidaritas Korsa Terbesar'
+      achievement: 'Solidaritas Korsa Terbesar',
+      image: ''
     },
     {
       period: '2020 - 2021',
       name: 'Capo Utama Mokleters',
       legacy: 'Menduniakan nyala korsa digital dan merancang aransemen chant modern di masa pembatasan fisik.',
-      achievement: 'Inovasi Chant Era Baru'
+      achievement: 'Inovasi Chant Era Baru',
+      image: ''
     },
     {
       period: '2018 - 2019',
       name: 'Capo Utama Mokleters',
       legacy: 'Memprakarsai aksi koreografi mosaik penuh warna pertama dan memperluas chant kebanggaan almamater.',
-      achievement: 'Pelopor Mosaik Warna'
+      achievement: 'Pelopor Mosaik Warna',
+      image: ''
     }
   ]
 
-  const values = [
-    {
-      title: 'Solidaritas Korsa',
-      desc: 'Satu suara, satu jiwa. Kebersamaan di tribun utara maupun luar lapangan yang mengakar erat di sanubari setiap siswa SMK Telkom Malang.',
-      icon: <IconUsers />
-    },
-    {
-      title: 'Loyalitas Tanpa Batas',
-      desc: 'Mendukung Wikusama berjuang hingga detik terakhir pertandingan. Kemenangan disambut, kekalahan tetap dikawal.',
-      icon: <IconFlame />
-    },
-    {
-      title: 'Kreativitas Tribun',
-      desc: 'Melodi chant baru, koreografi kertas, hingga bendera raksasa (giant flag) digarap mandiri demi menghidupkan stadion.',
-      icon: <IconPalette />
-    }
-  ]
+
 
   return (
     <div className="about-page" id="about-page">
@@ -175,9 +116,54 @@ export default function AboutPage() {
           display: flex;
           align-items: center;
           gap: 6px;
-          margin-top: auto;
           border-top: 1px solid rgba(255, 255, 255, 0.06);
           padding-top: 14px;
+        }
+
+        .captain-image-wrap {
+          width: 100%;
+          height: 180px;
+          border-radius: 12px;
+          overflow: hidden;
+          position: relative;
+          background: rgba(0, 0, 0, 0.4);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          margin-bottom: 4px;
+        }
+
+        .captain-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.5s ease;
+        }
+
+        .captain-card:hover .captain-image {
+          transform: scale(1.05);
+        }
+
+        .captain-image-placeholder {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          color: var(--color-outline);
+        }
+
+        .captain-image-placeholder svg {
+          opacity: 0.4;
+          color: var(--color-primary-bright);
+        }
+
+        .placeholder-text {
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          opacity: 0.5;
         }
       `}</style>
       {/* ── HEADER BANNER ── */}
@@ -230,20 +216,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* ── VALUES SECTION ── */}
-        <section className="about-values-section" aria-label="Nilai-nilai Utama">
-          <h2 className="about-section-title" style={{ textAlign: 'center', marginBottom: '32px' }}>Nilai Utama Kami</h2>
-          <div className="about-values-grid">
-            {values.map((v, i) => (
-              <div key={i} className="about-value-card glass-1">
-                <div className="about-value-icon">{v.icon}</div>
-                <h3 className="about-value-title">{v.title}</h3>
-                <p className="about-value-desc">{v.desc}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
         {/* ── CAPTAINS SECTION ── */}
         <section className="about-captains-section" aria-label="Sejarah Kapten Suporter" style={{ marginTop: '64px', width: '100%' }}>
           <h2 className="about-section-title" style={{ justifyContent: 'center', marginBottom: '8px' }}>Sejarah &amp; Mantan Kapten Tribun (Capo)</h2>
@@ -253,6 +225,16 @@ export default function AboutPage() {
           <div className="captains-grid">
             {capos.map((capo, i) => (
               <div key={i} className="captain-card glass-1">
+                <div className="captain-image-wrap">
+                  {capo.image ? (
+                    <img src={capo.image} alt={capo.name} className="captain-image" />
+                  ) : (
+                    <div className="captain-image-placeholder">
+                      <IconCaptainPlaceholder />
+                      <span className="placeholder-text">Foto Belum Tersedia</span>
+                    </div>
+                  )}
+                </div>
                 <span className="captain-period">{capo.period}</span>
                 <h3 className="captain-name">{capo.name}</h3>
                 <p className="captain-legacy">{capo.legacy}</p>
