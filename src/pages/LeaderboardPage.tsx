@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { PlayerTrack } from './App'
+import type { PlayerTrack } from '../App'
 
 /* =============================================
    ICONS

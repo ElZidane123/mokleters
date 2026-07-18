@@ -1,14 +1,14 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import './index.css'
-import ChantLibrary from './ChantLibrary'
-import PlaylistPage from './PlaylistPage'
-import LeaderboardPage from './LeaderboardPage'
-import ChantDetailPage from './ChantDetailPage'
+import ChantLibrary from './pages/ChantLibrary'
+import PlaylistPage from './pages/PlaylistPage'
+import LeaderboardPage from './pages/LeaderboardPage'
+import ChantDetailPage from './pages/ChantDetailPage'
 import mokletersLogo from './assets/Mokleters logo.png'
 import mokletsMascot from './assets/mascot.png'
 import mokletersGraffiti from './assets/Group 1261154060 (1).png'
-import { CHANTS } from './lyrics'
-import type { ChantData } from './lyrics'
+import { CHANTS } from './data/lyrics'
+import type { ChantData } from './data/lyrics'
 
 /* =============================================
    ICON COMPONENTS (inline SVG)

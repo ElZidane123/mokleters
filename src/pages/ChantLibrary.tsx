@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import type { ChantData } from './lyrics'
-import { CHANTS } from './lyrics'
+import type { ChantData } from '../data/lyrics'
+import { CHANTS } from '../data/lyrics'
 
 /* =============================================
    ICONS
