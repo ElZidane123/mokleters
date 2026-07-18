@@ -97,15 +97,11 @@ function ChantCard({
   isPlaying,
   onPlay,
   progress,
-  isExpanded,
-  onToggleExpand,
 }: {
   chant: ChantType
   isPlaying: boolean
   onPlay: () => void
   progress: number
-  isExpanded: boolean
-  onToggleExpand: () => void
 }) {
   const [liked, setLiked] = useState(false)
   const [hovered, setHovered] = useState(false)
@@ -118,13 +114,6 @@ function ChantCard({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => { setHovered(false); setIsMenuOpen(false); }}
       aria-label={chant.title}
-      onClick={() => {
-        onToggleExpand();
-        if (!isPlaying) {
-          onPlay();
-        }
-      }}
-      style={{ cursor: 'pointer' }}
     >
       {/* Image area */}
       <div className="chant-card-img-wrap">
@@ -150,11 +139,7 @@ function ChantCard({
           className={`chant-card-play-btn${hovered || isPlaying ? ' chant-card-play-btn--visible' : ''}`}
           type="button"
           aria-label={isPlaying ? `Pause ${chant.title}` : `Play ${chant.title}`}
-          onClick={(e) => {
-            e.stopPropagation();
-            onPlay();
-            if (!isExpanded) onToggleExpand();
-          }}
+          onClick={onPlay}
           id={`chant-play-btn-${chant.id}`}
         >
           {isPlaying ? <IconPause size={22} /> : <IconPlay size={22} />}
@@ -179,10 +164,7 @@ function ChantCard({
             type="button"
             aria-label={liked ? 'Unlike' : 'Like'}
             aria-pressed={liked}
-            onClick={(e) => {
-              e.stopPropagation();
-              setLiked(l => !l);
-            }}
+            onClick={() => setLiked(l => !l)}
           >
             <IconHeart filled={liked} size={14} />
           </button>
@@ -216,7 +198,7 @@ function ChantCard({
                   }}
                 >
                   Putar Sekarang
-                    </button>
+                </button>
                 <button
                   type="button"
                   className="chant-card-dropdown-item"
@@ -228,7 +210,7 @@ function ChantCard({
                   }}
                 >
                   Salin Lirik
-                    </button>
+                </button>
                 <button
                   type="button"
                   className="chant-card-dropdown-item"
@@ -240,39 +222,11 @@ function ChantCard({
                   }}
                 >
                   Bagikan Chant
-                    </button>
+                </button>
               </div>
             )}
           </div>
         </div>
-
-        {/* In-card Lyrics Expansion */}
-        {isExpanded && (
-          <div className="chant-card-lyrics-panel" style={{
-            marginTop: 12,
-            padding: '12px 14px',
-            borderRadius: 10,
-            background: 'rgba(0,0,0,0.6)',
-            maxHeight: 140,
-            overflowY: 'auto',
-            textAlign: 'left',
-            border: '1px solid rgba(255,255,255,0.06)'
-          }} onClick={(e) => e.stopPropagation()}>
-            <p style={{
-              fontSize: 10,
-              color: '#ff6060',
-              fontWeight: 700,
-              textTransform: 'uppercase',
-              letterSpacing: '0.08em',
-              margin: '0 0 6px 0'
-            }}>Lirik Chant</p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-              {chant.lyrics.map((line, idx) => (
-                <p key={idx} style={{ fontSize: 11.5, color: 'rgba(255,255,255,0.85)', margin: 0, lineHeight: 1.45 }}>{line.text}</p>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     </article>
   )
@@ -353,19 +307,20 @@ export default function ChantLibrary({
   playingChantId,
   isPlaying,
   onCardClick,
+  onPlayChantOnly,
   search,
   setSearch,
 }: {
   playingChantId: number | null
   isPlaying: boolean
   onCardClick: (chant: ChantData) => void
+  onPlayChantOnly: (chant: ChantData) => void
   search: string
   setSearch: (s: string) => void
 }) {
   const [activeFilter, setActiveFilter] = useState('Semua Chant')
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [expandedChantId, setExpandedChantId] = useState<number | null>(null)
-  const [expandedCardId, setExpandedCardId] = useState<number | null>(null)
 
   const matchFlowPhases = [
     {
@@ -731,8 +686,6 @@ export default function ChantLibrary({
                   isPlaying={playingChantId === chant.id && isPlaying}
                   onPlay={() => onCardClick(chant)}
                   progress={0}
-                  isExpanded={expandedCardId === chant.id}
-                  onToggleExpand={() => setExpandedCardId(prev => prev === chant.id ? null : chant.id)}
                 />
               ))}
             </div>
@@ -748,8 +701,6 @@ export default function ChantLibrary({
                   isPlaying={playingChantId === 6 && isPlaying}
                   onPlay={() => onCardClick(CHANTS.find(c => c.id === 6)!)}
                   progress={0}
-                  isExpanded={expandedCardId === 6}
-                  onToggleExpand={() => setExpandedCardId(prev => prev === 6 ? null : 6)}
                 />
               </div>
             )}
@@ -812,7 +763,7 @@ export default function ChantLibrary({
                       <div
                         className={`match-flow-vertical-item${isPlayingCurrent ? ' match-flow-vertical-item--playing' : ''}${isExpanded ? ' match-flow-vertical-item--expanded' : ''}`}
                         onClick={() => {
-                          onCardClick(ch);
+                          onPlayChantOnly(ch);
                           setExpandedChantId(prev => prev === ch.id ? null : ch.id);
                         }}
                         role="button"
@@ -829,7 +780,7 @@ export default function ChantLibrary({
                           type="button"
                           onClick={(e) => {
                             e.stopPropagation();
-                            onCardClick(ch);
+                            onPlayChantOnly(ch);
                             setExpandedChantId(ch.id);
                           }}
                           aria-label={isPlayingCurrent ? 'Pause' : 'Play'}
