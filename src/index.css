@@ -2398,7 +2398,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   filter: none;
   transform: translateX(0);
   padding-block: 8px;
-  text-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.90), 0 0 25px rgba(255, 255, 255, 0.50), 0 0 50px rgba(255, 255, 255, 0.25);
 }
 
 .pl-lyric-line--prev {

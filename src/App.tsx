@@ -709,14 +709,14 @@ export default function App() {
   const handleLibraryPlay = useCallback((chant: ChantData) => {
     playChant(chant)
     setDetailChant(chant)
-    setActiveNav('ChantDetail')
+    setActiveNav('Playlist')
   }, [playChant])
 
   // ── Open detail of currently playing chant ──
   const handleOpenDetail = useCallback(() => {
     if (playingChantId) {
       const chant = CHANTS.find(c => c.id === playingChantId)
-      if (chant) { setDetailChant(chant); setActiveNav('ChantDetail') }
+      if (chant) { setDetailChant(chant); setActiveNav('Playlist') }
     }
   }, [playingChantId])
 
@@ -725,9 +725,9 @@ export default function App() {
     if (audioRef.current) audioRef.current.volume = volume / 100
   }, [volume])
 
-  // ── Sync detailChant with playingChantId when on detail page ──
+  // ── Sync detailChant with playingChantId when on detail page or playlist page ──
   useEffect(() => {
-    if (activeNav === 'ChantDetail' && playingChantId !== null) {
+    if ((activeNav === 'ChantDetail' || activeNav === 'Playlist') && playingChantId !== null) {
       const current = CHANTS.find(c => c.id === playingChantId)
       if (current) {
         setDetailChant(current)
@@ -775,12 +775,20 @@ export default function App() {
       case 'Playlist':
         return (
           <PlaylistPage
-            onPlay={(track) => {
-              const chant = CHANTS.find(c => c.chantId === track.chantId || c.title === track.title)
-              if (chant) playChant(chant)
-            }}
+            chant={detailChant}
             isPlaying={isPlaying}
+            elapsed={elapsed}
+            progress={progress}
+            isShuffle={isShuffle}
+            isRepeat={isRepeat}
+            volume={volume}
             onPlayPause={handlePlayPause}
+            onPrev={handlePrev}
+            onNext={handleNext}
+            onSeek={handleSeek}
+            onShuffle={() => setIsShuffle(s => !s)}
+            onRepeat={() => setIsRepeat(r => !r)}
+            onVolume={handleVolume}
           />
         )
       case 'Papan Peringkat':

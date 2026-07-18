@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from 'react'
-import type { PlayerTrack } from './App'
+import { useState, useEffect } from 'react'
+import type { ChantData } from './lyrics'
+import { CHANTS } from './lyrics'
 
 /* =============================================
    ICONS
@@ -57,23 +58,6 @@ const IconSpotify = () => (
   </svg>
 )
 
-/* =============================================
-   LYRICS DATA
-   ============================================= */
-const LYRICS_DATA = [
-  { id: 0, text: 'Bersatu Dalam Jiwa', time: 0 },
-  { id: 1, text: 'Tak Gentar Lawan Menerjang', time: 14 },
-  { id: 2, text: 'Mokleters Kebanggaan Kita', time: 28 },
-  { id: 3, text: 'Di Atas Tanah Merah Putih', time: 44 },
-  { id: 4, text: 'Semangat Kita Takkan Padam', time: 58 },
-  { id: 5, text: 'Sampai Akhir Hayat Nanti', time: 72 },
-  { id: 6, text: 'Kami Berdiri Bersama', time: 86 },
-  { id: 7, text: 'Merah Putih Jiwa Raga', time: 100 },
-]
-
-const TRACK_DURATION = 134  // 2:14 in seconds (as shown in screenshot)
-const TRACK_DURATION_LABEL = '3:45'
-
 function formatTime(s: number): string {
   const m = Math.floor(s / 60)
   const sec = Math.floor(s % 60)
@@ -84,77 +68,65 @@ function formatTime(s: number): string {
    PLAYLIST PAGE
    ============================================= */
 export default function PlaylistPage({
-  onPlay,
-  isPlaying: externalIsPlaying,
+  chant,
+  isPlaying,
+  elapsed,
+  progress,
+  isShuffle,
+  isRepeat,
+  volume,
   onPlayPause,
+  onPrev,
+  onNext,
+  onSeek,
+  onShuffle,
+  onRepeat,
+  onVolume,
 }: {
-  onPlay: (track: Partial<PlayerTrack>) => void
+  chant: ChantData | null
   isPlaying: boolean
+  elapsed: number
+  progress: number
+  isShuffle: boolean
+  isRepeat: boolean
+  volume: number
   onPlayPause: () => void
+  onPrev: () => void
+  onNext: () => void
+  onSeek: (pct: number) => void
+  onShuffle: () => void
+  onRepeat: () => void
+  onVolume: (v: number) => void
 }) {
-  const [elapsed, setElapsed] = useState(134)   // start at 2:14 as in screenshot
-  const [isShuffle, setIsShuffle] = useState(false)
-  const [isRepeat, setIsRepeat] = useState(false)
-  const [volume, setVolume] = useState(55)
-  const [activeLyricIdx, setActiveLyricIdx] = useState(2) // "Mokleters Kebanggaan Kita"
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
-  const totalDuration = 225  // 3:45 in seconds
-
-  // Advance timer when playing
-  useEffect(() => {
-    if (externalIsPlaying) {
-      timerRef.current = setInterval(() => {
-        setElapsed(prev => {
-          const next = prev + 1
-          if (next >= totalDuration) return 0
-          return next
-        })
-      }, 1000)
-    } else {
-      if (timerRef.current) clearInterval(timerRef.current)
-    }
-    return () => { if (timerRef.current) clearInterval(timerRef.current) }
-  }, [externalIsPlaying])
+  const activeChant = chant || CHANTS[0]
+  const [activeLyricIdx, setActiveLyricIdx] = useState(0)
 
   // Sync lyric to elapsed time
   useEffect(() => {
-    const idx = LYRICS_DATA.findLastIndex(l => elapsed >= l.time)
-    if (idx >= 0) setActiveLyricIdx(idx)
-  }, [elapsed])
-
-  const progressPct = (elapsed / totalDuration) * 100
+    const idx = [...activeChant.lyrics].reverse().findIndex(l => elapsed >= l.time)
+    if (idx >= 0) {
+      setActiveLyricIdx(activeChant.lyrics.length - 1 - idx)
+    } else {
+      setActiveLyricIdx(0)
+    }
+  }, [elapsed, activeChant.lyrics])
 
   const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
-    const pct = (e.clientX - rect.left) / rect.width
-    setElapsed(Math.round(pct * totalDuration))
+    const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width))
+    onSeek(pct)
   }
 
   const handleVolumeClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
     const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width))
-    setVolume(Math.round(pct * 100))
-  }
-
-  // Notify parent when started
-  const handlePlayPause = () => {
-    if (!externalIsPlaying) {
-      onPlay({
-        title: 'Mokleters Pride',
-        artist: 'Anthem Pembuka • Fans Mokleters',
-        img: '/chant-art.png',
-        duration: TRACK_DURATION_LABEL,
-        currentTime: formatTime(elapsed),
-        progress: progressPct,
-      })
-    }
-    onPlayPause()
+    onVolume(Math.round(pct * 100))
   }
 
   return (
     <div className="playlist-page" id="playlist-page">
       {/* Latar belakang atmosferik */}
-      <div className="playlist-page-bg" aria-hidden="true" />
+      <div className="playlist-page-bg" aria-hidden="true" style={{ backgroundImage: `url(${activeChant.img})` }} />
 
       <div className="container playlist-page-layout">
 
@@ -164,12 +136,12 @@ export default function PlaylistPage({
           {/* Seni Sampul */}
           <div className="pl-artwork-wrap">
             <img
-              src="/chant-art.png"
-              alt="Mokleters Pride — Gambar sampul album Chant"
+              src={activeChant.img}
+              alt={`${activeChant.title} — Gambar sampul album Chant`}
               className="pl-artwork"
             />
             {/* Cincin cahaya saat berputar */}
-            {externalIsPlaying && (
+            {isPlaying && (
               <div className="pl-artwork-glow" aria-hidden="true" />
             )}
             {/* Overlay Spotify + putar */}
@@ -177,16 +149,16 @@ export default function PlaylistPage({
               <div className="pl-artwork-badge">
                 <IconSpotify />
               </div>
-              <div className="pl-artwork-badge pl-artwork-badge--play" onClick={handlePlayPause}>
-                {externalIsPlaying ? <IconPause size={16} /> : <IconPlay size={16} />}
+              <div className="pl-artwork-badge pl-artwork-badge--play" onClick={onPlayPause}>
+                {isPlaying ? <IconPause size={16} /> : <IconPlay size={16} />}
               </div>
             </div>
           </div>
 
           {/* Info Lagu */}
           <div className="pl-track-info">
-            <p className="pl-track-title">Mokleters Pride</p>
-            <p className="pl-track-artist">Anthem Pembuka • Fans Mokleters</p>
+            <p className="pl-track-title">{activeChant.title}</p>
+            <p className="pl-track-artist">{activeChant.category} • {activeChant.artist}</p>
           </div>
 
           {/* Bilah Kemajuan */}
@@ -197,17 +169,17 @@ export default function PlaylistPage({
               role="progressbar"
               aria-valuemin={0}
               aria-valuemax={100}
-              aria-valuenow={Math.round(progressPct)}
+              aria-valuenow={Math.round(progress)}
               aria-label="Kemajuan lagu"
               onClick={handleProgressClick}
             >
-              <div className="pl-progress-fill" style={{ width: `${progressPct}%` }}>
+              <div className="pl-progress-fill" style={{ width: `${progress}%` }}>
                 <div className="pl-progress-thumb" aria-hidden="true" />
               </div>
             </div>
             <div className="pl-progress-times">
               <span id="pl-current-time">{formatTime(elapsed)}</span>
-              <span id="pl-total-time">{TRACK_DURATION_LABEL}</span>
+              <span id="pl-total-time">{activeChant.duration}</span>
             </div>
           </div>
 
@@ -219,7 +191,7 @@ export default function PlaylistPage({
               type="button"
               aria-label="Acak"
               aria-pressed={isShuffle}
-              onClick={() => setIsShuffle(s => !s)}
+              onClick={onShuffle}
             >
               <IconShuffle />
             </button>
@@ -229,6 +201,7 @@ export default function PlaylistPage({
               className="pl-ctrl-btn"
               type="button"
               aria-label="Lagu sebelumnya"
+              onClick={onPrev}
             >
               <IconSkipBack />
             </button>
@@ -237,11 +210,11 @@ export default function PlaylistPage({
               id="pl-play-btn"
               className="pl-play-btn"
               type="button"
-              aria-label={externalIsPlaying ? 'Jeda' : 'Putar'}
-              aria-pressed={externalIsPlaying}
-              onClick={handlePlayPause}
+              aria-label={isPlaying ? 'Jeda' : 'Putar'}
+              aria-pressed={isPlaying}
+              onClick={onPlayPause}
             >
-              {externalIsPlaying ? <IconPause size={28} /> : <IconPlay size={28} />}
+              {isPlaying ? <IconPause size={28} /> : <IconPlay size={28} />}
             </button>
 
             <button
@@ -249,6 +222,7 @@ export default function PlaylistPage({
               className="pl-ctrl-btn"
               type="button"
               aria-label="Lagu berikutnya"
+              onClick={onNext}
             >
               <IconSkipForward />
             </button>
@@ -259,7 +233,7 @@ export default function PlaylistPage({
               type="button"
               aria-label="Ulangi"
               aria-pressed={isRepeat}
-              onClick={() => setIsRepeat(r => !r)}
+              onClick={onRepeat}
             >
               <IconRepeat />
             </button>
@@ -268,7 +242,7 @@ export default function PlaylistPage({
           {/* Volume + Mode Tribun */}
           <div className="pl-bottom-row">
             <div className="pl-volume" role="group" aria-label="Kontrol volume">
-              <button id="pl-volume-icon-btn" className="pl-ctrl-btn pl-ctrl-btn--sm" type="button" aria-label="Bisukan">
+              <button id="pl-volume-icon-btn" className="pl-ctrl-btn pl-ctrl-btn--sm" type="button" aria-label="Bisukan" onClick={() => onVolume(volume === 0 ? 70 : 0)}>
                 <IconVolume />
               </button>
               <div
@@ -306,7 +280,7 @@ export default function PlaylistPage({
           </div>
 
           <div className="pl-lyrics-list" role="list">
-            {LYRICS_DATA.map((lyric, idx) => {
+            {activeChant.lyrics.map((lyric, idx) => {
               const diff = idx - activeLyricIdx
               let role: 'prev-far' | 'prev' | 'active' | 'next' | 'next-far' = 'next-far'
               if (diff === 0) role = 'active'
@@ -322,8 +296,7 @@ export default function PlaylistPage({
                   role="listitem"
                   aria-current={role === 'active' ? 'true' : undefined}
                   onClick={() => {
-                    setActiveLyricIdx(idx)
-                    setElapsed(lyric.time)
+                    onSeek(lyric.time / activeChant.durationSec)
                   }}
                 >
                   {lyric.text}
@@ -335,7 +308,7 @@ export default function PlaylistPage({
           {/* Indikator Sinkronisasi */}
           <div className="pl-lyrics-sync" aria-hidden="true">
             <div className="pl-lyrics-sync-bar">
-              <div className="pl-lyrics-sync-fill" style={{ width: `${progressPct}%` }} />
+              <div className="pl-lyrics-sync-fill" style={{ width: `${progress}%` }} />
             </div>
             <span className="pl-lyrics-sync-label">SINKRONISASI OTOMATIS</span>
           </div>
