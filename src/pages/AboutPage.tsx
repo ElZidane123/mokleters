@@ -9,9 +9,10 @@ import mascotPhoto from '../assets/mascot.png'
    ============================================= */
 
 export default function AboutPage() {
-  const IconAward = () => (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 2 }}>
-      <circle cx="12" cy="8" r="7" /><polyline points="8.21,13.89 7,23 12,20 17,23 15.79,13.88" />
+  const IconGraduation = () => (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 4 }}>
+      <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+      <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5" />
     </svg>
   )
 
@@ -27,28 +28,28 @@ export default function AboutPage() {
       period: '2024 - 2025',
       name: 'Capo Utama Mokleters',
       legacy: 'Mengorkestrasi koreografi kertas 3D raksasa dan memimpin gerakan bendera besar (giant flag) di sepanjang tribun olahraga.',
-      achievement: 'Suporter Terbaik Kompetisi DBL',
+      angkatan: 'Angkatan 33',
       image: mascotPhoto
     },
     {
       period: '2022 - 2023',
       name: 'Capo Utama Mokleters',
       legacy: 'Memperkenalkan aransemen perkusi tribun terkoordinasi dan menyatukan suara korsa lintas angkatan.',
-      achievement: 'Solidaritas Korsa Terbesar',
+      angkatan: 'Angkatan 31',
       image: nabilPhoto
     },
     {
       period: '2020 - 2021',
       name: 'Capo Utama Mokleters',
       legacy: 'Menduniakan nyala korsa digital dan merancang aransemen chant modern di masa pembatasan fisik.',
-      achievement: 'Inovasi Chant Era Baru',
+      angkatan: 'Angkatan 29',
       image: elzidanePhoto
     },
     {
       period: '2018 - 2019',
       name: 'Capo Utama Mokleters',
       legacy: 'Memprakarsai aksi koreografi mosaik penuh warna pertama dan memperluas chant kebanggaan almamater.',
-      achievement: 'Pelopor Mosaik Warna',
+      angkatan: 'Angkatan 27',
       image: mokletsMascot
     }
   ]
@@ -209,7 +210,7 @@ export default function AboutPage() {
       </div>
 
       <div className="container about-content-layout">
-        
+
         {/* ── PROFILE SECTION ── */}
         <section className="about-profile-section glass-1" aria-label="Profil Komunitas">
           <div className="about-profile-grid">
@@ -232,9 +233,9 @@ export default function AboutPage() {
               </p>
             </div>
           </div>
-          
+
           <div style={{ margin: '40px 0', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.08) 50%, transparent)' }} />
-          
+
           <div className="about-who-we-are" style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
             <h2 className="about-section-title" style={{ justifyContent: 'center', marginBottom: '20px' }}>Siapa Kami?</h2>
             <p className="about-paragraph" style={{ fontSize: '15.5px', lineHeight: '1.85' }}>
@@ -275,8 +276,8 @@ export default function AboutPage() {
                   <h3 className="captain-name">{capo.name}</h3>
                   <p className="captain-legacy">{capo.legacy}</p>
                   <div className="captain-achievement">
-                    <IconAward />
-                    {capo.achievement}
+                    <IconGraduation />
+                    {capo.angkatan}
                   </div>
                 </div>
               </div>
