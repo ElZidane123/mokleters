@@ -151,7 +151,7 @@ export default function ChantDetailPage({
           <div className="chant-detail-info">
             <div style={{ flex: 1 }}>
               <p className="chant-detail-title">{chant.title}</p>
-              <p className="chant-detail-artist">{chant.category} • {chant.artist}</p>
+              <p className="chant-detail-artist">{chant.category}</p>
             </div>
             <button
               type="button"
@@ -312,10 +312,6 @@ export default function ChantDetailPage({
 
           {/* Stats */}
           <div className="chant-detail-stats">
-            <div className="chant-detail-stat">
-              <span className="chant-detail-stat-value">{chant.plays}</span>
-              <span className="chant-detail-stat-label">Putaran</span>
-            </div>
             <div className="chant-detail-stat">
               <span className="chant-detail-stat-value">{chant.lyrics.length}</span>
               <span className="chant-detail-stat-label">Baris Lirik</span>

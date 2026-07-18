@@ -105,13 +105,14 @@ function ChantCard({
 }) {
   const [liked, setLiked] = useState(false)
   const [hovered, setHovered] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
     <article
-      className={`chant-card${isPlaying ? ' chant-card--playing' : ''}`}
+      className={`chant-card${isPlaying ? ' chant-card--playing' : ''}${chant.id === 6 ? ' chant-card--featured' : ''}`}
       id={`chant-card-${chant.id}`}
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseLeave={() => { setHovered(false); setIsMenuOpen(false); }}
       aria-label={chant.title}
     >
       {/* Image area */}
@@ -124,32 +125,14 @@ function ChantCard({
         />
 
         {/* Overlay on hover / playing */}
-        <div className={`chant-card-overlay${hovered || isPlaying ? ' chant-card-overlay--visible' : ''}`} aria-hidden="true">
-          {/* Overlaid icons top-right */}
-          <div className="chant-card-overlay-top">
-            <button
-              className={`chant-card-icon-btn${liked ? ' chant-card-icon-btn--liked' : ''}`}
-              type="button"
-              aria-label={liked ? 'Unlike' : 'Like'}
-              onClick={e => { e.stopPropagation(); setLiked(l => !l) }}
-            >
-              <IconHeart filled={liked} size={13} />
-            </button>
-            <button
-              className="chant-card-icon-btn"
-              type="button"
-              aria-label="More options"
-              onClick={e => e.stopPropagation()}
-            >
-              <IconMoreHorizontal />
-            </button>
-          </div>
-        </div>
+        <div className={`chant-card-overlay${hovered || isPlaying ? ' chant-card-overlay--visible' : ''}`} aria-hidden="true" />
 
-        {/* Popular badge */}
-        {chant.popular && (
+        {/* Popular / Anthem badge */}
+        {chant.id === 6 ? (
+          <div className="chant-card-anthem-badge" aria-label="Anthem Utama">ANTHEM UTAMA</div>
+        ) : chant.popular ? (
           <div className="chant-card-popular-badge" aria-label="Popular">POPULAR</div>
-        )}
+        ) : null}
 
         {/* Play button */}
         <button
@@ -190,13 +173,59 @@ function ChantCard({
               <IconVolume2 /> Diputar
             </span>
           )}
-          <button
-            className="chant-card-action-btn"
-            type="button"
-            aria-label="More options"
-          >
-            <IconMoreHorizontal />
-          </button>
+          <div style={{ position: 'relative', display: 'inline-block' }}>
+            <button
+              className="chant-card-action-btn"
+              type="button"
+              aria-label="More options"
+              onClick={(e) => {
+                e.stopPropagation()
+                setIsMenuOpen(prev => !prev)
+              }}
+            >
+              <IconMoreHorizontal />
+            </button>
+
+            {isMenuOpen && (
+              <div className="chant-card-dropdown-menu glass-2">
+                <button
+                  type="button"
+                  className="chant-card-dropdown-item"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onPlay()
+                    setIsMenuOpen(false)
+                  }}
+                >
+                  Putar Sekarang
+                </button>
+                <button
+                  type="button"
+                  className="chant-card-dropdown-item"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    navigator.clipboard.writeText(chant.lyrics.map(l => l.text).join('\n'))
+                    setIsMenuOpen(false)
+                    alert('Lirik chant berhasil disalin!')
+                  }}
+                >
+                  Salin Lirik
+                </button>
+                <button
+                  type="button"
+                  className="chant-card-dropdown-item"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    navigator.clipboard.writeText(window.location.origin + '?chant=' + chant.id)
+                    setIsMenuOpen(false)
+                    alert('Tautan bagikan chant berhasil disalin!')
+                  }}
+                >
+                  Bagikan Chant
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </article>
@@ -242,11 +271,10 @@ function ChantRow({
       <img src={chant.img} alt="" aria-hidden="true" className="chant-row-thumb" />
       <div className="chant-row-info">
         <p className="chant-row-title" style={{ color: isPlaying ? '#ff6060' : undefined }}>{chant.title}</p>
-        <p className="chant-row-artist">{chant.artist}</p>
         {isPlaying && <MiniProgressBar progress={progress} />}
       </div>
       <span className="chant-row-category">{chant.category}</span>
-      <span className="chant-row-plays">{chant.plays}</span>
+      <span className="chant-row-plays">{chant.popular ? 'Populer' : 'Standard'}</span>
       <div className="chant-row-actions">
         <button
           className={`chant-card-action-btn${liked ? ' chant-card-action-btn--liked' : ''}`}
@@ -356,24 +384,41 @@ export default function ChantLibrary({
       </div>
 
       {/* ── GRID / LIST ── */}
-      <div className="container" style={{ paddingBottom: 100 }}>
+      <div className="container" style={{ paddingBottom: 220 }}>
         {filtered.length === 0 ? (
           <div className="chant-empty" role="status">
             <p style={{ fontFamily: 'var(--font-display)', fontSize: 28, color: 'var(--color-outline)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Chant tidak ditemukan</p>
             <p style={{ fontSize: 14, color: 'var(--color-outline)', marginTop: 8 }}>Coba gunakan filter atau kata kunci pencarian lainnya.</p>
           </div>
         ) : viewMode === 'grid' ? (
-          <div className="chant-grid" role="list" aria-label="Grid perpustakaan chant">
-            {filtered.map(chant => (
-              <ChantCard
-                key={chant.id}
-                chant={chant}
-                isPlaying={playingChantId === chant.id && isPlaying}
-                onPlay={() => onCardClick(chant)}
-                progress={0}
-              />
-            ))}
-          </div>
+          <>
+            <div className="chant-grid" role="list" aria-label="Grid perpustakaan chant">
+              {filtered.filter(c => c.id !== 6).map(chant => (
+                <ChantCard
+                  key={chant.id}
+                  chant={chant}
+                  isPlaying={playingChantId === chant.id && isPlaying}
+                  onPlay={() => onCardClick(chant)}
+                  progress={0}
+                />
+              ))}
+            </div>
+
+            {filtered.some(c => c.id === 6) && (
+              <div className="chant-featured-section">
+                <div className="chant-featured-separator" />
+                <div className="chant-featured-label-row">
+                  <span className="chant-featured-tag">ANTHEM MOKLETERS</span>
+                </div>
+                <ChantCard
+                  chant={CHANTS.find(c => c.id === 6)!}
+                  isPlaying={playingChantId === 6 && isPlaying}
+                  onPlay={() => onCardClick(CHANTS.find(c => c.id === 6)!)}
+                  progress={0}
+                />
+              </div>
+            )}
+          </>
         ) : (
           <div className="chant-list-view">
             <div className="chant-list-header" aria-hidden="true">
