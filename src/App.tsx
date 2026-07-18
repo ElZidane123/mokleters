@@ -4,6 +4,7 @@ import ChantLibrary from './pages/ChantLibrary'
 import PlaylistPage from './pages/PlaylistPage'
 import ChantDetailPage from './pages/ChantDetailPage'
 import AboutPage from './pages/AboutPage'
+import DeveloperPage from './pages/DeveloperPage'
 import mokletersLogo from './assets/Mokleters logo.png'
 import mokletsMascot from './assets/mascot.png'
 import mokletersGraffiti from './assets/Group 1261154060 (1).png'
@@ -641,7 +642,6 @@ export default function App() {
   const [isCrowdMode, setIsCrowdMode] = useState(false)
   const [isQueueOpen, setIsQueueOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
-  const [isDevModalOpen, setIsDevModalOpen] = useState(false)
 
   // ── Derived progress ──
   const progress = duration > 0 ? (elapsed / duration) * 100 : 0
@@ -945,6 +945,8 @@ export default function App() {
         )
       case 'Tentang':
         return <AboutPage />
+      case 'Developer':
+        return <DeveloperPage />
       default:
         return (
           <HomePage
@@ -993,7 +995,10 @@ export default function App() {
             <button
               className="dev-profile-btn"
               type="button"
-              onClick={() => setIsDevModalOpen(true)}
+              onClick={() => {
+                setActiveNav('Developer')
+                setDetailChant(null)
+              }}
             >
               Developer
             </button>
@@ -1148,35 +1153,6 @@ export default function App() {
                 )}
               </div>
             ))}
-          </div>
-        </div>
-      )}
-
-      {/* DEVELOPER PROFILE MODAL */}
-      {isDevModalOpen && (
-        <div className="dev-modal-overlay" onClick={() => setIsDevModalOpen(false)}>
-          <div className="dev-modal-card glass-2" onClick={e => e.stopPropagation()}>
-            <button className="dev-modal-close" onClick={() => setIsDevModalOpen(false)}>×</button>
-            <img src={mokletsMascot} alt="Developer Avatar" className="dev-modal-avatar" />
-            <h3 className="dev-modal-name">Mohammad Nabil Kencana</h3>
-            <p className="dev-modal-role">Lead Developer &amp; UI Architect</p>
-            <p className="dev-modal-team">Mokleters Dev Team 2025</p>
-            <div className="dev-modal-divider" />
-            <p className="dev-modal-bio">
-              Website ini dirancang secara khusus dengan teknologi modern untuk membakar semangat juang supporter SMK Telkom Malang.
-              Satu jiwa, satu korsa, selamanya Wikusama!
-            </p>
-            <div className="dev-modal-stats">
-              <div className="dev-modal-stat-box">
-                <span className="stat-val">React + TS</span>
-                <span className="stat-lbl">Tech Stack</span>
-              </div>
-              <div className="dev-modal-stat-box">
-                <span className="stat-val">Vite</span>
-                <span className="stat-lbl">Bundler</span>
-              </div>
-            </div>
-            <button className="btn btn-primary" style={{ width: '100%', marginTop: '20px' }} onClick={() => setIsDevModalOpen(false)}>KEMBALI KE TRIBUN</button>
           </div>
         </div>
       )}
