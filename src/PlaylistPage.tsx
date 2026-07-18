@@ -127,6 +127,7 @@ export default function PlaylistPage({
     <div className="playlist-page" id="playlist-page">
       {/* Latar belakang atmosferik */}
       <div className="playlist-page-bg" aria-hidden="true" style={{ backgroundImage: `url(${activeChant.img})` }} />
+      <div className="playlist-page-overlay" aria-hidden="true" />
 
       <div className="container playlist-page-layout">
 

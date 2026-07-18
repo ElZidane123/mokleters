@@ -1991,10 +1991,21 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .playlist-page-bg {
   position: fixed;
   inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(80px) saturate(1.2) brightness(0.2);
+  transform: scale(1.15);
+  z-index: -2;
+  pointer-events: none;
+}
+
+.playlist-page-overlay {
+  position: fixed;
+  inset: 0;
   background:
-    radial-gradient(ellipse 90% 70% at 20% 80%, rgba(125, 12, 15, 0.30) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(80, 8, 10, 0.15) 0%, transparent 55%),
-    var(--color-bg);
+    radial-gradient(ellipse 90% 70% at 20% 80%, rgba(125, 12, 15, 0.28) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(80, 8, 10, 0.12) 0%, transparent 55%),
+    linear-gradient(180deg, rgba(10, 10, 15, 0.75) 0%, rgba(10, 10, 15, 0.95) 100%);
   z-index: -1;
   pointer-events: none;
 }
