@@ -141,7 +141,7 @@ export default function PlaylistPage({
     if (!externalIsPlaying) {
       onPlay({
         title: 'Mokleters Pride',
-        artist: 'Opening Anthem • Mokleters Fans',
+        artist: 'Anthem Pembuka • Fans Mokleters',
         img: '/chant-art.png',
         duration: TRACK_DURATION_LABEL,
         currentTime: formatTime(elapsed),
@@ -153,26 +153,26 @@ export default function PlaylistPage({
 
   return (
     <div className="playlist-page" id="playlist-page">
-      {/* Atmospheric background */}
+      {/* Latar belakang atmosferik */}
       <div className="playlist-page-bg" aria-hidden="true" />
 
       <div className="container playlist-page-layout">
 
-        {/* ══ LEFT: Player Panel ══ */}
-        <section className="pl-player-panel" aria-label="Music player">
+        {/* ══ KIRI: Panel Pemutar ══ */}
+        <section className="pl-player-panel" aria-label="Pemutar musik">
 
-          {/* Album Art */}
+          {/* Seni Sampul */}
           <div className="pl-artwork-wrap">
             <img
               src="/chant-art.png"
-              alt="Mokleters Pride — The Chant album art"
+              alt="Mokleters Pride — Gambar sampul album Chant"
               className="pl-artwork"
             />
-            {/* Playing glow ring */}
+            {/* Cincin cahaya saat berputar */}
             {externalIsPlaying && (
               <div className="pl-artwork-glow" aria-hidden="true" />
             )}
-            {/* Spotify + play overlay */}
+            {/* Overlay Spotify + putar */}
             <div className="pl-artwork-badges" aria-hidden="true">
               <div className="pl-artwork-badge">
                 <IconSpotify />
@@ -183,13 +183,13 @@ export default function PlaylistPage({
             </div>
           </div>
 
-          {/* Track info */}
+          {/* Info Lagu */}
           <div className="pl-track-info">
             <p className="pl-track-title">Mokleters Pride</p>
-            <p className="pl-track-artist">Opening Anthem • Mokleters Fans</p>
+            <p className="pl-track-artist">Anthem Pembuka • Fans Mokleters</p>
           </div>
 
-          {/* Progress bar */}
+          {/* Bilah Kemajuan */}
           <div className="pl-progress-section">
             <div
               className="pl-progress-track"
@@ -198,7 +198,7 @@ export default function PlaylistPage({
               aria-valuemin={0}
               aria-valuemax={100}
               aria-valuenow={Math.round(progressPct)}
-              aria-label="Track progress"
+              aria-label="Kemajuan lagu"
               onClick={handleProgressClick}
             >
               <div className="pl-progress-fill" style={{ width: `${progressPct}%` }}>
@@ -211,13 +211,13 @@ export default function PlaylistPage({
             </div>
           </div>
 
-          {/* Playback controls */}
-          <div className="pl-controls" role="group" aria-label="Playback controls">
+          {/* Kontrol Pemutaran */}
+          <div className="pl-controls" role="group" aria-label="Kontrol pemutaran">
             <button
               id="pl-shuffle-btn"
               className={`pl-ctrl-btn${isShuffle ? ' pl-ctrl-btn--active' : ''}`}
               type="button"
-              aria-label="Shuffle"
+              aria-label="Acak"
               aria-pressed={isShuffle}
               onClick={() => setIsShuffle(s => !s)}
             >
@@ -228,7 +228,7 @@ export default function PlaylistPage({
               id="pl-prev-btn"
               className="pl-ctrl-btn"
               type="button"
-              aria-label="Previous track"
+              aria-label="Lagu sebelumnya"
             >
               <IconSkipBack />
             </button>
@@ -237,7 +237,7 @@ export default function PlaylistPage({
               id="pl-play-btn"
               className="pl-play-btn"
               type="button"
-              aria-label={externalIsPlaying ? 'Pause' : 'Play'}
+              aria-label={externalIsPlaying ? 'Jeda' : 'Putar'}
               aria-pressed={externalIsPlaying}
               onClick={handlePlayPause}
             >
@@ -248,7 +248,7 @@ export default function PlaylistPage({
               id="pl-next-btn"
               className="pl-ctrl-btn"
               type="button"
-              aria-label="Next track"
+              aria-label="Lagu berikutnya"
             >
               <IconSkipForward />
             </button>
@@ -257,7 +257,7 @@ export default function PlaylistPage({
               id="pl-repeat-btn"
               className={`pl-ctrl-btn${isRepeat ? ' pl-ctrl-btn--active' : ''}`}
               type="button"
-              aria-label="Repeat"
+              aria-label="Ulangi"
               aria-pressed={isRepeat}
               onClick={() => setIsRepeat(r => !r)}
             >
@@ -265,10 +265,10 @@ export default function PlaylistPage({
             </button>
           </div>
 
-          {/* Volume + Crowd Mode */}
+          {/* Volume + Mode Tribun */}
           <div className="pl-bottom-row">
-            <div className="pl-volume" role="group" aria-label="Volume control">
-              <button id="pl-volume-icon-btn" className="pl-ctrl-btn pl-ctrl-btn--sm" type="button" aria-label="Mute">
+            <div className="pl-volume" role="group" aria-label="Kontrol volume">
+              <button id="pl-volume-icon-btn" className="pl-ctrl-btn pl-ctrl-btn--sm" type="button" aria-label="Bisukan">
                 <IconVolume />
               </button>
               <div
@@ -290,18 +290,18 @@ export default function PlaylistPage({
               id="pl-crowd-mode-btn"
               className="pl-crowd-btn"
               type="button"
-              aria-label="Enter Crowd Mode"
+              aria-label="Masuk Mode Tribun"
             >
               <IconUsers />
-              Enter Crowd Mode
+              Masuk Mode Tribun
             </button>
           </div>
         </section>
 
-        {/* ══ RIGHT: Live Lyrics Panel ══ */}
-        <section className="pl-lyrics-panel glass-1" aria-label="Live lyrics" aria-live="polite">
+        {/* ══ KANAN: Panel Lirik Langsung ══ */}
+        <section className="pl-lyrics-panel glass-1" aria-label="Lirik langsung" aria-live="polite">
           <div className="pl-lyrics-header">
-            <span className="pl-lyrics-label" aria-label="Live Lyrics">LIVE LYRICS</span>
+            <span className="pl-lyrics-label" aria-label="Lirik Langsung">LIRIK LANGSUNG</span>
             <div className="live-dot" aria-hidden="true" />
           </div>
 
@@ -332,12 +332,12 @@ export default function PlaylistPage({
             })}
           </div>
 
-          {/* Sync indicator */}
+          {/* Indikator Sinkronisasi */}
           <div className="pl-lyrics-sync" aria-hidden="true">
             <div className="pl-lyrics-sync-bar">
               <div className="pl-lyrics-sync-fill" style={{ width: `${progressPct}%` }} />
             </div>
-            <span className="pl-lyrics-sync-label">AUTO-SYNC</span>
+            <span className="pl-lyrics-sync-label">SINKRONISASI OTOMATIS</span>
           </div>
         </section>
 

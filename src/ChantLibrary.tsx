@@ -58,17 +58,17 @@ const IconSortDown = () => (
    CHANT DATA
    ============================================= */
 const CHANTS = [
-  { id: 1, title: 'Mokleters Pride', duration: '3:45', category: 'Opening Anthem', tag: 'Opening', popular: true, img: '/chant-art.png', artist: 'Mokleters Fans', plays: '1.5M' },
-  { id: 2, title: 'Red Storm', duration: '2:12', category: 'Match Tempo', tag: 'Match', popular: false, img: '/chant-art.png', artist: 'North Stand Choir', plays: '892K' },
-  { id: 3, title: 'Victory Roar', duration: '4:05', category: 'Victory Chant', tag: 'Victory', popular: true, img: '/chant-art.png', artist: 'Percussion Unit', plays: '740K' },
-  { id: 4, title: 'We Are One', duration: '2:50', category: 'Closing', tag: 'Closing', popular: false, img: '/chant-art.png', artist: 'Vocal Ensemble 2025', plays: '612K' },
-  { id: 5, title: 'Stadium Shaker', duration: '1:45', category: 'Match Tempo', tag: 'Match', popular: false, img: '/chant-art.png', artist: 'SMK Malang Ultras', plays: '541K' },
-  { id: 6, title: 'Iron Hearts', duration: '3:18', category: 'Opening Anthem', tag: 'Opening', popular: false, img: '/chant-art.png', artist: 'Mokleters Fans', plays: '498K' },
-  { id: 7, title: 'Blood & Pride', duration: '2:40', category: 'Match Tempo', tag: 'Match', popular: true, img: '/chant-art.png', artist: 'North Stand Choir', plays: '432K' },
-  { id: 8, title: 'Telkom Rising', duration: '3:55', category: 'Victory Chant', tag: 'Victory', popular: false, img: '/chant-art.png', artist: 'Percussion Unit', plays: '387K' },
+  { id: 1, title: 'Mokleters Pride', duration: '3:45', category: 'Anthem Pembuka', tag: 'Pembuka', popular: true, img: '/chant-art.png', artist: 'Fans Mokleters', plays: '1.5Jt' },
+  { id: 2, title: 'Red Storm', duration: '2:12', category: 'Tempo Pertandingan', tag: 'Pertandingan', popular: false, img: '/chant-art.png', artist: 'Paduan Suara Tribun Utara', plays: '892Rb' },
+  { id: 3, title: 'Victory Roar', duration: '4:05', category: 'Chant Kemenangan', tag: 'Kemenangan', popular: true, img: '/chant-art.png', artist: 'Unit Perkusi', plays: '740Rb' },
+  { id: 4, title: 'We Are One', duration: '2:50', category: 'Lagu Penutup', tag: 'Penutup', popular: false, img: '/chant-art.png', artist: 'Ensembel Vokal 2025', plays: '612Rb' },
+  { id: 5, title: 'Stadium Shaker', duration: '1:45', category: 'Tempo Pertandingan', tag: 'Pertandingan', popular: false, img: '/chant-art.png', artist: 'Ultras SMK Malang', plays: '541Rb' },
+  { id: 6, title: 'Iron Hearts', duration: '3:18', category: 'Anthem Pembuka', tag: 'Pembuka', popular: false, img: '/chant-art.png', artist: 'Fans Mokleters', plays: '498Rb' },
+  { id: 7, title: 'Blood & Pride', duration: '2:40', category: 'Tempo Pertandingan', tag: 'Pertandingan', popular: true, img: '/chant-art.png', artist: 'Paduan Suara Tribun Utara', plays: '432Rb' },
+  { id: 8, title: 'Telkom Rising', duration: '3:55', category: 'Chant Kemenangan', tag: 'Kemenangan', popular: false, img: '/chant-art.png', artist: 'Unit Perkusi', plays: '387Rb' },
 ]
 
-const FILTERS = ['All Chants', 'Opening', 'Match', 'Victory', 'Closing']
+const FILTERS = ['Semua Chant', 'Pembuka', 'Pertandingan', 'Kemenangan', 'Penutup']
 
 /* =============================================
    CHANT CARD (Grid View)
@@ -238,13 +238,13 @@ function ChantRow({
    CHANT LIBRARY PAGE
    ============================================= */
 export default function ChantLibrary({ onPlay }: { onPlay: (track: Partial<PlayerTrack>) => void }) {
-  const [activeFilter, setActiveFilter] = useState('All Chants')
+  const [activeFilter, setActiveFilter] = useState('Semua Chant')
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [playingId, setPlayingId] = useState<number | null>(1)
   const [search, setSearch] = useState('')
 
   const filtered = CHANTS.filter(c => {
-    const matchFilter = activeFilter === 'All Chants' || c.tag === activeFilter
+    const matchFilter = activeFilter === 'Semua Chant' || c.tag === activeFilter
     const matchSearch = c.title.toLowerCase().includes(search.toLowerCase()) ||
       c.category.toLowerCase().includes(search.toLowerCase())
     return matchFilter && matchSearch
@@ -257,7 +257,7 @@ export default function ChantLibrary({ onPlay }: { onPlay: (track: Partial<Playe
       setPlayingId(chant.id)
       onPlay({
         title: chant.title,
-        artist: `${chant.category} • Mokleters Fans`,
+        artist: `${chant.category} • Fans Mokleters`,
         img: chant.img,
         duration: chant.duration,
         currentTime: '0:00',
@@ -268,25 +268,25 @@ export default function ChantLibrary({ onPlay }: { onPlay: (track: Partial<Playe
 
   return (
     <div className="chant-library" id="chant-library">
-      {/* ── PAGE HEADER ── */}
+      {/* ── HEADER HALAMAN ── */}
       <div className="chant-library-header">
         <div className="chant-library-header-bg" aria-hidden="true" />
         <div className="container chant-library-header-content">
           <div>
-            <h1 className="chant-library-title">Chant Library</h1>
+            <h1 className="chant-library-title">Perpustakaan Chant</h1>
             <p className="chant-library-subtitle">
-              Fuel the fire. Access the complete arsenal of Mokleters stadium anthems,<br className="br-desktop" />
-              designed to shake the stands and unite the pride.
+              Bakar semangat juang. Akses koleksi lengkap anthem stadion Mokleters,<br className="br-desktop" />
+              dirancang untuk mengguncang tribun dan menyatukan kebanggaan.
             </p>
           </div>
         </div>
       </div>
 
-      {/* ── CONTROLS BAR ── */}
+      {/* ── BILAH KONTROL ── */}
       <div className="chant-controls-bar">
         <div className="container chant-controls-inner">
-          {/* Filter Pills */}
-          <nav className="chant-filters" aria-label="Filter chants by category">
+          {/* Pil Filter */}
+          <nav className="chant-filters" aria-label="Filter chant berdasarkan kategori">
             {FILTERS.map(f => (
               <button
                 key={f}
@@ -301,31 +301,31 @@ export default function ChantLibrary({ onPlay }: { onPlay: (track: Partial<Playe
             ))}
           </nav>
 
-          {/* Right: search + sort + view mode */}
+          {/* Kanan: cari + urutkan + mode tampilan */}
           <div className="chant-controls-right">
             <label className="chant-search-box" htmlFor="chant-search-input">
               <IconSearch />
               <input
                 id="chant-search-input"
                 type="search"
-                placeholder="Search chants..."
+                placeholder="Cari chant..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                aria-label="Search chants"
+                aria-label="Cari chant"
               />
             </label>
 
-            <button className="chant-sort-btn" type="button" id="chant-sort-btn" aria-label="Sort chants">
+            <button className="chant-sort-btn" type="button" id="chant-sort-btn" aria-label="Urutkan chant">
               <IconSortDown />
-              Sort
+              Urutkan
             </button>
 
-            <div className="chant-view-toggle" role="group" aria-label="View mode">
+            <div className="chant-view-toggle" role="group" aria-label="Mode tampilan">
               <button
                 id="view-grid-btn"
                 className={`chant-view-btn${viewMode === 'grid' ? ' chant-view-btn--active' : ''}`}
                 type="button"
-                aria-label="Grid view"
+                aria-label="Tampilan grid"
                 aria-pressed={viewMode === 'grid'}
                 onClick={() => setViewMode('grid')}
               >
@@ -335,7 +335,7 @@ export default function ChantLibrary({ onPlay }: { onPlay: (track: Partial<Playe
                 id="view-list-btn"
                 className={`chant-view-btn${viewMode === 'list' ? ' chant-view-btn--active' : ''}`}
                 type="button"
-                aria-label="List view"
+                aria-label="Tampilan daftar"
                 aria-pressed={viewMode === 'list'}
                 onClick={() => setViewMode('list')}
               >
@@ -346,19 +346,19 @@ export default function ChantLibrary({ onPlay }: { onPlay: (track: Partial<Playe
         </div>
       </div>
 
-      {/* ── CHANT GRID ── */}
+      {/* ── GRID CHANT ── */}
       <div className="container" style={{ paddingBottom: 100 }}>
         {filtered.length === 0 ? (
           <div className="chant-empty" role="status">
             <p style={{ fontFamily: 'var(--font-display)', fontSize: 28, color: 'var(--color-outline)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-              No chants found
+              Chant tidak ditemukan
             </p>
             <p style={{ fontSize: 14, color: 'var(--color-outline)', marginTop: 8 }}>
-              Try a different filter or search term.
+              Coba gunakan filter atau kata kunci pencarian lainnya.
             </p>
           </div>
         ) : viewMode === 'grid' ? (
-          <div className="chant-grid" role="list" aria-label="Chant library grid">
+          <div className="chant-grid" role="list" aria-label="Grid perpustakaan chant">
             {filtered.map(chant => (
               <ChantCard
                 key={chant.id}
@@ -372,12 +372,12 @@ export default function ChantLibrary({ onPlay }: { onPlay: (track: Partial<Playe
           <div className="chant-list-view">
             <div className="chant-list-header" aria-hidden="true">
               <span className="chant-list-col-num">#</span>
-              <span style={{ gridColumn: 'span 2' }}>Title</span>
-              <span>Category</span>
-              <span>Plays</span>
-              <span style={{ textAlign: 'right' }}>Duration</span>
+              <span style={{ gridColumn: 'span 2' }}>Judul</span>
+              <span>Kategori</span>
+              <span>Diputar</span>
+              <span style={{ textAlign: 'right' }}>Durasi</span>
             </div>
-            <ol className="chant-list" aria-label="Chant library list">
+            <ol className="chant-list" aria-label="Daftar perpustakaan chant">
               {filtered.map((chant, i) => (
                 <ChantRow
                   key={chant.id}

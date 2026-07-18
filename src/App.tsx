@@ -2,6 +2,8 @@ import { useState } from 'react'
 import './index.css'
 import ChantLibrary from './ChantLibrary'
 import PlaylistPage from './PlaylistPage'
+import LeaderboardPage from './LeaderboardPage'
+import mokletersLogo from './assets/Mokleters logo.png'
 
 /* =============================================
    ICON COMPONENTS (inline SVG)
@@ -119,18 +121,18 @@ const IconQueue = () => (
    DATA
    ============================================= */
 const anthemData = [
-  { id: 1, title: 'Merah Putih Kebanggaan', tag: 'classic', tagLabel: 'Classic', plays: '1.5M', desc: 'The ultimate anthem of SMK Telkom Malang. Sung with pride before every match begins.', img: '/anthem1.png' },
-  { id: 2, title: 'Sabit Utara', tag: 'anthem', tagLabel: 'Anthem', plays: '892K', desc: 'Rising chant from the North Stand.', img: '/anthem2.png' },
-  { id: 3, title: 'Ritme Telkom', tag: 'top10', tagLabel: 'Top 10', plays: '740K', desc: 'Percussion-led rhythm anthem.', img: '/anthem3.png' },
-  { id: 4, title: 'Braket Gelora', tag: 'anthem', tagLabel: 'Anthem', plays: '612K', desc: 'A devoted tune — a classic melody for the new generation.', img: '/anthem1.png' },
+  { id: 1, title: 'Merah Putih Kebanggaan', tag: 'classic', tagLabel: 'Klasik', plays: '1.5Jt', desc: 'Anthem utama SMK Telkom Malang. Dinyanyikan dengan bangga sebelum setiap pertandingan dimulai.', img: '/anthem1.png' },
+  { id: 2, title: 'Sabit Utara', tag: 'anthem', tagLabel: 'Anthem', plays: '892Rb', desc: 'Chant membakar semangat dari Tribun Utara.', img: '/anthem2.png' },
+  { id: 3, title: 'Ritme Telkom', tag: 'top10', tagLabel: 'Top 10', plays: '740Rb', desc: 'Anthem berirama yang dipimpin oleh perkusi.', img: '/anthem3.png' },
+  { id: 4, title: 'Braket Gelora', tag: 'anthem', tagLabel: 'Anthem', plays: '612Rb', desc: 'Melodi klasik penuh pengabdian untuk generasi baru.', img: '/anthem1.png' },
 ]
 
 const leaderboardData = [
-  { rank: 1, title: 'Merah Putih Kebanggaan', artist: 'SMK Telkom Malang — Official', plays: '1.5M plays', img: '/anthem1.png' },
-  { rank: 2, title: 'Sabit Utara', artist: 'North Stand Choir', plays: '892K plays', img: '/anthem2.png' },
-  { rank: 3, title: 'Ritme Telkom', artist: 'Percussion Unit', plays: '740K plays', img: '/anthem3.png' },
-  { rank: 4, title: 'Braket Gelora', artist: 'Vocal Ensemble 2025', plays: '612K plays', img: '/anthem1.png' },
-  { rank: 5, title: 'Api Kami Takkan Padam', artist: 'SMK Malang Ultras', plays: '541K plays', img: '/anthem2.png' },
+  { rank: 1, title: 'Merah Putih Kebanggaan', artist: 'SMK Telkom Malang — Resmi', plays: '1.5Jt putaran', img: '/anthem1.png' },
+  { rank: 2, title: 'Sabit Utara', artist: 'Paduan Suara Tribun Utara', plays: '892Rb putaran', img: '/anthem2.png' },
+  { rank: 3, title: 'Ritme Telkom', artist: 'Unit Perkusi', plays: '740Rb putaran', img: '/anthem3.png' },
+  { rank: 4, title: 'Braket Gelora', artist: 'Ensembel Vokal 2025', plays: '612Rb putaran', img: '/anthem1.png' },
+  { rank: 5, title: 'Api Kami Takkan Padam', artist: 'Ultras SMK Malang', plays: '541Rb putaran', img: '/anthem2.png' },
 ]
 
 const tagClass: Record<string, string> = { classic: 'tag-classic', anthem: 'tag-anthem', top10: 'tag-top10' }
@@ -149,7 +151,7 @@ export interface PlayerTrack {
 
 const defaultTrack: PlayerTrack = {
   title: 'Mokleters Pride',
-  artist: 'Opening Anthem • Mokleters Fans',
+  artist: 'Anthem Pembuka • Fans Mokleters',
   img: '/chant-art.png',
   duration: '3:45',
   currentTime: '1:24',
@@ -173,8 +175,8 @@ function PlayerBar({
   onLike: () => void
 }) {
   return (
-    <div className="player-bar" role="region" aria-label="Music player" id="player-bar">
-      {/* Track info */}
+    <div className="player-bar" role="region" aria-label="Pemutar musik" id="player-bar">
+      {/* Info lagu */}
       <div className="player-track-info">
         <img src={track.img} alt={track.title} className="player-thumb" />
         <div>
@@ -185,7 +187,7 @@ function PlayerBar({
           id="player-like-btn"
           className={`player-track-like${isLiked ? ' liked' : ''}`}
           type="button"
-          aria-label={isLiked ? 'Unlike this track' : 'Like this track'}
+          aria-label={isLiked ? 'Batal sukai lagu ini' : 'Sukai lagu ini'}
           aria-pressed={isLiked}
           onClick={onLike}
         >
@@ -193,26 +195,26 @@ function PlayerBar({
         </button>
       </div>
 
-      {/* Center: controls + progress */}
+      {/* Tengah: kontrol + kemajuan */}
       <div className="player-controls-col">
-        <div className="player-control-btns" role="group" aria-label="Playback controls">
-          <button id="player-shuffle-btn" className="ctrl-btn" type="button" aria-label="Shuffle"><IconShuffle /></button>
-          <button id="player-prev-btn" className="ctrl-btn" type="button" aria-label="Previous"><IconSkipBack /></button>
+        <div className="player-control-btns" role="group" aria-label="Kontrol pemutaran">
+          <button id="player-shuffle-btn" className="ctrl-btn" type="button" aria-label="Acak"><IconShuffle /></button>
+          <button id="player-prev-btn" className="ctrl-btn" type="button" aria-label="Sebelumnya"><IconSkipBack /></button>
           <button
             id="player-play-btn"
             className="ctrl-btn ctrl-btn-play"
             type="button"
-            aria-label={isPlaying ? 'Pause' : 'Play'}
+            aria-label={isPlaying ? 'Jeda' : 'Putar'}
             aria-pressed={isPlaying}
             onClick={onPlayPause}
           >
             {isPlaying ? <IconPause size={20} /> : <IconPlay size={20} />}
           </button>
-          <button id="player-next-btn" className="ctrl-btn" type="button" aria-label="Next"><IconSkipForward /></button>
-          <button id="player-repeat-btn" className="ctrl-btn" type="button" aria-label="Repeat"><IconRepeat /></button>
+          <button id="player-next-btn" className="ctrl-btn" type="button" aria-label="Berikutnya"><IconSkipForward /></button>
+          <button id="player-repeat-btn" className="ctrl-btn" type="button" aria-label="Ulangi"><IconRepeat /></button>
         </div>
-        <div className="player-progress" role="group" aria-label="Track progress">
-          <span className="player-time" aria-label="Current time">{track.currentTime}</span>
+        <div className="player-progress" role="group" aria-label="Kemajuan lagu">
+          <span className="player-time" aria-label="Waktu sekarang">{track.currentTime}</span>
           <div
             className="player-progress-track"
             role="progressbar"
@@ -225,17 +227,17 @@ function PlayerBar({
               <div className="player-progress-thumb" aria-hidden="true" />
             </div>
           </div>
-          <span className="player-time" aria-label="Total duration">{track.duration}</span>
+          <span className="player-time" aria-label="Total durasi">{track.duration}</span>
         </div>
       </div>
 
-      {/* Right controls */}
+      {/* Kontrol kanan */}
       <div className="player-right-controls">
-        <button id="player-crowd-mode-btn" className="player-crowd-mode" type="button" aria-label="Crowd Mode lyrics">
+        <button id="player-crowd-mode-btn" className="player-crowd-mode" type="button" aria-label="Lirik Mode Tribun">
           <IconMic />
-          Crowd Mode
+          Mode Tribun
         </button>
-        <button id="player-queue-btn" className="ctrl-btn" type="button" aria-label="Queue"><IconQueue /></button>
+        <button id="player-queue-btn" className="ctrl-btn" type="button" aria-label="Antrean"><IconQueue /></button>
         <button id="player-playlist-btn" className="ctrl-btn" type="button" aria-label="Playlist"><IconList /></button>
         <div className="volume-slider" role="group" aria-label="Volume">
           <button id="player-volume-btn" className="ctrl-btn" type="button" aria-label="Volume"><IconVolume /></button>
@@ -243,7 +245,7 @@ function PlayerBar({
             <div className="volume-fill" />
           </div>
         </div>
-        <button id="player-fullscreen-btn" className="ctrl-btn" type="button" aria-label="Fullscreen"><IconMaximize /></button>
+        <button id="player-fullscreen-btn" className="ctrl-btn" type="button" aria-label="Layar Penuh"><IconMaximize /></button>
       </div>
     </div>
   )
@@ -256,47 +258,47 @@ function HomePage({ onPlay }: { onPlay: () => void }) {
   return (
     <>
       {/* HERO */}
-      <section id="hero" className="hero-section" aria-label="Hero section">
+      <section id="hero" className="hero-section" aria-label="Bagian hero">
         <div className="hero-bg" aria-hidden="true" />
         <div className="hero-gradient" aria-hidden="true" />
         <div className="hero-content">
-          <div className="hero-eyebrow" aria-label="Live event">
+          <div className="hero-eyebrow" aria-label="Acara langsung">
             <span className="live-dot" aria-hidden="true" />
-            LIVE — 12 PLAYERS ACTIVE
+            LANGSUNG — 12 PENDUKUNG AKTIF
           </div>
           <h1 className="hero-title">
-            ONE VOICE.<br />
-            <span className="accent">ONE SCHOOL.</span><br />
-            <span className="accent-bright">ONE SPIRIT.</span>
+            SATU SUARA.<br />
+            <span className="accent">SATU SEKOLAH.</span><br />
+            <span className="accent-bright">SATU SEMANGAT.</span>
           </h1>
           <p className="hero-subtitle">
-            The official chant library for SMK Telkom Malang supporters. Ignite the fire,
-            feel the crowd, and keep the red and white flame burning bright.
+            Perpustakaan chant resmi untuk pendukung SMK Telkom Malang. Nyalakan api semangat,
+            rasakan riuhnya tribun, dan jaga agar bara merah putih tetap menyala.
           </p>
           <div className="hero-actions">
             <button id="hero-explore-btn" className="btn btn-primary" type="button">
-              Explore Chants <IconArrowRight />
+              Jelajahi Chant <IconArrowRight />
             </button>
             <button id="hero-rankings-btn" className="btn btn-glass" type="button">
-              View Rankings
+              Lihat Peringkat
             </button>
           </div>
         </div>
         <div className="hero-scroll-hint" aria-hidden="true">
           <div className="scroll-mouse"><div className="scroll-wheel" /></div>
-          <span>SCROLL TO FEEL THE RHYTHM</span>
+          <span>GULIR UNTUK MERASAKAN RITME</span>
         </div>
       </section>
 
-      {/* STATS */}
-      <section id="stats" className="stats-section" aria-label="Statistics">
+      {/* STATISTIK */}
+      <section id="stats" className="stats-section" aria-label="Statistik">
         <div className="container">
           <dl className="stats-grid">
             {[
-              { value: '247', label: 'Chants Available' },
-              { value: '12K', label: 'Active Supporters' },
-              { value: '94', label: 'Matches Covered' },
-              { value: '3.2M', label: 'Total Plays' },
+              { value: '247', label: 'Chant Tersedia' },
+              { value: '12K', label: 'Pendukung Aktif' },
+              { value: '94', label: 'Pertandingan Diliput' },
+              { value: '3.2Jt', label: 'Total Putaran' },
             ].map((stat) => (
               <div key={stat.label} className="stat-item">
                 <dt className="stat-number">{stat.value}</dt>
@@ -312,11 +314,11 @@ function HomePage({ onPlay }: { onPlay: () => void }) {
         <div className="container">
           <header className="section-header">
             <div>
-              <p className="section-label">Featured This Week</p>
-              <h2 className="section-title">Hottest Anthems</h2>
-              <p style={{ fontSize: 13, color: 'var(--color-outline)', marginTop: 4 }}>Most played chants in the stadium this week.</p>
+              <p className="section-label">Unggulan Minggu Ini</p>
+              <h2 className="section-title">Anthem Terpopuler</h2>
+              <p style={{ fontSize: 13, color: 'var(--color-outline)', marginTop: 4 }}>Chant yang paling sering dinyanyikan di stadion minggu ini.</p>
             </div>
-            <a href="#" id="view-all-anthems" className="section-view-all">View All <IconArrowRight /></a>
+            <a href="#" id="view-all-anthems" className="section-view-all">Lihat Semua <IconArrowRight /></a>
           </header>
           <div className="anthems-grid">
             <article className="anthem-featured" id="anthem-featured-card">
@@ -326,9 +328,9 @@ function HomePage({ onPlay }: { onPlay: () => void }) {
                 <div className="playlist-card-content">
                   <span className={`playlist-card-tag ${tagClass[anthemData[0].tag]}`}>{anthemData[0].tagLabel}</span>
                   <h3 className="playlist-card-title">{anthemData[0].title}</h3>
-                  <p className="playlist-card-meta">{anthemData[0].plays} plays</p>
+                  <p className="playlist-card-meta">{anthemData[0].plays} putaran</p>
                   <p style={{ fontSize: 13, color: 'rgba(229,226,225,0.60)', marginTop: 6, lineHeight: 1.5 }}>{anthemData[0].desc}</p>
-                  <button id="featured-play-btn" className="playlist-card-play" type="button" aria-label={`Play ${anthemData[0].title}`} onClick={onPlay}>
+                  <button id="featured-play-btn" className="playlist-card-play" type="button" aria-label={`Putar ${anthemData[0].title}`} onClick={onPlay}>
                     <IconPlay size={18} />
                   </button>
                 </div>
@@ -343,7 +345,7 @@ function HomePage({ onPlay }: { onPlay: () => void }) {
                     <div className="playlist-card-content">
                       <span className={`playlist-card-tag ${tagClass[anthemData[i].tag]}`}>{anthemData[i].tagLabel}</span>
                       <h3 className="playlist-card-title">{anthemData[i].title}</h3>
-                      <p className="playlist-card-meta">{anthemData[i].plays} plays</p>
+                      <p className="playlist-card-meta">{anthemData[i].plays} putaran</p>
                     </div>
                   </div>
                 </div>
@@ -355,30 +357,30 @@ function HomePage({ onPlay }: { onPlay: () => void }) {
                   <p className="anthem-side-title">{anthemData[3].title}</p>
                   <p className="anthem-side-sub">{anthemData[3].desc}</p>
                 </div>
-                <button id="anthem-braket-play" className="anthem-side-btn" type="button" onClick={onPlay}>Listen Now <IconArrowRight /></button>
+                <button id="anthem-braket-play" className="anthem-side-btn" type="button" onClick={onPlay}>Dengar Sekarang <IconArrowRight /></button>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CROWD MODE */}
-      <section id="crowd-mode" className="crowd-section" aria-label="Crowd Mode feature">
+      {/* MODE TRIBUN */}
+      <section id="crowd-mode" className="crowd-section" aria-label="Fitur Mode Tribun">
         <div className="crowd-bg-glow" aria-hidden="true" />
         <div className="container">
           <div className="crowd-text-col">
-            <div className="live-badge"><span className="live-dot" aria-hidden="true" />LIVE — 12 PLAYERS</div>
+            <div className="live-badge"><span className="live-dot" aria-hidden="true" />LANGSUNG — 12 PENDUKUNG</div>
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(40px, 5vw, 64px)', fontWeight: 700, letterSpacing: '0.02em', textTransform: 'uppercase', color: 'var(--color-on-surface)', lineHeight: 1.0, marginTop: 20, marginBottom: 12 }}>
-              ENTER THE<br /><span style={{ color: 'var(--color-primary-bright)' }}>CROWD MODE</span>
+              MASUK KE<br /><span style={{ color: 'var(--color-primary-bright)' }}>MODE TRIBUN</span>
             </h2>
             <p style={{ fontSize: 16, lineHeight: 1.7, color: 'var(--color-outline)', maxWidth: 400 }}>
-              Turn your phone into a stadium centerpiece. High-contrast lyrics, synchronized light shows, and real-time chanting guides to lead your section with absolute precision.
+              Ubah ponsel Anda menjadi bagian dari koreografi stadion. Lirik kontras tinggi, pertunjukan cahaya yang sinkron, dan panduan chant waktu nyata untuk memimpin tribun Anda dengan presisi mutlak.
             </p>
             <ul className="crowd-features">
               {[
-                { icon: <IconZap />, title: 'Dynamic Display', sub: 'XL lyrics for stadium visibility' },
-                { icon: <IconList />, title: 'Multi-device sync', sub: 'Synchronization for massive chants' },
-                { icon: <IconMapPin />, title: 'Section Mapping', sub: 'Screen from choreography matching the beat' },
+                { icon: <IconZap />, title: 'Tampilan Dinamis', sub: 'Lirik ukuran XL untuk keterbacaan di stadion' },
+                { icon: <IconList />, title: 'Sinkronisasi Multi-perangkat', sub: 'Sinkronisasi untuk chant massal yang kompak' },
+                { icon: <IconMapPin />, title: 'Pemetaan Sektor', sub: 'Tampilan layar untuk koreografi yang selaras dengan ketukan' },
               ].map((f) => (
                 <li key={f.title} className="crowd-feature-item">
                   <div className="crowd-feature-icon" aria-hidden="true">{f.icon}</div>
@@ -386,12 +388,12 @@ function HomePage({ onPlay }: { onPlay: () => void }) {
                 </li>
               ))}
             </ul>
-            <button id="crowd-mode-launch-btn" className="btn btn-primary" type="button">Launch Player <IconZap /></button>
+            <button id="crowd-mode-launch-btn" className="btn btn-primary" type="button">Buka Pemutar <IconZap /></button>
           </div>
           <div className="crowd-device-col">
             <div className="crowd-device">
-              <div className="crowd-device-badge" role="status"><span className="live-dot" aria-hidden="true" />LIVE SESSION</div>
-              <div className="crowd-device-frame" aria-label="Lyrics display">
+              <div className="crowd-device-badge" role="status"><span className="live-dot" aria-hidden="true" />SESI LANGSUNG</div>
+              <div className="crowd-device-frame" aria-label="Tampilan lirik">
                 <p className="crowd-lyrics-prev" aria-hidden="true">TELKOM...</p>
                 <p className="crowd-lyrics-current">MALANG!</p>
                 <p className="crowd-lyrics-next" aria-hidden="true">TERBAIK...</p>
@@ -403,7 +405,7 @@ function HomePage({ onPlay }: { onPlay: () => void }) {
                   <div className="supporter-avatar">R</div>
                   <div className="supporter-avatar">+</div>
                 </div>
-                <div className="supporter-text"><strong>12 Active</strong><span>supporters online</span></div>
+                <div className="supporter-text"><strong>12 Aktif</strong><span>pendukung online</span></div>
               </div>
             </div>
           </div>
@@ -415,12 +417,12 @@ function HomePage({ onPlay }: { onPlay: () => void }) {
         <div className="container">
           <header className="section-header">
             <div>
-              <p className="section-label">This Season</p>
-              <h2 className="section-title">Top Chants</h2>
+              <p className="section-label">Musim Ini</p>
+              <h2 className="section-title">Chant Teratas</h2>
             </div>
-            <a href="#" id="view-all-leaderboard" className="section-view-all">Full Rankings <IconTrophy /></a>
+            <a href="#" id="view-all-leaderboard" className="section-view-all">Peringkat Lengkap <IconTrophy /></a>
           </header>
-          <ol className="leaderboard-list" aria-label="Top chants leaderboard">
+          <ol className="leaderboard-list" aria-label="Papan peringkat chant teratas">
             {leaderboardData.map((item) => (
               <li key={item.rank} className={`leaderboard-item${item.rank <= 3 ? ' top-rank' : ''}`} id={`leaderboard-item-${item.rank}`}>
                 <span className="leaderboard-rank">{item.rank}</span>
@@ -429,8 +431,8 @@ function HomePage({ onPlay }: { onPlay: () => void }) {
                   <p className="leaderboard-name">{item.title}</p>
                   <p className="leaderboard-sub">{item.artist}</p>
                 </div>
-                <div className="leaderboard-plays">{item.plays}<span>This week</span></div>
-                <button id={`leaderboard-play-${item.rank}`} className="leaderboard-play-btn" type="button" aria-label={`Play ${item.title}`} onClick={onPlay}>
+                <div className="leaderboard-plays">{item.plays}<span>Minggu ini</span></div>
+                <button id={`leaderboard-play-${item.rank}`} className="leaderboard-play-btn" type="button" aria-label={`Putar ${item.title}`} onClick={onPlay}>
                   <IconPlay size={14} />
                 </button>
               </li>
@@ -445,30 +447,30 @@ function HomePage({ onPlay }: { onPlay: () => void }) {
           <div className="footer-grid">
             <div>
               <p className="footer-brand-name">MOKLETERS</p>
-              <p className="footer-brand-desc">The heartbeat of SMK Telkom Malang supporters. We are the voice that never silences, and the fire that never dies.</p>
+              <p className="footer-brand-desc">Detak jantung pendukung SMK Telkom Malang. Kami adalah suara yang tak pernah padam, dan api yang tak pernah mati.</p>
             </div>
             <div>
               <p className="footer-col-title">Platform</p>
-              <ul className="footer-links">{['Top Chants','School Songs','Media Gallery'].map(l=><li key={l}><a href="#">{l}</a></li>)}</ul>
+              <ul className="footer-links">{['Chant Teratas','Lagu Sekolah','Galeri Media'].map(l=><li key={l}><a href="#">{l}</a></li>)}</ul>
             </div>
             <div>
-              <p className="footer-col-title">Site Index</p>
-              <ul className="footer-links">{['About Us','Leaderboard','School Story','Content Support'].map(l=><li key={l}><a href="#">{l}</a></li>)}</ul>
+              <p className="footer-col-title">Indeks Situs</p>
+              <ul className="footer-links">{['Tentang Kami','Papan Peringkat','Sejarah Sekolah','Dukungan Konten'].map(l=><li key={l}><a href="#">{l}</a></li>)}</ul>
             </div>
             <div>
-              <p className="footer-col-title">Newsletter</p>
-              <p style={{ fontSize: 13, color: 'var(--color-outline)', lineHeight: 1.6, marginBottom: 8 }}>Get notified for new chants and matchday events.</p>
+              <p className="footer-col-title">Buletin</p>
+              <p style={{ fontSize: 13, color: 'var(--color-outline)', lineHeight: 1.6, marginBottom: 8 }}>Dapatkan info terbaru tentang chant baru dan acara pertandingan.</p>
               <form id="footer-newsletter-form" className="footer-newsletter-form" onSubmit={e=>e.preventDefault()}>
-                <input id="newsletter-email-input" className="footer-input" type="email" placeholder="Email address" aria-label="Email for newsletter" />
-                <button id="newsletter-join-btn" className="btn btn-primary" type="submit" style={{ padding:'10px 16px', borderRadius:'var(--radius)', fontSize:13 }}>Join</button>
+                <input id="newsletter-email-input" className="footer-input" type="email" placeholder="Alamat email" aria-label="Email untuk buletin" />
+                <button id="newsletter-join-btn" className="btn btn-primary" type="submit" style={{ padding:'10px 16px', borderRadius:'var(--radius)', fontSize:13 }}>Gabung</button>
               </form>
             </div>
           </div>
           <hr className="footer-divider" />
           <div className="footer-bottom">
-            <p>© 2025 SMK Telkom Malang Fan Club. All Rights Reserved.</p>
+            <p>© 2025 Klub Penggemar SMK Telkom Malang. Hak Cipta Dilindungi Undang-Undang.</p>
             <div style={{ display:'flex', gap:20 }}>
-              {['Privacy Policy','Terms','Contact'].map(l=><a key={l} href="#" style={{ fontSize:12, color:'var(--color-outline)' }}>{l}</a>)}
+              {['Kebijakan Privasi','Ketentuan','Kontak'].map(l=><a key={l} href="#" style={{ fontSize:12, color:'var(--color-outline)' }}>{l}</a>)}
             </div>
           </div>
         </div>
@@ -483,10 +485,10 @@ function HomePage({ onPlay }: { onPlay: () => void }) {
 export default function App() {
   const [isPlaying, setIsPlaying] = useState(false)
   const [isLiked, setIsLiked] = useState(false)
-  const [activeNav, setActiveNav] = useState('Home')
+  const [activeNav, setActiveNav] = useState('Beranda')
   const [currentTrack, setCurrentTrack] = useState<PlayerTrack>(defaultTrack)
 
-  const navLinks = ['Home', 'Chants', 'Playlist', 'Leaderboard', 'About']
+  const navLinks = ['Beranda', 'Chant', 'Playlist', 'Papan Peringkat', 'Tentang']
 
   const handlePlay = (track?: Partial<PlayerTrack>) => {
     if (track) setCurrentTrack({ ...defaultTrack, ...track })
@@ -495,6 +497,7 @@ export default function App() {
 
   const renderPage = () => {
     switch (activeNav) {
+      case 'Chant':
       case 'Chants':
         return <ChantLibrary onPlay={handlePlay} />
       case 'Playlist':
@@ -505,6 +508,9 @@ export default function App() {
             onPlayPause={() => setIsPlaying(p => !p)}
           />
         )
+      case 'Papan Peringkat':
+      case 'Leaderboard':
+        return <LeaderboardPage onPlay={handlePlay} />
       default:
         return <HomePage onPlay={() => setIsPlaying(p => !p)} />
     }
@@ -513,10 +519,10 @@ export default function App() {
   return (
     <>
       {/* NAVBAR */}
-      <nav className="navbar" role="navigation" aria-label="Main navigation">
+      <nav className="navbar" role="navigation" aria-label="Navigasi utama">
         <div className="container">
-          <a href="#" className="navbar-logo" aria-label="Stadium Pulse home" onClick={e=>{e.preventDefault();setActiveNav('Home')}}>
-            <span className="navbar-logo-dot" aria-hidden="true" />
+          <a href="#" className="navbar-logo" aria-label="Halaman Beranda Stadium Pulse" onClick={e=>{e.preventDefault();setActiveNav('Beranda')}}>
+            <img src={mokletersLogo} alt="Mokleters Logo" className="navbar-logo-img" style={{ height: '32px', width: 'auto', marginRight: '10px', objectFit: 'contain' }} />
             MOKLETERS
           </a>
           <ul className="navbar-nav" role="list">
@@ -524,7 +530,7 @@ export default function App() {
               <li key={link}>
                 <a
                   href="#"
-                  id={`nav-${link.toLowerCase()}`}
+                  id={`nav-${link.toLowerCase().replace(' ', '-')}`}
                   className={activeNav === link ? 'active' : ''}
                   onClick={e => { e.preventDefault(); setActiveNav(link) }}
                   aria-current={activeNav === link ? 'page' : undefined}
@@ -537,19 +543,19 @@ export default function App() {
           <div className="navbar-actions">
             <label className="navbar-search" htmlFor="navbar-search-input">
               <IconSearch />
-              <input id="navbar-search-input" type="search" placeholder="Search all chants..." aria-label="Search chants" />
+              <input id="navbar-search-input" type="search" placeholder="Cari semua chant..." aria-label="Cari chant" />
             </label>
-            <div className="navbar-avatar" role="button" tabIndex={0} aria-label="User account">S</div>
+            <div className="navbar-avatar" role="button" tabIndex={0} aria-label="Akun pengguna">S</div>
           </div>
         </div>
       </nav>
 
-      {/* PAGE CONTENT */}
-      <main style={{ paddingTop: activeNav !== 'Home' ? '64px' : '0' }}>
+      {/* ISI HALAMAN */}
+      <main style={{ paddingTop: activeNav !== 'Beranda' ? '64px' : '0' }}>
         {renderPage()}
       </main>
 
-      {/* PLAYER BAR */}
+      {/* BILAH PEMUTAR */}
       <PlayerBar
         track={currentTrack}
         isPlaying={isPlaying}
