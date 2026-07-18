@@ -37,7 +37,7 @@ export default function DeveloperPage() {
         <div className="container dev-header-content">
           <h1 className="dev-title">Tim Pengembang</h1>
           <p className="dev-subtitle">
-            Di balik layar Stadium Pulse Mokleters. Bertanggung jawab atas setiap baris kode, korsa, dan inovasi digital.
+            Di balik layar Website Chant Mokleters. Bertanggung jawab atas setiap baris kode, korsa, dan inovasi digital.
           </p>
         </div>
       </div>
