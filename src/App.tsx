@@ -133,11 +133,11 @@ const anthemData = [
 ]
 
 const leaderboardData = [
-  { rank: 1, title: 'Merah Putih Kebanggaan', artist: 'SMK Telkom Malang — Resmi', plays: '1.5Jt putaran', img: '/anthem1.png' },
-  { rank: 2, title: 'Sabit Utara', artist: 'Paduan Suara Tribun Utara', plays: '892Rb putaran', img: '/anthem2.png' },
-  { rank: 3, title: 'Ritme Telkom', artist: 'Unit Perkusi', plays: '740Rb putaran', img: '/anthem3.png' },
-  { rank: 4, title: 'Braket Gelora', artist: 'Ensembel Vokal 2025', plays: '612Rb putaran', img: '/anthem1.png' },
-  { rank: 5, title: 'Api Kami Takkan Padam', artist: 'Ultras SMK Malang', plays: '541Rb putaran', img: '/anthem2.png' },
+  { rank: 1, title: 'Kami Datang Lagi', artist: 'Chant Mokleters', plays: '1.5Jt putaran', img: '/anthem1.png' },
+  { rank: 2, title: 'SMK Telkom Malang Kami Datang', artist: 'Anthem Pembuka', plays: '892Rb putaran', img: '/anthem2.png' },
+  { rank: 3, title: 'Bukalah Matamu', artist: 'Tempo Pertandingan', plays: '740Rb putaran', img: '/anthem3.png' },
+  { rank: 4, title: 'Mokleters Mokleters Wikusama', artist: 'Chant Kebanggaan', plays: '612Rb putaran', img: '/anthem1.png' },
+  { rank: 5, title: 'Kami Pendukung Telkom Malang', artist: 'Tempo Pertandingan', plays: '541Rb putaran', img: '/anthem2.png' },
 ]
 
 const tagClass: Record<string, string> = { classic: 'tag-classic', anthem: 'tag-anthem', top10: 'tag-top10' }
@@ -187,6 +187,7 @@ function PlayerBar({
   onToggleCrowdMode,
   onToggleQueue,
   onOpenPlaylist,
+  onClose,
 }: {
   track: PlayerTrack
   isPlaying: boolean
@@ -206,6 +207,7 @@ function PlayerBar({
   onToggleCrowdMode: () => void
   onToggleQueue: () => void
   onOpenPlaylist: () => void
+  onClose: () => void
 }) {
   const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -301,6 +303,18 @@ function PlayerBar({
 
       {/* Kontrol kanan */}
       <div className="player-right-controls">
+        <button
+          id="player-close-btn"
+          className="player-close-btn"
+          type="button"
+          aria-label="Tutup pemutar"
+          onClick={(e) => {
+            e.stopPropagation()
+            onClose()
+          }}
+        >
+          ×
+        </button>
         <button
           id="player-crowd-mode-btn"
           className="player-crowd-mode"
@@ -414,7 +428,7 @@ function HomePage({
               Jelajahi Chant <IconArrowRight />
             </button>
             <button id="hero-rankings-btn" className="btn btn-glass" type="button">
-              Lihat Peringkat
+              Tentang
             </button>
           </div>
         </div>
@@ -640,6 +654,7 @@ export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isCrowdMode, setIsCrowdMode] = useState(false)
   const [isQueueOpen, setIsQueueOpen] = useState(false)
+  const [isPlayerVisible, setIsPlayerVisible] = useState(true)
 
   // ── Derived progress ──
   const progress = duration > 0 ? (elapsed / duration) * 100 : 0
@@ -779,6 +794,7 @@ export default function App() {
     setPlayingChantId(chant.id)
     setIsPlaying(true)
     setElapsed(0)
+    setIsPlayerVisible(true)
 
     setCurrentTrack({
       title: chant.title,
@@ -1039,7 +1055,7 @@ export default function App() {
       </main>
 
       {/* BILAH PEMUTAR — FULLY FUNCTIONAL */}
-      {playingChantId !== null && (
+      {playingChantId !== null && isPlayerVisible && (
         <PlayerBar
           track={currentTrack}
           isPlaying={isPlaying}
@@ -1059,6 +1075,11 @@ export default function App() {
           onToggleCrowdMode={() => setIsCrowdMode(prev => !prev)}
           onToggleQueue={() => setIsQueueOpen(prev => !prev)}
           onOpenPlaylist={() => setActiveNav('Playlist')}
+          onClose={() => {
+            stopAudio()
+            setPlayingChantId(null)
+            setIsPlayerVisible(false)
+          }}
         />
       )}
 
@@ -1074,7 +1095,15 @@ export default function App() {
         }
         return (
           <div className="crowd-mode-overlay" onClick={() => setIsCrowdMode(false)}>
-            <div className="crowd-mode-close" onClick={() => setIsCrowdMode(false)}>TUTUP ×</div>
+            <button
+              type="button"
+              className="crowd-mode-close"
+              onClick={e => { e.stopPropagation(); setIsCrowdMode(false) }}
+              aria-label="Tutup mode tribun"
+            >
+              <span aria-hidden="true">×</span>
+              <span className="crowd-mode-close-label">Tutup</span>
+            </button>
             <div className="crowd-mode-content">
               <span className="crowd-mode-chant-title">{chant?.title}</span>
               <h2 className="crowd-mode-big-lyric">{currentText.toUpperCase()}</h2>
