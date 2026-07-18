@@ -1,5 +1,6 @@
-import mokletsMascot from '../assets/mascot.png'
 import ProfileCard from '../components/ProfileCard'
+import nabilPhoto from '../assets/nabil.jpg'
+import elzidanePhoto from '../assets/elzidane.jpg'
 
 export default function DeveloperPage() {
   const developers = [
@@ -9,7 +10,7 @@ export default function DeveloperPage() {
       team: 'Mokleters Dev Team 2025',
       handle: 'nabilkencana',
       bio: 'Merancang arsitektur antarmuka pengguna (UI), menyusun sistem tema warna dinamis, serta mengoptimalkan sinkronisasi lirik presisi tinggi untuk pengalaman tribun terbaik.',
-      avatar: mokletsMascot,
+      avatar: nabilPhoto,
       github: 'https://github.com/nabilkencana',
       glow: 'rgba(161, 15, 18, 0.55)',
       gradient: 'linear-gradient(145deg, rgba(161, 15, 18, 0.4) 0%, rgba(10, 10, 10, 0.95) 100%)'
@@ -20,7 +21,7 @@ export default function DeveloperPage() {
       team: 'Mokleters Dev Team 2025',
       handle: 'elzidane',
       bio: 'Mengembangkan mesin sinkronisasi progres pemutar audio global, optimalisasi kinerja data, serta mengintegrasikan Web Audio API untuk efek suara tribun secara real-time.',
-      avatar: mokletsMascot,
+      avatar: elzidanePhoto,
       github: 'https://github.com/ElZidane123',
       glow: 'rgba(161, 15, 18, 0.55)',
       gradient: 'linear-gradient(145deg, rgba(161, 15, 18, 0.4) 0%, rgba(10, 10, 10, 0.95) 100%)'
