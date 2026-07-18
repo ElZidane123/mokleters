@@ -908,6 +908,7 @@ export default function App() {
     setActiveNav('Playlist')
   }, [playChant])
 
+
   // ── Open detail of currently playing chant ──
   const handleOpenDetail = useCallback(() => {
     if (playingChantId) {
@@ -981,6 +982,7 @@ export default function App() {
             playingChantId={playingChantId}
             isPlaying={isPlaying}
             onCardClick={handleLibraryPlay}
+            onPlayChantOnly={playChant}
             search={searchQuery}
             setSearch={setSearchQuery}
           />
