@@ -307,17 +307,6 @@ export default function ChantLibrary({
               Klik card chant untuk membuka detail lirik &amp; memutar audio asli Mokleters.<br className="br-desktop" />
               Dirancang untuk mengguncang tribun dan menyatukan kebanggaan.
             </p>
-            <div style={{ marginTop: 16, display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
-              <span style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 99, padding: '6px 16px', fontSize: 13 }}>
-                🎵 {CHANTS.length} Chant Tersedia
-              </span>
-              <span style={{ background: 'rgba(255,80,80,0.15)', border: '1px solid rgba(255,80,80,0.3)', borderRadius: 99, padding: '6px 16px', fontSize: 13, color: '#ff6060' }}>
-                ● Audio Asli Mokleters
-              </span>
-              <span style={{ background: 'rgba(80,180,255,0.10)', border: '1px solid rgba(80,180,255,0.25)', borderRadius: 99, padding: '6px 16px', fontSize: 13, color: '#60c8ff' }}>
-                📝 Lirik Sinkron
-              </span>
-            </div>
           </div>
         </div>
       </div>
