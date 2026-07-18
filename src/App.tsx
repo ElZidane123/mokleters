@@ -882,23 +882,25 @@ export default function App() {
       </main>
 
       {/* BILAH PEMUTAR — FULLY FUNCTIONAL */}
-      <PlayerBar
-        track={currentTrack}
-        isPlaying={isPlaying}
-        isLiked={isLiked}
-        isShuffle={isShuffle}
-        isRepeat={isRepeat}
-        volume={volume}
-        onPlayPause={handlePlayPause}
-        onLike={() => setIsLiked(l => !l)}
-        onPrev={handlePrev}
-        onNext={handleNext}
-        onShuffle={() => setIsShuffle(s => !s)}
-        onRepeat={() => setIsRepeat(r => !r)}
-        onSeek={handleSeek}
-        onVolume={handleVolume}
-        onOpenDetail={handleOpenDetail}
-      />
+      {playingChantId !== null && (
+        <PlayerBar
+          track={currentTrack}
+          isPlaying={isPlaying}
+          isLiked={isLiked}
+          isShuffle={isShuffle}
+          isRepeat={isRepeat}
+          volume={volume}
+          onPlayPause={handlePlayPause}
+          onLike={() => setIsLiked(l => !l)}
+          onPrev={handlePrev}
+          onNext={handleNext}
+          onShuffle={() => setIsShuffle(s => !s)}
+          onRepeat={() => setIsRepeat(r => !r)}
+          onSeek={handleSeek}
+          onVolume={handleVolume}
+          onOpenDetail={handleOpenDetail}
+        />
+      )}
     </>
   )
 }
