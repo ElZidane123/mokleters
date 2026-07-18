@@ -1,11 +1,14 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import './index.css'
 import ChantLibrary from './ChantLibrary'
 import PlaylistPage from './PlaylistPage'
 import LeaderboardPage from './LeaderboardPage'
+import ChantDetailPage from './ChantDetailPage'
 import mokletersLogo from './assets/Mokleters logo.png'
 import mokletsMascot from './assets/mascot.png'
 import mokletersGraffiti from './assets/Group 1261154060 (1).png'
+import { CHANTS } from './lyrics'
+import type { ChantData } from './lyrics'
 
 /* =============================================
    ICON COMPONENTS (inline SVG)
@@ -149,6 +152,8 @@ export interface PlayerTrack {
   duration: string
   currentTime: string
   progress: number
+  src?: string
+  chantId?: number
 }
 
 const defaultTrack: PlayerTrack = {
@@ -156,8 +161,8 @@ const defaultTrack: PlayerTrack = {
   artist: 'Anthem Pembuka • Fans Mokleters',
   img: '/chant-art.png',
   duration: '3:45',
-  currentTime: '1:24',
-  progress: 38,
+  currentTime: '0:00',
+  progress: 0,
 }
 
 /* =============================================
@@ -167,19 +172,50 @@ function PlayerBar({
   track,
   isPlaying,
   isLiked,
+  isShuffle,
+  isRepeat,
+  volume,
   onPlayPause,
   onLike,
+  onPrev,
+  onNext,
+  onShuffle,
+  onRepeat,
+  onSeek,
+  onVolume,
+  onOpenDetail,
 }: {
   track: PlayerTrack
   isPlaying: boolean
   isLiked: boolean
+  isShuffle: boolean
+  isRepeat: boolean
+  volume: number
   onPlayPause: () => void
   onLike: () => void
+  onPrev: () => void
+  onNext: () => void
+  onShuffle: () => void
+  onRepeat: () => void
+  onSeek: (pct: number) => void
+  onVolume: (v: number) => void
+  onOpenDetail: () => void
 }) {
+  const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width))
+    onSeek(pct)
+  }
+  const handleVolumeClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width))
+    onVolume(Math.round(pct * 100))
+  }
+
   return (
     <div className="player-bar" role="region" aria-label="Pemutar musik" id="player-bar">
       {/* Info lagu */}
-      <div className="player-track-info">
+      <div className="player-track-info" style={{ cursor: 'pointer' }} onClick={onOpenDetail} title="Lihat detail & lirik">
         <img src={track.img} alt={track.title} className="player-thumb" />
         <div>
           <p className="player-track-name">{track.title}</p>
@@ -191,7 +227,7 @@ function PlayerBar({
           type="button"
           aria-label={isLiked ? 'Batal sukai lagu ini' : 'Sukai lagu ini'}
           aria-pressed={isLiked}
-          onClick={onLike}
+          onClick={e => { e.stopPropagation(); onLike() }}
         >
           <IconHeart filled={isLiked} />
         </button>
@@ -200,8 +236,19 @@ function PlayerBar({
       {/* Tengah: kontrol + kemajuan */}
       <div className="player-controls-col">
         <div className="player-control-btns" role="group" aria-label="Kontrol pemutaran">
-          <button id="player-shuffle-btn" className="ctrl-btn" type="button" aria-label="Acak"><IconShuffle /></button>
-          <button id="player-prev-btn" className="ctrl-btn" type="button" aria-label="Sebelumnya"><IconSkipBack /></button>
+          <button
+            id="player-shuffle-btn"
+            className={`ctrl-btn${isShuffle ? ' ctrl-btn--active' : ''}`}
+            type="button"
+            aria-label="Acak"
+            aria-pressed={isShuffle}
+            onClick={onShuffle}
+          >
+            <IconShuffle />
+          </button>
+          <button id="player-prev-btn" className="ctrl-btn" type="button" aria-label="Sebelumnya" onClick={onPrev}>
+            <IconSkipBack />
+          </button>
           <button
             id="player-play-btn"
             className="ctrl-btn ctrl-btn-play"
@@ -212,8 +259,19 @@ function PlayerBar({
           >
             {isPlaying ? <IconPause size={20} /> : <IconPlay size={20} />}
           </button>
-          <button id="player-next-btn" className="ctrl-btn" type="button" aria-label="Berikutnya"><IconSkipForward /></button>
-          <button id="player-repeat-btn" className="ctrl-btn" type="button" aria-label="Ulangi"><IconRepeat /></button>
+          <button id="player-next-btn" className="ctrl-btn" type="button" aria-label="Berikutnya" onClick={onNext}>
+            <IconSkipForward />
+          </button>
+          <button
+            id="player-repeat-btn"
+            className={`ctrl-btn${isRepeat ? ' ctrl-btn--active' : ''}`}
+            type="button"
+            aria-label="Ulangi"
+            aria-pressed={isRepeat}
+            onClick={onRepeat}
+          >
+            <IconRepeat />
+          </button>
         </div>
         <div className="player-progress" role="group" aria-label="Kemajuan lagu">
           <span className="player-time" aria-label="Waktu sekarang">{track.currentTime}</span>
@@ -222,8 +280,10 @@ function PlayerBar({
             role="progressbar"
             aria-valuemin={0}
             aria-valuemax={100}
-            aria-valuenow={track.progress}
+            aria-valuenow={Math.round(track.progress)}
             id="player-progress-bar"
+            onClick={handleProgressClick}
+            style={{ cursor: 'pointer' }}
           >
             <div className="player-progress-fill" style={{ width: `${track.progress}%` }}>
               <div className="player-progress-thumb" aria-hidden="true" />
@@ -235,16 +295,39 @@ function PlayerBar({
 
       {/* Kontrol kanan */}
       <div className="player-right-controls">
-        <button id="player-crowd-mode-btn" className="player-crowd-mode" type="button" aria-label="Lirik Mode Tribun">
+        <button
+          id="player-crowd-mode-btn"
+          className="player-crowd-mode"
+          type="button"
+          aria-label="Lirik Mode Tribun"
+          onClick={onOpenDetail}
+        >
           <IconMic />
           Mode Tribun
         </button>
         <button id="player-queue-btn" className="ctrl-btn" type="button" aria-label="Antrean"><IconQueue /></button>
-        <button id="player-playlist-btn" className="ctrl-btn" type="button" aria-label="Playlist"><IconList /></button>
+        <button id="player-playlist-btn" className="ctrl-btn" type="button" aria-label="Playlist" onClick={onOpenDetail}><IconList /></button>
         <div className="volume-slider" role="group" aria-label="Volume">
-          <button id="player-volume-btn" className="ctrl-btn" type="button" aria-label="Volume"><IconVolume /></button>
-          <div className="volume-track" role="slider" aria-valuemin={0} aria-valuemax={100} aria-valuenow={75} id="player-volume-slider">
-            <div className="volume-fill" />
+          <button
+            id="player-volume-btn"
+            className="ctrl-btn"
+            type="button"
+            aria-label="Volume"
+            onClick={() => onVolume(volume === 0 ? 70 : 0)}
+          >
+            <IconVolume />
+          </button>
+          <div
+            className="volume-track"
+            role="slider"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={volume}
+            id="player-volume-slider"
+            onClick={handleVolumeClick}
+            style={{ cursor: 'pointer' }}
+          >
+            <div className="volume-fill" style={{ width: `${volume}%` }} />
           </div>
         </div>
         <button id="player-fullscreen-btn" className="ctrl-btn" type="button" aria-label="Layar Penuh"><IconMaximize /></button>
@@ -264,10 +347,6 @@ function HomePage({ onPlay }: { onPlay: () => void }) {
         <div className="hero-bg" aria-hidden="true" />
         <div className="hero-gradient" aria-hidden="true" />
         <div className="hero-content">
-          <div className="hero-eyebrow" aria-label="Acara langsung">
-            <span className="live-dot" aria-hidden="true" />
-            LANGSUNG — 12 PENDUKUNG AKTIF
-          </div>
           <h1 className="hero-title">
             MOKLETERS<br />
             <span className="accent">FIGHT TOGETHER</span><br />
@@ -285,10 +364,6 @@ function HomePage({ onPlay }: { onPlay: () => void }) {
               Lihat Peringkat
             </button>
           </div>
-        </div>
-        <div className="hero-scroll-hint" aria-hidden="true">
-          <div className="scroll-mouse"><div className="scroll-wheel" /></div>
-          <span>GULIR UNTUK MERASAKAN RITME</span>
         </div>
       </section>
 
@@ -476,45 +551,245 @@ function HomePage({ onPlay }: { onPlay: () => void }) {
 }
 
 /* =============================================
+   GLOBAL AUDIO ENGINE HELPERS
+   ============================================= */
+function fmtSec(s: number) {
+  const m = Math.floor(s / 60)
+  const sec = Math.floor(s % 60)
+  return `${m}:${sec.toString().padStart(2, '0')}`
+}
+
+/* =============================================
    MAIN APP
    ============================================= */
 export default function App() {
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [isLiked, setIsLiked] = useState(false)
+  // ── Navigation ──
   const [activeNav, setActiveNav] = useState('Beranda')
+  const [detailChant, setDetailChant] = useState<ChantData | null>(null)
+
+  // ── Audio engine state ──
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const [playingChantId, setPlayingChantId] = useState<number | null>(null)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [elapsed, setElapsed] = useState(0)
+  const [duration, setDuration] = useState(0)
+  const [volume, setVolume] = useState(75)
+  const [isShuffle, setIsShuffle] = useState(false)
+  const [isRepeat, setIsRepeat] = useState(false)
+  const [isLiked, setIsLiked] = useState(false)
   const [currentTrack, setCurrentTrack] = useState<PlayerTrack>(defaultTrack)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
+  // ── Derived progress ──
+  const progress = duration > 0 ? (elapsed / duration) * 100 : 0
+
   const navLinks = ['Beranda', 'Chant', 'Playlist', 'Papan Peringkat', 'Tentang']
 
-  const handlePlay = (track?: Partial<PlayerTrack>) => {
-    if (track) setCurrentTrack({ ...defaultTrack, ...track })
-    setIsPlaying(true)
-  }
+  // ── Stop & cleanup audio ──
+  const stopAudio = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.pause()
+      audioRef.current.src = ''
+      audioRef.current.ontimeupdate = null
+      audioRef.current.onended = null
+      audioRef.current.onloadedmetadata = null
+      audioRef.current = null
+    }
+    setIsPlaying(false)
+    setElapsed(0)
+    setDuration(0)
+  }, [])
 
   const handleNavClick = (link: string) => {
     setActiveNav(link)
     setMobileMenuOpen(false)
   }
 
+  // ── Play a chant by id ──
+  const playChant = useCallback((chant: ChantData) => {
+    stopAudio()
+
+    const audio = new Audio(chant.src)
+    audioRef.current = audio
+    audio.volume = volume / 100
+
+    audio.onloadedmetadata = () => setDuration(audio.duration)
+
+    audio.ontimeupdate = () => {
+      setElapsed(audio.currentTime)
+      setCurrentTrack(prev => ({
+        ...prev,
+        currentTime: fmtSec(audio.currentTime),
+        progress: audio.duration > 0 ? (audio.currentTime / audio.duration) * 100 : 0,
+      }))
+    }
+
+    audio.onended = () => {
+      if (isRepeat) {
+        audio.currentTime = 0
+        audio.play().catch(() => {})
+        return
+      }
+      // Auto-advance to next
+      const idx = CHANTS.findIndex(c => c.id === chant.id)
+      const nextChants = isShuffle
+        ? CHANTS.filter(c => c.id !== chant.id)
+        : null
+      const nextChant = nextChants
+        ? nextChants[Math.floor(Math.random() * nextChants.length)]
+        : CHANTS[(idx + 1) % CHANTS.length]
+      if (nextChant) playChant(nextChant)
+      else { setIsPlaying(false); setPlayingChantId(null) }
+    }
+
+    audio.play().catch(err => console.warn('Audio play failed:', err))
+    setPlayingChantId(chant.id)
+    setIsPlaying(true)
+    setElapsed(0)
+
+    setCurrentTrack({
+      title: chant.title,
+      artist: `${chant.category} • ${chant.artist}`,
+      img: chant.img,
+      duration: chant.duration,
+      currentTime: '0:00',
+      progress: 0,
+      src: chant.src,
+      chantId: chant.id,
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stopAudio, volume, isRepeat, isShuffle])
+
+  // ── Toggle play/pause ──
+  const handlePlayPause = useCallback(() => {
+    if (!audioRef.current) return
+    if (audioRef.current.paused) {
+      audioRef.current.play().catch(() => {})
+      setIsPlaying(true)
+    } else {
+      audioRef.current.pause()
+      setIsPlaying(false)
+    }
+  }, [])
+
+  // ── Prev ──
+  const handlePrev = useCallback(() => {
+    const idx = CHANTS.findIndex(c => c.id === playingChantId)
+    if (idx < 0) { if (CHANTS[0]) playChant(CHANTS[0]); return }
+    const prevIdx = idx === 0 ? CHANTS.length - 1 : idx - 1
+    playChant(CHANTS[prevIdx])
+  }, [playingChantId, playChant])
+
+  // ── Next ──
+  const handleNext = useCallback(() => {
+    const idx = CHANTS.findIndex(c => c.id === playingChantId)
+    if (idx < 0) { if (CHANTS[0]) playChant(CHANTS[0]); return }
+    if (isShuffle) {
+      const others = CHANTS.filter(c => c.id !== playingChantId)
+      playChant(others[Math.floor(Math.random() * others.length)])
+    } else {
+      playChant(CHANTS[(idx + 1) % CHANTS.length])
+    }
+  }, [playingChantId, isShuffle, playChant])
+
+  // ── Seek ──
+  const handleSeek = useCallback((pct: number) => {
+    if (!audioRef.current || !audioRef.current.duration) return
+    audioRef.current.currentTime = pct * audioRef.current.duration
+    setElapsed(audioRef.current.currentTime)
+  }, [])
+
+  // ── Volume ──
+  const handleVolume = useCallback((v: number) => {
+    setVolume(v)
+    if (audioRef.current) audioRef.current.volume = v / 100
+  }, [])
+
+  // ── ChantLibrary onPlay (card click → start playing + go to detail) ──
+  const handleLibraryPlay = useCallback((chant: ChantData) => {
+    playChant(chant)
+    setDetailChant(chant)
+    setActiveNav('ChantDetail')
+  }, [playChant])
+
+  // ── Open detail of currently playing chant ──
+  const handleOpenDetail = useCallback(() => {
+    if (playingChantId) {
+      const chant = CHANTS.find(c => c.id === playingChantId)
+      if (chant) { setDetailChant(chant); setActiveNav('ChantDetail') }
+    }
+  }, [playingChantId])
+
+  // ── Sync volume on mount ──
+  useEffect(() => {
+    if (audioRef.current) audioRef.current.volume = volume / 100
+  }, [volume])
+
+  // ── Sync detailChant with playingChantId when on detail page ──
+  useEffect(() => {
+    if (activeNav === 'ChantDetail' && playingChantId !== null) {
+      const current = CHANTS.find(c => c.id === playingChantId)
+      if (current) {
+        setDetailChant(current)
+      }
+    }
+  }, [playingChantId, activeNav])
+
+  // ── Cleanup ──
+  useEffect(() => () => stopAudio(), [stopAudio])
+
+  // ── Render page ──
   const renderPage = () => {
+    if (activeNav === 'ChantDetail' && detailChant) {
+      return (
+        <ChantDetailPage
+          chant={detailChant}
+          isPlaying={isPlaying && playingChantId === detailChant.id}
+          elapsed={elapsed}
+          progress={progress}
+          isShuffle={isShuffle}
+          isRepeat={isRepeat}
+          onBack={() => setActiveNav('Chant')}
+          onPlayPause={() => {
+            if (playingChantId === detailChant.id) handlePlayPause()
+            else playChant(detailChant)
+          }}
+          onPrev={handlePrev}
+          onNext={handleNext}
+          onSeek={handleSeek}
+          onShuffle={() => setIsShuffle(s => !s)}
+          onRepeat={() => setIsRepeat(r => !r)}
+        />
+      )
+    }
     switch (activeNav) {
       case 'Chant':
       case 'Chants':
-        return <ChantLibrary onPlay={handlePlay} />
+        return (
+          <ChantLibrary
+            playingChantId={playingChantId}
+            isPlaying={isPlaying}
+            onCardClick={handleLibraryPlay}
+          />
+        )
       case 'Playlist':
         return (
           <PlaylistPage
-            onPlay={handlePlay}
+            onPlay={(track) => {
+              const chant = CHANTS.find(c => c.chantId === track.chantId || c.title === track.title)
+              if (chant) playChant(chant)
+            }}
             isPlaying={isPlaying}
-            onPlayPause={() => setIsPlaying(p => !p)}
+            onPlayPause={handlePlayPause}
           />
         )
       case 'Papan Peringkat':
       case 'Leaderboard':
-        return <LeaderboardPage onPlay={handlePlay} />
+        return <LeaderboardPage onPlay={() => {}} />
       default:
-        return <HomePage onPlay={() => setIsPlaying(p => !p)} />
+        return <HomePage onPlay={() => {
+          if (CHANTS[0]) playChant(CHANTS[0])
+        }} />
     }
   }
 
@@ -523,8 +798,8 @@ export default function App() {
       {/* NAVBAR */}
       <nav className="navbar" role="navigation" aria-label="Navigasi utama">
         <div className="container">
-          <a href="#" className="navbar-logo" aria-label="Halaman Beranda Mokleters" onClick={e=>{e.preventDefault();handleNavClick('Beranda')}}>
-            <img src={mokletersLogo} alt="Mokleters Logo" className="navbar-logo-img" />
+          <a href="#" className="navbar-logo" aria-label="Halaman Beranda Mokleters" onClick={e=>{e.preventDefault();handleNavClick('Beranda');setDetailChant(null)}}>
+            <img src={mokletersLogo} alt="Mokleters Logo" className="navbar-logo-img" style={{ height: '32px', width: 'auto', marginRight: '10px', objectFit: 'contain' }} />
             MOKLETERS
           </a>
 
@@ -535,9 +810,9 @@ export default function App() {
                 <a
                   href="#"
                   id={`nav-${link.toLowerCase().replace(' ', '-')}`}
-                  className={activeNav === link ? 'active' : ''}
-                  onClick={e => { e.preventDefault(); handleNavClick(link) }}
-                  aria-current={activeNav === link ? 'page' : undefined}
+                  className={(activeNav === link || (link === 'Chant' && activeNav === 'ChantDetail')) ? 'active' : ''}
+                  onClick={e => { e.preventDefault(); handleNavClick(link); setDetailChant(null) }}
+                  aria-current={(activeNav === link || (link === 'Chant' && activeNav === 'ChantDetail')) ? 'page' : undefined}
                 >
                   {link}
                 </a>
@@ -598,13 +873,23 @@ export default function App() {
         {renderPage()}
       </main>
 
-      {/* BILAH PEMUTAR */}
+      {/* BILAH PEMUTAR — FULLY FUNCTIONAL */}
       <PlayerBar
         track={currentTrack}
         isPlaying={isPlaying}
         isLiked={isLiked}
-        onPlayPause={() => setIsPlaying(p => !p)}
+        isShuffle={isShuffle}
+        isRepeat={isRepeat}
+        volume={volume}
+        onPlayPause={handlePlayPause}
         onLike={() => setIsLiked(l => !l)}
+        onPrev={handlePrev}
+        onNext={handleNext}
+        onShuffle={() => setIsShuffle(s => !s)}
+        onRepeat={() => setIsRepeat(r => !r)}
+        onSeek={handleSeek}
+        onVolume={handleVolume}
+        onOpenDetail={handleOpenDetail}
       />
     </>
   )

@@ -1750,6 +1750,12 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   to   { transform: scaleY(1.0); }
 }
 
+@keyframes chantBar {
+  from { transform: scaleY(0.3); opacity: 0.6; }
+  to   { transform: scaleY(1.0); opacity: 1; }
+}
+
+
 /* Card info section */
 .chant-card-info {
   padding: 14px 14px 12px;
@@ -3421,4 +3427,433 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .player-bar { height: 64px; padding: 0 8px; }
   .player-track-like { display: none; }
   .ctrl-btn-play { width: 36px !important; height: 36px !important; }
+}
+
+/* =============================================
+   PLAYER BAR — ACTIVE BUTTON STATES
+   ============================================= */
+.ctrl-btn--active {
+  color: var(--color-primary-bright) !important;
+  position: relative;
+}
+.ctrl-btn--active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-primary-bright);
+}
+
+/* =============================================
+   CHANT DETAIL PAGE
+   ============================================= */
+.chant-detail-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chant-detail-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(80px) saturate(1.2) brightness(0.3);
+  transform: scale(1.2);
+  z-index: 0;
+}
+
+.chant-detail-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10,10,15,0.85) 0%, rgba(10,10,15,0.97) 100%);
+  z-index: 0;
+}
+
+.chant-detail-layout {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 48px;
+  align-items: start;
+  padding-top: 100px;
+  padding-bottom: 120px;
+  min-height: 100vh;
+}
+
+/* ── LEFT: Player Panel ── */
+.chant-detail-player {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 80px;
+}
+
+.chant-detail-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: var(--color-outline);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  padding: 0;
+  transition: color var(--transition-fast);
+}
+.chant-detail-back:hover { color: var(--color-on-surface); }
+
+.chant-detail-artwork-wrap {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 1;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.7);
+}
+
+.chant-detail-artwork {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.chant-detail-artwork--playing {
+  transform: scale(1.03);
+}
+
+.chant-detail-artwork-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  box-shadow: inset 0 0 0 2px rgba(229,57,53,0.5), 0 0 60px rgba(229,57,53,0.3);
+  animation: detailGlow 2s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes detailGlow {
+  from { box-shadow: inset 0 0 0 2px rgba(229,57,53,0.3), 0 0 40px rgba(229,57,53,0.2); }
+  to   { box-shadow: inset 0 0 0 2px rgba(229,57,53,0.7), 0 0 80px rgba(229,57,53,0.5); }
+}
+
+.chant-detail-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.chant-detail-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-on-surface);
+  margin: 0 0 4px 0;
+  line-height: 1.1;
+}
+
+.chant-detail-artist {
+  font-size: 13px;
+  color: var(--color-outline);
+  margin: 0;
+}
+
+.chant-detail-like {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-outline);
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+.chant-detail-like:hover { border-color: var(--color-primary); color: var(--color-primary); }
+.chant-detail-like--active { color: var(--color-primary-bright); border-color: var(--color-primary-bright); background: rgba(229,57,53,0.15); }
+
+/* Progress */
+.chant-detail-progress-section { display: flex; flex-direction: column; gap: 6px; }
+
+.chant-detail-progress-track {
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 99px;
+  cursor: pointer;
+  position: relative;
+  transition: height 0.15s ease;
+}
+.chant-detail-progress-track:hover { height: 6px; }
+
+.chant-detail-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #e53935, #ff6060);
+  border-radius: 99px;
+  position: relative;
+  transition: width 0.3s linear;
+}
+
+.chant-detail-progress-thumb {
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%) scale(0);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ff6060;
+  transition: transform 0.15s ease;
+}
+.chant-detail-progress-track:hover .chant-detail-progress-thumb { transform: translateY(-50%) scale(1); }
+
+.chant-detail-times {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--color-outline);
+}
+
+/* Controls */
+.chant-detail-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.chant-detail-ctrl {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-outline);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all var(--transition-fast);
+}
+.chant-detail-ctrl:hover { color: var(--color-on-surface); background: rgba(255,255,255,0.06); }
+.chant-detail-ctrl--active { color: var(--color-primary-bright); }
+
+.chant-detail-play-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e53935, #c62828);
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(229,57,53,0.45);
+  transition: all 0.2s ease;
+}
+.chant-detail-play-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 12px 32px rgba(229,57,53,0.6);
+}
+.chant-detail-play-btn:active { transform: scale(0.96); }
+
+/* Queue preview */
+.chant-detail-queue {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.chant-detail-queue-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+.chant-detail-queue-item:hover { background: rgba(255,255,255,0.08); }
+.chant-detail-queue-item--right { flex-direction: row-reverse; }
+.chant-detail-queue-item img { width: 36px; height: 36px; border-radius: 6px; object-fit: cover; flex-shrink: 0; }
+
+/* ── RIGHT: Lyrics Panel ── */
+.chant-detail-lyrics-panel {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 20px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  backdrop-filter: blur(16px);
+  position: sticky;
+  top: 80px;
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+}
+
+.chant-detail-lyrics-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chant-detail-lyrics-label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  color: var(--color-outline);
+  text-transform: uppercase;
+}
+
+.chant-detail-lyrics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.chant-detail-lyric-line {
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-size: 24px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+  text-align: center;
+}
+
+.chant-detail-lyric-line--active {
+  font-size: 30px;
+  color: #fff;
+  background: rgba(229,57,53,0.12);
+  border: 1px solid rgba(229,57,53,0.2);
+}
+
+.chant-detail-lyric-line--prev {
+  color: rgba(255,255,255,0.55);
+  font-size: 22px;
+}
+
+.chant-detail-lyric-line--prev-far {
+  color: rgba(255,255,255,0.2);
+  font-size: 18px;
+}
+
+.chant-detail-lyric-line--next {
+  color: rgba(255,255,255,0.55);
+  font-size: 22px;
+}
+
+.chant-detail-lyric-line--next-far {
+  color: rgba(255,255,255,0.2);
+  font-size: 18px;
+}
+
+.chant-detail-lyric-line:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+/* Sync bar */
+.chant-detail-lyrics-sync {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.chant-detail-lyrics-sync-bar {
+  flex: 1;
+  height: 2px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.chant-detail-lyrics-sync-fill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: 99px;
+  transition: width 0.5s linear;
+}
+
+.chant-detail-lyrics-sync-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--color-outline);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Stats */
+.chant-detail-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding-top: 20px;
+}
+
+.chant-detail-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.chant-detail-stat-value {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--color-on-surface);
+}
+
+.chant-detail-stat-label {
+  font-size: 10px;
+  color: var(--color-outline);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* live-dot */
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e53935;
+  animation: livePulse 1.2s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .chant-detail-layout { grid-template-columns: 1fr; }
+  .chant-detail-player { position: static; }
+  .chant-detail-lyrics-panel { position: static; max-height: none; }
 }
