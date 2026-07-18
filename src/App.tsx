@@ -877,12 +877,6 @@ export default function App() {
     if (audioRef.current) audioRef.current.volume = v / 100
   }, [])
 
-  // ── ChantLibrary onPlay (card click → start playing + go to detail) ──
-  const handleLibraryPlay = useCallback((chant: ChantData) => {
-    playChant(chant)
-    setDetailChant(chant)
-    setActiveNav('Playlist')
-  }, [playChant])
 
   // ── Open detail of currently playing chant ──
   const handleOpenDetail = useCallback(() => {
@@ -956,7 +950,7 @@ export default function App() {
           <ChantLibrary
             playingChantId={playingChantId}
             isPlaying={isPlaying}
-            onCardClick={handleLibraryPlay}
+            onCardClick={playChant}
             search={searchQuery}
             setSearch={setSearchQuery}
           />
