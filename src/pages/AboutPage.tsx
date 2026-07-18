@@ -1,22 +1,80 @@
 import mokletsMascot from '../assets/mascot.png'
 import mokletersLogo from '../assets/Mokleters logo.png'
 
+/* =============================================
+   LUCIDE-STYLE SVG ICONS
+   ============================================= */
+const IconUsers = ({ size = 32 }: { size?: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    style={{ color: 'var(--color-primary-bright)' }}
+  >
+    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+    <circle cx="9" cy="7" r="4" />
+    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+  </svg>
+)
+
+const IconFlame = ({ size = 32 }: { size?: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    style={{ color: 'var(--color-primary-bright)' }}
+  >
+    <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
+  </svg>
+)
+
+const IconPalette = ({ size = 32 }: { size?: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    style={{ color: 'var(--color-primary-bright)' }}
+  >
+    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 14.7255 3.09032 17.1962 4.85857 19C5.03457 19.176 5.0977 19.4357 5.01804 19.675C4.84687 20.1884 4.75 20.7334 4.75 21.3C4.75 21.6866 5.0634 22 5.45 22H12Z" />
+    <circle cx="7.5" cy="10.5" r="1.5" fill="currentColor" />
+    <circle cx="11.5" cy="7.5" r="1.5" fill="currentColor" />
+    <circle cx="16.5" cy="9.5" r="1.5" fill="currentColor" />
+    <circle cx="15.5" cy="14.5" r="1.5" fill="currentColor" />
+  </svg>
+)
+
 export default function AboutPage() {
   const values = [
     {
       title: 'Solidaritas Korsa',
       desc: 'Satu suara, satu jiwa. Kebersamaan di tribun utara maupun luar lapangan yang mengakar erat di sanubari setiap siswa SMK Telkom Malang.',
-      icon: '🤝'
+      icon: <IconUsers />
     },
     {
       title: 'Loyalitas Tanpa Batas',
       desc: 'Mendukung Wikusama berjuang hingga detik terakhir pertandingan. Kemenangan disambut, kekalahan tetap dikawal.',
-      icon: '🔥'
+      icon: <IconFlame />
     },
     {
       title: 'Kreativitas Tribun',
       desc: 'Melodi chant baru, koreografi kertas, hingga bendera raksasa (giant flag) digarap mandiri demi menghidupkan stadion.',
-      icon: '🎨'
+      icon: <IconPalette />
     }
   ]
 
