@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import type { PlayerTrack } from './App'
+import type { ChantData } from './lyrics'
+import { CHANTS } from './lyrics'
 
 /* =============================================
    ICONS
@@ -54,33 +55,53 @@ const IconSortDown = () => (
   </svg>
 )
 
-/* =============================================
-   CHANT DATA
-   ============================================= */
-const CHANTS = [
-  { id: 1, title: 'Mokleters Pride', duration: '3:45', category: 'Anthem Pembuka', tag: 'Pembuka', popular: true, img: '/chant-art.png', artist: 'Fans Mokleters', plays: '1.5Jt' },
-  { id: 2, title: 'Red Storm', duration: '2:12', category: 'Tempo Pertandingan', tag: 'Pertandingan', popular: false, img: '/chant-art.png', artist: 'Paduan Suara Tribun Utara', plays: '892Rb' },
-  { id: 3, title: 'Victory Roar', duration: '4:05', category: 'Chant Kemenangan', tag: 'Kemenangan', popular: true, img: '/chant-art.png', artist: 'Unit Perkusi', plays: '740Rb' },
-  { id: 4, title: 'We Are One', duration: '2:50', category: 'Lagu Penutup', tag: 'Penutup', popular: false, img: '/chant-art.png', artist: 'Ensembel Vokal 2025', plays: '612Rb' },
-  { id: 5, title: 'Stadium Shaker', duration: '1:45', category: 'Tempo Pertandingan', tag: 'Pertandingan', popular: false, img: '/chant-art.png', artist: 'Ultras SMK Malang', plays: '541Rb' },
-  { id: 6, title: 'Iron Hearts', duration: '3:18', category: 'Anthem Pembuka', tag: 'Pembuka', popular: false, img: '/chant-art.png', artist: 'Fans Mokleters', plays: '498Rb' },
-  { id: 7, title: 'Blood & Pride', duration: '2:40', category: 'Tempo Pertandingan', tag: 'Pertandingan', popular: true, img: '/chant-art.png', artist: 'Paduan Suara Tribun Utara', plays: '432Rb' },
-  { id: 8, title: 'Telkom Rising', duration: '3:55', category: 'Chant Kemenangan', tag: 'Kemenangan', popular: false, img: '/chant-art.png', artist: 'Unit Perkusi', plays: '387Rb' },
-]
+const FILTERS = ['Semua Chant', 'Pembuka', 'Pertandingan', 'Kemenangan', 'Kebanggaan']
 
-const FILTERS = ['Semua Chant', 'Pembuka', 'Pertandingan', 'Kemenangan', 'Penutup']
+type ChantType = ChantData
+
+/* =============================================
+   MINI PROGRESS BAR (shown on playing card)
+   ============================================= */
+function MiniProgressBar({ progress }: { progress: number }) {
+  return (
+    <div style={{
+      width: '100%',
+      height: 3,
+      background: 'rgba(255,255,255,0.12)',
+      borderRadius: 99,
+      overflow: 'hidden',
+      marginTop: 8,
+    }}>
+      <div style={{
+        height: '100%',
+        width: `${progress}%`,
+        background: 'linear-gradient(90deg, #e53935, #ff6b35)',
+        borderRadius: 99,
+        transition: 'width 0.3s linear',
+      }} />
+    </div>
+  )
+}
 
 /* =============================================
    CHANT CARD (Grid View)
    ============================================= */
+const IconVolume2 = () => (
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="11,5 6,9 2,9 2,15 6,15 11,19" /><path d="M15.54 8.46a5,5,0,0,1,0,7.07" />
+  </svg>
+)
+
 function ChantCard({
   chant,
   isPlaying,
   onPlay,
+  progress,
 }: {
-  chant: typeof CHANTS[0]
+  chant: ChantType
   isPlaying: boolean
   onPlay: () => void
+  progress: number
 }) {
   const [liked, setLiked] = useState(false)
   const [hovered, setHovered] = useState(false)
@@ -151,8 +172,9 @@ function ChantCard({
 
       {/* Info */}
       <div className="chant-card-info">
-        <h3 className="chant-card-title">{chant.title}</h3>
+        <h3 className="chant-card-title" style={{ color: isPlaying ? '#ff6060' : undefined }}>{chant.title}</h3>
         <p className="chant-card-meta">{chant.duration} • {chant.category}</p>
+        {isPlaying && <MiniProgressBar progress={progress} />}
         <div className="chant-card-actions">
           <button
             className={`chant-card-action-btn${liked ? ' chant-card-action-btn--liked' : ''}`}
@@ -163,6 +185,11 @@ function ChantCard({
           >
             <IconHeart filled={liked} size={14} />
           </button>
+          {isPlaying && (
+            <span style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 11, color: '#ff6060' }}>
+              <IconVolume2 /> Diputar
+            </span>
+          )}
           <button
             className="chant-card-action-btn"
             type="button"
@@ -184,11 +211,13 @@ function ChantRow({
   index,
   isPlaying,
   onPlay,
+  progress,
 }: {
-  chant: typeof CHANTS[0]
+  chant: ChantType
   index: number
   isPlaying: boolean
   onPlay: () => void
+  progress: number
 }) {
   const [liked, setLiked] = useState(false)
   const [hovered, setHovered] = useState(false)
@@ -212,8 +241,9 @@ function ChantRow({
       </div>
       <img src={chant.img} alt="" aria-hidden="true" className="chant-row-thumb" />
       <div className="chant-row-info">
-        <p className="chant-row-title">{chant.title}</p>
+        <p className="chant-row-title" style={{ color: isPlaying ? '#ff6060' : undefined }}>{chant.title}</p>
         <p className="chant-row-artist">{chant.artist}</p>
+        {isPlaying && <MiniProgressBar progress={progress} />}
       </div>
       <span className="chant-row-category">{chant.category}</span>
       <span className="chant-row-plays">{chant.plays}</span>
@@ -228,6 +258,14 @@ function ChantRow({
           <IconHeart filled={liked} size={14} />
         </button>
         <span className="chant-row-duration">{chant.duration}</span>
+        <button
+          type="button"
+          className="chant-row-play-inline"
+          onClick={onPlay}
+          aria-label={isPlaying ? `Pause ${chant.title}` : `Play ${chant.title}`}
+        >
+          {isPlaying ? <IconPause size={14} /> : <IconPlay size={14} />}
+        </button>
         <button className="chant-card-action-btn" type="button" aria-label="More options"><IconMoreHorizontal /></button>
       </div>
     </li>
@@ -237,10 +275,17 @@ function ChantRow({
 /* =============================================
    CHANT LIBRARY PAGE
    ============================================= */
-export default function ChantLibrary({ onPlay }: { onPlay: (track: Partial<PlayerTrack>) => void }) {
+export default function ChantLibrary({
+  playingChantId,
+  isPlaying,
+  onCardClick,
+}: {
+  playingChantId: number | null
+  isPlaying: boolean
+  onCardClick: (chant: ChantData) => void
+}) {
   const [activeFilter, setActiveFilter] = useState('Semua Chant')
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
-  const [playingId, setPlayingId] = useState<number | null>(1)
   const [search, setSearch] = useState('')
 
   const filtered = CHANTS.filter(c => {
@@ -249,22 +294,6 @@ export default function ChantLibrary({ onPlay }: { onPlay: (track: Partial<Playe
       c.category.toLowerCase().includes(search.toLowerCase())
     return matchFilter && matchSearch
   })
-
-  const handlePlay = (chant: typeof CHANTS[0]) => {
-    if (playingId === chant.id) {
-      setPlayingId(null)
-    } else {
-      setPlayingId(chant.id)
-      onPlay({
-        title: chant.title,
-        artist: `${chant.category} • Fans Mokleters`,
-        img: chant.img,
-        duration: chant.duration,
-        currentTime: '0:00',
-        progress: 0,
-      })
-    }
-  }
 
   return (
     <div className="chant-library" id="chant-library">
@@ -275,9 +304,20 @@ export default function ChantLibrary({ onPlay }: { onPlay: (track: Partial<Playe
           <div>
             <h1 className="chant-library-title">Perpustakaan Chant</h1>
             <p className="chant-library-subtitle">
-              Bakar semangat juang. Akses koleksi lengkap anthem stadion Mokleters,<br className="br-desktop" />
-              dirancang untuk mengguncang tribun dan menyatukan kebanggaan.
+              Klik card chant untuk membuka detail lirik &amp; memutar audio asli Mokleters.<br className="br-desktop" />
+              Dirancang untuk mengguncang tribun dan menyatukan kebanggaan.
             </p>
+            <div style={{ marginTop: 16, display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
+              <span style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 99, padding: '6px 16px', fontSize: 13 }}>
+                🎵 {CHANTS.length} Chant Tersedia
+              </span>
+              <span style={{ background: 'rgba(255,80,80,0.15)', border: '1px solid rgba(255,80,80,0.3)', borderRadius: 99, padding: '6px 16px', fontSize: 13, color: '#ff6060' }}>
+                ● Audio Asli Mokleters
+              </span>
+              <span style={{ background: 'rgba(80,180,255,0.10)', border: '1px solid rgba(80,180,255,0.25)', borderRadius: 99, padding: '6px 16px', fontSize: 13, color: '#60c8ff' }}>
+                📝 Lirik Sinkron
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -285,12 +325,11 @@ export default function ChantLibrary({ onPlay }: { onPlay: (track: Partial<Playe
       {/* ── BILAH KONTROL ── */}
       <div className="chant-controls-bar">
         <div className="container chant-controls-inner">
-          {/* Pil Filter */}
           <nav className="chant-filters" aria-label="Filter chant berdasarkan kategori">
             {FILTERS.map(f => (
               <button
                 key={f}
-                id={`filter-${f.toLowerCase().replace(' ', '-')}`}
+                id={`filter-${f.toLowerCase().replace(/ /g, '-')}`}
                 className={`chant-filter-pill${activeFilter === f ? ' chant-filter-pill--active' : ''}`}
                 type="button"
                 onClick={() => setActiveFilter(f)}
@@ -301,7 +340,6 @@ export default function ChantLibrary({ onPlay }: { onPlay: (track: Partial<Playe
             ))}
           </nav>
 
-          {/* Kanan: cari + urutkan + mode tampilan */}
           <div className="chant-controls-right">
             <label className="chant-search-box" htmlFor="chant-search-input">
               <IconSearch />
@@ -321,41 +359,19 @@ export default function ChantLibrary({ onPlay }: { onPlay: (track: Partial<Playe
             </button>
 
             <div className="chant-view-toggle" role="group" aria-label="Mode tampilan">
-              <button
-                id="view-grid-btn"
-                className={`chant-view-btn${viewMode === 'grid' ? ' chant-view-btn--active' : ''}`}
-                type="button"
-                aria-label="Tampilan grid"
-                aria-pressed={viewMode === 'grid'}
-                onClick={() => setViewMode('grid')}
-              >
-                <IconGrid />
-              </button>
-              <button
-                id="view-list-btn"
-                className={`chant-view-btn${viewMode === 'list' ? ' chant-view-btn--active' : ''}`}
-                type="button"
-                aria-label="Tampilan daftar"
-                aria-pressed={viewMode === 'list'}
-                onClick={() => setViewMode('list')}
-              >
-                <IconRows />
-              </button>
+              <button id="view-grid-btn" className={`chant-view-btn${viewMode === 'grid' ? ' chant-view-btn--active' : ''}`} type="button" aria-label="Tampilan grid" aria-pressed={viewMode === 'grid'} onClick={() => setViewMode('grid')}><IconGrid /></button>
+              <button id="view-list-btn" className={`chant-view-btn${viewMode === 'list' ? ' chant-view-btn--active' : ''}`} type="button" aria-label="Tampilan daftar" aria-pressed={viewMode === 'list'} onClick={() => setViewMode('list')}><IconRows /></button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* ── GRID CHANT ── */}
+      {/* ── GRID / LIST ── */}
       <div className="container" style={{ paddingBottom: 100 }}>
         {filtered.length === 0 ? (
           <div className="chant-empty" role="status">
-            <p style={{ fontFamily: 'var(--font-display)', fontSize: 28, color: 'var(--color-outline)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-              Chant tidak ditemukan
-            </p>
-            <p style={{ fontSize: 14, color: 'var(--color-outline)', marginTop: 8 }}>
-              Coba gunakan filter atau kata kunci pencarian lainnya.
-            </p>
+            <p style={{ fontFamily: 'var(--font-display)', fontSize: 28, color: 'var(--color-outline)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Chant tidak ditemukan</p>
+            <p style={{ fontSize: 14, color: 'var(--color-outline)', marginTop: 8 }}>Coba gunakan filter atau kata kunci pencarian lainnya.</p>
           </div>
         ) : viewMode === 'grid' ? (
           <div className="chant-grid" role="list" aria-label="Grid perpustakaan chant">
@@ -363,8 +379,9 @@ export default function ChantLibrary({ onPlay }: { onPlay: (track: Partial<Playe
               <ChantCard
                 key={chant.id}
                 chant={chant}
-                isPlaying={playingId === chant.id}
-                onPlay={() => handlePlay(chant)}
+                isPlaying={playingChantId === chant.id && isPlaying}
+                onPlay={() => onCardClick(chant)}
+                progress={0}
               />
             ))}
           </div>
@@ -383,8 +400,9 @@ export default function ChantLibrary({ onPlay }: { onPlay: (track: Partial<Playe
                   key={chant.id}
                   chant={chant}
                   index={i}
-                  isPlaying={playingId === chant.id}
-                  onPlay={() => handlePlay(chant)}
+                  isPlaying={playingChantId === chant.id && isPlaying}
+                  onPlay={() => onCardClick(chant)}
+                  progress={0}
                 />
               ))}
             </ol>
