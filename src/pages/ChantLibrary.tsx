@@ -563,36 +563,70 @@ export default function ChantLibrary({
         }
 
         .match-flow-lyrics-panel {
-          background: rgba(10, 10, 12, 0.95) !important;
-          border: 1px solid rgba(255, 255, 255, 0.05) !important;
+          background: linear-gradient(180deg, rgba(14, 14, 18, 0.98) 0%, rgba(8, 8, 10, 0.99) 100%) !important;
+          border: 1px solid rgba(161, 15, 18, 0.2) !important;
           border-top: none !important;
           border-bottom-left-radius: 16px !important;
           border-bottom-right-radius: 16px !important;
-          padding: 20px 24px !important;
-          box-shadow: inset 0 8px 24px rgba(0, 0, 0, 0.9) !important;
-          animation: slideDownFade 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+          padding: 24px !important;
+          box-shadow: inset 0 8px 30px rgba(0, 0, 0, 0.95), 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+          animation: slideDownFade 0.35s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
           overflow: hidden;
           width: 100%;
           box-sizing: border-box;
-          text-align: left;
+          text-align: center;
+        }
+
+        .match-flow-lyrics-header {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 16px;
+          border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+          padding-bottom: 12px;
+        }
+
+        .match-flow-lyrics-badge {
+          font-size: 9px;
+          font-weight: 800;
+          color: var(--color-primary-bright);
+          letter-spacing: 0.15em;
+          background: rgba(161, 15, 18, 0.12);
+          padding: 4px 10px;
+          border-radius: 4px;
+          border: 1px solid rgba(161, 15, 18, 0.25);
+          text-transform: uppercase;
         }
 
         .match-flow-lyrics-content {
           display: flex;
           flex-direction: column;
-          gap: 8px;
+          gap: 10px;
           max-height: 220px;
           overflow-y: auto;
-          padding-right: 8px;
+          padding: 0 8px;
+          align-items: center;
         }
 
         .match-flow-lyric-line {
-          font-size: 13.5px;
-          line-height: 1.6;
-          color: rgba(255, 255, 255, 0.8);
-          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+          font-size: 15px;
+          line-height: 1.8;
+          color: rgba(255, 255, 255, 0.9);
+          text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
           font-weight: 500;
           margin: 0;
+          transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+          padding: 4px 16px;
+          border-radius: 8px;
+          width: 100%;
+          max-width: 500px;
+          box-sizing: border-box;
+        }
+
+        .match-flow-lyric-line:hover {
+          color: var(--color-primary-bright);
+          background: rgba(255, 255, 255, 0.03);
+          transform: scale(1.02);
+          text-shadow: 0 0 8px rgba(161, 15, 18, 0.4);
         }
 
         @media (max-width: 768px) {
@@ -792,6 +826,9 @@ export default function ChantLibrary({
                       {/* Expandable Lyrics Area */}
                       {isExpanded && (
                         <div className="match-flow-lyrics-panel">
+                          <div className="match-flow-lyrics-header">
+                            <span className="match-flow-lyrics-badge">Lirik Chant Tribun</span>
+                          </div>
                           <div className="match-flow-lyrics-content">
                             {ch.lyrics.map((line, lIdx) => (
                               <p key={lIdx} className="match-flow-lyric-line">{line.text}</p>
