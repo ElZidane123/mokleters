@@ -2,7 +2,6 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import './index.css'
 import ChantLibrary from './pages/ChantLibrary'
 import PlaylistPage from './pages/PlaylistPage'
-import LeaderboardPage from './pages/LeaderboardPage'
 import ChantDetailPage from './pages/ChantDetailPage'
 import mokletersLogo from './assets/Mokleters logo.png'
 import mokletsMascot from './assets/mascot.png'
@@ -525,7 +524,7 @@ function HomePage({ onPlay }: { onPlay: () => void }) {
             </div>
             <div>
               <p className="footer-col-title">Indeks Situs</p>
-              <ul className="footer-links">{['Tentang Kami', 'Papan Peringkat', 'Sejarah Sekolah', 'Dukungan Konten'].map(l => <li key={l}><a href="#">{l}</a></li>)}</ul>
+              <ul className="footer-links">{['Tentang Kami', 'Sejarah Sekolah', 'Dukungan Konten'].map(l => <li key={l}><a href="#">{l}</a></li>)}</ul>
             </div>
             <div>
               <p className="footer-col-title">Buletin</p>
@@ -582,7 +581,7 @@ export default function App() {
   // ── Derived progress ──
   const progress = duration > 0 ? (elapsed / duration) * 100 : 0
 
-  const navLinks = ['Beranda', 'Chant', 'Playlist', 'Papan Peringkat', 'Tentang']
+  const navLinks = ['Beranda', 'Chant', 'Playlist', 'Tentang']
 
   // ── Stop & cleanup audio ──
   const stopAudio = useCallback(() => {
@@ -805,9 +804,6 @@ export default function App() {
             onVolume={handleVolume}
           />
         )
-      case 'Papan Peringkat':
-      case 'Leaderboard':
-        return <LeaderboardPage onPlay={() => { }} />
       default:
         return <HomePage onPlay={() => {
           if (CHANTS[0]) playChant(CHANTS[0])
