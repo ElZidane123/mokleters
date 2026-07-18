@@ -90,17 +90,7 @@ const IconArrowRight = () => (
   </svg>
 )
 
-const IconZap = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2" />
-  </svg>
-)
 
-const IconMapPin = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
-  </svg>
-)
 
 const IconTrophy = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -126,13 +116,6 @@ const IconQueue = () => (
 /* =============================================
    DATA
    ============================================= */
-const anthemData = [
-  { id: 1, title: 'Merah Putih Kebanggaan', tag: 'classic', tagLabel: 'Klasik', plays: '1.5Jt', desc: 'Anthem utama SMK Telkom Malang. Dinyanyikan dengan bangga sebelum setiap pertandingan dimulai.', img: '/anthem1.png' },
-  { id: 2, title: 'Sabit Utara', tag: 'anthem', tagLabel: 'Anthem', plays: '892Rb', desc: 'Chant membakar semangat dari Tribun Utara.', img: '/anthem2.png' },
-  { id: 3, title: 'Ritme Telkom', tag: 'top10', tagLabel: 'Top 10', plays: '740Rb', desc: 'Anthem berirama yang dipimpin oleh perkusi.', img: '/anthem3.png' },
-  { id: 4, title: 'Braket Gelora', tag: 'anthem', tagLabel: 'Anthem', plays: '612Rb', desc: 'Melodi klasik penuh pengabdian untuk generasi baru.', img: '/anthem1.png' },
-]
-
 const leaderboardData = [
   { rank: 1, title: 'Kami Datang Lagi', artist: 'Chant Mokleters', plays: '1.5Jt putaran', img: '/anthem1.png' },
   { rank: 2, title: 'SMK Telkom Malang Kami Datang', artist: 'Anthem Pembuka', plays: '892Rb putaran', img: '/anthem2.png' },
@@ -140,8 +123,6 @@ const leaderboardData = [
   { rank: 4, title: 'Mokleters Mokleters Wikusama', artist: 'Chant Kebanggaan', plays: '612Rb putaran', img: '/anthem1.png' },
   { rank: 5, title: 'Kami Pendukung Telkom Malang', artist: 'Tempo Pertandingan', plays: '541Rb putaran', img: '/anthem2.png' },
 ]
-
-const tagClass: Record<string, string> = { classic: 'tag-classic', anthem: 'tag-anthem', top10: 'tag-top10' }
 
 /* =============================================
    PLAYER STATE (shared across pages)
@@ -402,12 +383,23 @@ function PlayerBar({
    HOME PAGE
    ============================================= */
 function HomePage({
-  onPlay,
-  onLaunchCrowdMode,
+  onPlayTrack,
+  onNavigate,
 }: {
-  onPlay: () => void
-  onLaunchCrowdMode: () => void
+  onPlayTrack: (chant: any) => void
+  onNavigate: (page: string) => void
 }) {
+  const popularChants = [
+    { chant: CHANTS.find(c => c.id === 6)!, plays: '1.5Jt', tagLabel: 'Anthem Penutup', tagClass: 'tag-classic' },
+    { chant: CHANTS.find(c => c.id === 1)!, plays: '892Rb', tagLabel: 'Chant Utama', tagClass: 'tag-anthem' },
+    { chant: CHANTS.find(c => c.id === 2)!, plays: '740Rb', tagLabel: 'Anthem Pembuka', tagClass: 'tag-top10' },
+    { chant: CHANTS.find(c => c.id === 4)!, plays: '612Rb', tagLabel: 'Chant Kebanggaan', tagClass: 'tag-anthem' },
+  ].filter(item => item.chant !== undefined);
+
+  const featured = popularChants[0];
+  const sideChants = [popularChants[1], popularChants[2]];
+  const bottomChant = popularChants[3];
+
   return (
     <>
       {/* HERO */}
@@ -425,10 +417,10 @@ function HomePage({
             rasakan riuhnya tribun, dan jaga agar bara merah putih tetap menyala.
           </p>
           <div className="hero-actions">
-            <button id="hero-explore-btn" className="btn btn-primary" type="button">
+            <button id="hero-explore-btn" className="btn btn-primary" type="button" onClick={() => onNavigate('Chant')}>
               Jelajahi Chant <IconArrowRight />
             </button>
-            <button id="hero-rankings-btn" className="btn btn-glass" type="button">
+            <button id="hero-rankings-btn" className="btn btn-glass" type="button" onClick={() => onNavigate('Tentang')}>
               Tentang
             </button>
           </div>
@@ -440,7 +432,7 @@ function HomePage({
         <div className="container">
           <dl className="stats-grid">
             {[
-              { value: '247', label: 'Chant Tersedia' },
+              { value: `${CHANTS.length}`, label: 'Chant Tersedia' },
               { value: '12K', label: 'Pendukung Aktif' },
               { value: '94', label: 'Pertandingan Diliput' },
               { value: '3.2Jt', label: 'Total Putaran' },
@@ -463,90 +455,84 @@ function HomePage({
               <h2 className="section-title">Anthem Terpopuler</h2>
               <p style={{ fontSize: 13, color: 'var(--color-outline)', marginTop: 4 }}>Chant yang paling sering dinyanyikan di stadion minggu ini.</p>
             </div>
-            <a href="#" id="view-all-anthems" className="section-view-all">Lihat Semua <IconArrowRight /></a>
+            <a href="#" id="view-all-anthems" className="section-view-all" onClick={e => { e.preventDefault(); onNavigate('Chant'); }}>Lihat Semua <IconArrowRight /></a>
           </header>
-          <div className="anthems-grid">
-            <article className="anthem-featured" id="anthem-featured-card">
-              <div className="playlist-card">
-                <img src={anthemData[0].img} alt={anthemData[0].title} className="playlist-card-img" />
-                <div className="playlist-card-vignette" aria-hidden="true" />
-                <div className="playlist-card-content">
-                  <span className={`playlist-card-tag ${tagClass[anthemData[0].tag]}`}>{anthemData[0].tagLabel}</span>
-                  <h3 className="playlist-card-title">{anthemData[0].title}</h3>
-                  <p className="playlist-card-meta">{anthemData[0].plays} putaran</p>
-                  <p style={{ fontSize: 13, color: 'rgba(229,226,225,0.60)', marginTop: 6, lineHeight: 1.5 }}>{anthemData[0].desc}</p>
-                  <button id="featured-play-btn" className="playlist-card-play" type="button" aria-label={`Putar ${anthemData[0].title}`} onClick={onPlay}>
-                    <IconPlay size={18} />
-                  </button>
-                </div>
-              </div>
-            </article>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              {[1, 2].map((i) => (
-                <div key={i} className="anthem-side">
-                  <div className="playlist-card">
-                    <img src={anthemData[i].img} alt={anthemData[i].title} className="playlist-card-img" />
-                    <div className="playlist-card-vignette" aria-hidden="true" />
-                    <div className="playlist-card-content">
-                      <span className={`playlist-card-tag ${tagClass[anthemData[i].tag]}`}>{anthemData[i].tagLabel}</span>
-                      <h3 className="playlist-card-title">{anthemData[i].title}</h3>
-                      <p className="playlist-card-meta">{anthemData[i].plays} putaran</p>
-                    </div>
+          {featured && (
+            <div className="anthems-grid">
+              <article className="anthem-featured" id="anthem-featured-card">
+                <div className="playlist-card">
+                  <img src={featured.chant.img} alt={featured.chant.title} className="playlist-card-img" />
+                  <div className="playlist-card-vignette" aria-hidden="true" />
+                  <div className="playlist-card-content">
+                    <span className={`playlist-card-tag ${featured.tagClass}`}>{featured.tagLabel}</span>
+                    <h3 className="playlist-card-title">{featured.chant.title}</h3>
+                    <p className="playlist-card-meta">{featured.plays} putaran</p>
+                    <p style={{ fontSize: 13, color: 'rgba(229,226,225,0.60)', marginTop: 6, lineHeight: 1.5 }}>
+                      Lirik: {featured.chant.lyrics.slice(0, 3).map(l => l.text).join(', ')}...
+                    </p>
+                    <button id="featured-play-btn" className="playlist-card-play" type="button" aria-label={`Putar ${featured.chant.title}`} onClick={() => onPlayTrack(featured.chant)}>
+                      <IconPlay size={18} />
+                    </button>
                   </div>
                 </div>
-              ))}
-              <div className="anthem-side-inner" id="anthem-braket-row" role="article">
-                <img src={anthemData[3].img} alt={anthemData[3].title} className="anthem-side-thumb" />
-                <div className="anthem-side-info">
-                  <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-primary-container)', marginBottom: 4 }}>{anthemData[3].tagLabel}</p>
-                  <p className="anthem-side-title">{anthemData[3].title}</p>
-                  <p className="anthem-side-sub">{anthemData[3].desc}</p>
-                </div>
-                <button id="anthem-braket-play" className="anthem-side-btn" type="button" onClick={onPlay}>Dengar Sekarang <IconArrowRight /></button>
+              </article>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                {sideChants.map((item, idx) => item && (
+                  <div key={idx} className="anthem-side" style={{ cursor: 'pointer' }} onClick={() => onPlayTrack(item.chant)}>
+                    <div className="playlist-card">
+                      <img src={item.chant.img} alt={item.chant.title} className="playlist-card-img" />
+                      <div className="playlist-card-vignette" aria-hidden="true" />
+                      <div className="playlist-card-content">
+                        <span className={`playlist-card-tag ${item.tagClass}`}>{item.tagLabel}</span>
+                        <h3 className="playlist-card-title">{item.chant.title}</h3>
+                        <p className="playlist-card-meta">{item.plays} putaran</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                {bottomChant && (
+                  <div className="anthem-side-inner" id="anthem-braket-row" role="article">
+                    <img src={bottomChant.chant.img} alt={bottomChant.chant.title} className="anthem-side-thumb" />
+                    <div className="anthem-side-info">
+                      <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-primary-container)', marginBottom: 4 }}>{bottomChant.tagLabel}</p>
+                      <p className="anthem-side-title">{bottomChant.chant.title}</p>
+                      <p className="anthem-side-sub">Lirik: {bottomChant.chant.lyrics[0]?.text}...</p>
+                    </div>
+                    <button id="anthem-braket-play" className="anthem-side-btn" type="button" onClick={() => onPlayTrack(bottomChant.chant)}>Dengar Sekarang <IconArrowRight /></button>
+                  </div>
+                )}
               </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 
-      {/* MODE TRIBUN */}
-      <section id="crowd-mode" className="crowd-section" aria-label="Fitur Mode Tribun">
+      {/* MASCOT SECTION */}
+      <section id="mascot-intro" className="crowd-section" aria-label="Maskot Mokleters" style={{ padding: '80px 0' }}>
         <div className="crowd-bg-glow" aria-hidden="true" />
         <div className="container">
-          <div className="crowd-text-col">
-            
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(40px, 5vw, 64px)', fontWeight: 700, letterSpacing: '0.02em', textTransform: 'uppercase', color: 'var(--color-on-surface)', lineHeight: 1.0, marginTop: 20, marginBottom: 12 }}>
-              MASUK KE<br /><span style={{ color: 'var(--color-primary-bright)' }}>MODE TRIBUN</span>
-            </h2>
-            <p style={{ fontSize: 16, lineHeight: 1.7, color: 'var(--color-outline)', maxWidth: 400 }}>
-              Ubah ponsel Anda menjadi bagian dari koreografi stadion. Lirik kontras tinggi, pertunjukan cahaya yang sinkron, dan panduan chant waktu nyata untuk memimpin tribun Anda dengan presisi mutlak.
-            </p>
-            <ul className="crowd-features">
-              {[
-                { icon: <IconZap />, title: 'Tampilan Dinamis', sub: 'Lirik ukuran XL untuk keterbacaan di stadion' },
-                { icon: <IconList />, title: 'Sinkronisasi Multi-perangkat', sub: 'Sinkronisasi untuk chant massal yang kompak' },
-                { icon: <IconMapPin />, title: 'Pemetaan Sektor', sub: 'Tampilan layar untuk koreografi yang selaras dengan ketukan' },
-              ].map((f) => (
-                <li key={f.title} className="crowd-feature-item">
-                  <div className="crowd-feature-icon" aria-hidden="true">{f.icon}</div>
-                  <div className="crowd-feature-text"><strong>{f.title}</strong><span>{f.sub}</span></div>
-                </li>
-              ))}
-            </ul>
-            <button
-              id="crowd-mode-launch-btn"
-              className="btn btn-primary"
-              type="button"
-              onClick={onLaunchCrowdMode}
-            >
-              Buka Pemutar <IconZap />
-            </button>
-          </div>
-          <div className="crowd-device-col">
-            <div className="crowd-mascot-wrap">
-              <img src={mokletsMascot} alt="Maskot Mokleters" className="crowd-mascot-img" />
-              <div className="crowd-mascot-badge" role="status">
-                <span>Mokleters Maskot</span>
+          <div className="mascot-grand-card">
+            <div className="crowd-text-col" style={{ flex: '1 1 55%', maxWidth: '600px' }}>
+              <p className="section-label" style={{ color: 'var(--color-primary-bright)', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '8px' }}>Maskot Mokleters</p>
+              <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(32px, 4vw, 52px)', fontWeight: 800, letterSpacing: '0.02em', textTransform: 'uppercase', color: 'var(--color-on-surface)', lineHeight: 1.1, margin: '8px 0 24px' }}>
+                MEMPERKENALKAN<br /><span style={{ color: 'var(--color-primary-bright)', textShadow: '0 0 15px rgba(215,38,46,0.3)' }}>BOMBI</span>
+              </h2>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+                <p className="mascot-intro-primary">
+                  Bombi merupakan logo yang terbentuk berlandaskan kearifan lokal dengan menyiratkan perangai tokoh Gatotkaca sewaktu kecil bernama Tetuko. Tetuko adalah kesatria yang memiliki kesaktian paling sempurna, hebat di segala medan baik di darat maupun di udara. Mempunyai karakter tangkas, lincah, kuat, dan trengginas.
+                </p>
+                <div style={{ height: '1px', background: 'linear-gradient(90deg, rgba(215, 38, 46, 0.4), transparent)', width: '100%' }} />
+                <p className="mascot-intro-secondary">
+                  Harapannya, dengan filosofi tersebut semua anak Moklet dapat memiliki karakter Tetuko. Tidak hanya memiliki kemampuan yang komplet di atas rata-rata akademis melainkan juga memiliki softskill dan hardskill. Hal ini bertujuan agar anak-anak Moklet yang hebat dapat berdaya saing dan disegani oleh sesama, seperti Tetuko (Gatot Kaca kecil). Jagoan-jagoan Moklet kelak akan terbang tinggi menjulang cakrawala, meraih kesuksesan, dan mengharumkan nama MOKLET tercinta.
+                </p>
+              </div>
+            </div>
+            <div className="crowd-device-col" style={{ flex: '1 1 40%', display: 'flex', justifyContent: 'center', zIndex: 2 }}>
+              <div className="crowd-mascot-wrap" style={{ minHeight: 'auto' }}>
+                <img src={mokletsMascot} alt="Maskot Mokleters" className="crowd-mascot-img" />
+                <div className="crowd-mascot-badge" role="status">
+                  <span>Mokleters Maskot</span>
+                </div>
               </div>
             </div>
           </div>
@@ -561,7 +547,7 @@ function HomePage({
               <p className="section-label">Musim Ini</p>
               <h2 className="section-title">Chant Teratas</h2>
             </div>
-            <a href="#" id="view-all-leaderboard" className="section-view-all">Peringkat Lengkap <IconTrophy /></a>
+            <a href="#" id="view-all-leaderboard" className="section-view-all" onClick={e => { e.preventDefault(); onNavigate('Chant'); }}>Peringkat Lengkap <IconTrophy /></a>
           </header>
           <ol className="leaderboard-list" aria-label="Papan peringkat chant teratas">
             {leaderboardData.map((item) => (
@@ -572,8 +558,10 @@ function HomePage({
                   <p className="leaderboard-name">{item.title}</p>
                   <p className="leaderboard-sub">{item.artist}</p>
                 </div>
-                <div className="leaderboard-plays">{item.plays}<span>Minggu ini</span></div>
-                <button id={`leaderboard-play-${item.rank}`} className="leaderboard-play-btn" type="button" aria-label={`Putar ${item.title}`} onClick={onPlay}>
+                <button id={`leaderboard-play-${item.rank}`} className="leaderboard-play-btn" type="button" aria-label={`Putar ${item.title}`} onClick={() => {
+                  const ch = CHANTS.find(c => c.id === item.rank);
+                  if (ch) onPlayTrack(ch);
+                }}>
                   <IconPlay size={14} />
                 </button>
               </li>
@@ -596,17 +584,48 @@ function HomePage({
             </div>
             <div>
               <p className="footer-col-title">Platform</p>
-              <ul className="footer-links">{['Chant Teratas', 'Lagu Sekolah', 'Galeri Media'].map(l => <li key={l}><a href="#">{l}</a></li>)}</ul>
+              <ul className="footer-links">
+                <li>
+                  <a href="#" onClick={e => {
+                    e.preventDefault();
+                    const el = document.getElementById('leaderboard');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}>Chant Teratas</a>
+                </li>
+                <li>
+                  <a href="#" onClick={e => { e.preventDefault(); onNavigate('Chant'); }}>Lagu Sekolah</a>
+                </li>
+                <li>
+                  <a href="#" onClick={e => { e.preventDefault(); onNavigate('Chant'); }}>Galeri Media</a>
+                </li>
+              </ul>
             </div>
             <div>
               <p className="footer-col-title">Indeks Situs</p>
-              <ul className="footer-links">{['Tentang Kami', 'Sejarah Sekolah', 'Dukungan Konten'].map(l => <li key={l}><a href="#">{l}</a></li>)}</ul>
+              <ul className="footer-links">
+                <li>
+                  <a href="#" onClick={e => { e.preventDefault(); onNavigate('Tentang'); }}>Tentang Kami</a>
+                </li>
+                <li>
+                  <a href="#" onClick={e => { e.preventDefault(); onNavigate('Tentang'); }}>Sejarah Sekolah</a>
+                </li>
+                <li>
+                  <a href="#" onClick={e => { e.preventDefault(); onNavigate('Developer'); }}>Dukungan Konten</a>
+                </li>
+              </ul>
             </div>
             <div>
               <p className="footer-col-title">Buletin</p>
               <p style={{ fontSize: 13, color: 'var(--color-outline)', lineHeight: 1.6, marginBottom: 8 }}>Dapatkan info terbaru tentang chant baru dan acara pertandingan.</p>
-              <form id="footer-newsletter-form" className="footer-newsletter-form" onSubmit={e => e.preventDefault()}>
-                <input id="newsletter-email-input" className="footer-input" type="email" placeholder="Alamat email" aria-label="Email untuk buletin" />
+              <form id="footer-newsletter-form" className="footer-newsletter-form" onSubmit={e => {
+                e.preventDefault();
+                const emailInput = document.getElementById('newsletter-email-input') as HTMLInputElement;
+                if (emailInput && emailInput.value) {
+                  alert(`Terima kasih! Email ${emailInput.value} berhasil didaftarkan ke Buletin Mokleters.`);
+                  emailInput.value = '';
+                }
+              }}>
+                <input id="newsletter-email-input" className="footer-input" type="email" placeholder="Alamat email" aria-label="Email untuk buletin" required />
                 <button id="newsletter-join-btn" className="btn btn-primary" type="submit" style={{ padding: '10px 16px', borderRadius: 'var(--radius)', fontSize: 13 }}>Gabung</button>
               </form>
             </div>
@@ -966,15 +985,8 @@ export default function App() {
       default:
         return (
           <HomePage
-            onPlay={() => {
-              if (CHANTS[0]) playChant(CHANTS[0])
-            }}
-            onLaunchCrowdMode={() => {
-              if (playingChantId === null && CHANTS[0]) {
-                playChant(CHANTS[0])
-              }
-              setIsCrowdMode(true)
-            }}
+            onPlayTrack={playChant}
+            onNavigate={handleNavClick}
           />
         )
     }
