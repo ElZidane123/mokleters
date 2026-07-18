@@ -269,9 +269,9 @@ function HomePage({ onPlay }: { onPlay: () => void }) {
             LANGSUNG — 12 PENDUKUNG AKTIF
           </div>
           <h1 className="hero-title">
-            SATU SUARA.<br />
-            <span className="accent">SATU SEKOLAH.</span><br />
-            <span className="accent-bright">SATU SEMANGAT.</span>
+            MOKLETERS<br />
+            <span className="accent">FIGHT TOGETHER</span><br />
+            <span className="accent-bright">NEVER SURENDER</span>
           </h1>
           <p className="hero-subtitle">
             Perpustakaan chant resmi untuk pendukung SMK Telkom Malang. Nyalakan api semangat,
