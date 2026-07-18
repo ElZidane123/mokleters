@@ -35,6 +35,7 @@ export interface ProfileCardProps {
   contactText?: string
   showUserInfo?: boolean
   onContactClick?: () => void
+  instagramUrl?: string
 }
 
 const ProfileCardComponent: React.FC<ProfileCardProps> = ({
@@ -56,7 +57,8 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   status = 'Online',
   contactText = 'Contact',
   showUserInfo = true,
-  onContactClick
+  onContactClick,
+  instagramUrl
 }) => {
   const wrapRef = useRef<HTMLDivElement | null>(null)
   const shellRef = useRef<HTMLDivElement | null>(null)
@@ -367,15 +369,32 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                       <div className="pc-status">{status}</div>
                     </div>
                   </div>
-                  <button
-                    className="pc-contact-btn"
-                    onClick={handleContactClick}
-                    style={{ pointerEvents: 'auto' }}
-                    type="button"
-                    aria-label={`Contact ${name || 'user'}`}
-                  >
-                    {contactText}
-                  </button>
+                  <div className="pc-actions-row" style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                    <button
+                      className="pc-contact-btn"
+                      onClick={handleContactClick}
+                      style={{ pointerEvents: 'auto' }}
+                      type="button"
+                      aria-label={`GitHub ${name || 'user'}`}
+                    >
+                      {contactText}
+                    </button>
+                    {instagramUrl && (
+                      <button
+                        className="pc-contact-btn pc-instagram-btn"
+                        onClick={() => window.open(instagramUrl, '_blank')}
+                        style={{ pointerEvents: 'auto', padding: '10px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: '36px', height: '36px' }}
+                        type="button"
+                        aria-label={`Instagram ${name || 'user'}`}
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'block' }}>
+                          <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                          <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                        </svg>
+                      </button>
+                    )}
+                  </div>
                 </div>
               )}
             </div>

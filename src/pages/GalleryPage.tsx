@@ -97,10 +97,10 @@ const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: 9,
     src: elzidanePhoto,
-    title: 'Capo & Koordinator',
-    category: 'Tim',
-    date: '20 Juni 2024',
-    desc: 'Para koordinator lapangan yang memimpin yel-yel dan memastikan setiap chant bergema sempurna.',
+    title: 'Website Developer Mokleters',
+    category: 'Developer',
+    date: '10 Juni 2026',
+    desc: 'Website Developer Mokleters',
   },
   {
     id: 10,

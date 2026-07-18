@@ -8,22 +8,24 @@ export default function DeveloperPage() {
     {
       name: 'M. Nabil Anwar K.',
       role: 'Lead Developer & UI Architect',
-      team: 'Mokleters Dev Team 2025',
+      team: 'Mokleters Dev Team 2026',
       handle: 'nabilkencana',
       bio: 'Merancang arsitektur antarmuka pengguna (UI), menyusun sistem tema warna dinamis, serta mengoptimalkan sinkronisasi lirik presisi tinggi untuk pengalaman tribun terbaik.',
       avatar: elzidanePhoto,
       github: 'https://github.com/nabilkencana',
+      instagram: 'https://www.instagram.com/nabill.anwr',
       glow: 'rgba(161, 15, 18, 0.55)',
       gradient: 'linear-gradient(145deg, rgba(161, 15, 18, 0.4) 0%, rgba(10, 10, 10, 0.95) 100%)'
     },
     {
       name: 'Elzidane Ardyansyah',
       role: 'Fullstack & Systems Engineer',
-      team: 'Mokleters Dev Team 2025',
+      team: 'Mokleters Dev Team 2026',
       handle: 'elzidane',
       bio: 'Mengembangkan mesin sinkronisasi progres pemutar audio global, optimalisasi kinerja data, serta mengintegrasikan Web Audio API untuk efek suara tribun secara real-time.',
       avatar: nabilPhoto,
       github: 'https://github.com/ElZidane123',
+      instagram: 'https://www.instagram.com/_elzdne',
       glow: 'rgba(161, 15, 18, 0.55)',
       gradient: 'linear-gradient(145deg, rgba(161, 15, 18, 0.4) 0%, rgba(10, 10, 10, 0.95) 100%)'
     }
@@ -59,6 +61,7 @@ export default function DeveloperPage() {
                 enableTilt={true}
                 enableMobileTilt={true}
                 onContactClick={() => window.open(dev.github, '_blank')}
+                instagramUrl={dev.instagram}
                 behindGlowEnabled={true}
                 behindGlowColor={dev.glow}
                 innerGradient={dev.gradient}
