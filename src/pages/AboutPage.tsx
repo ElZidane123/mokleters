@@ -64,106 +64,133 @@ export default function AboutPage() {
         }
 
         .captain-card {
-          background: linear-gradient(145deg, rgba(255, 255, 255, 0.01) 0%, rgba(161, 15, 18, 0.02) 100%) !important;
+          position: relative !important;
+          background: #0d0e12 !important;
           border: 1px solid rgba(255, 255, 255, 0.05) !important;
           border-radius: 20px !important;
           padding: 24px !important;
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+          overflow: hidden !important;
+          display: flex !important;
+          flex-direction: column !important;
+          min-height: 360px !important;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
           transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+          justify-content: flex-end !important;
         }
 
         .captain-card:hover {
           transform: translateY(-5px) !important;
-          border-color: rgba(161, 15, 18, 0.3) !important;
-          box-shadow: 0 12px 30px rgba(161, 15, 18, 0.08) !important;
-          background: linear-gradient(145deg, rgba(255, 255, 255, 0.02) 0%, rgba(161, 15, 18, 0.05) 100%) !important;
+          border-color: rgba(161, 15, 18, 0.35) !important;
+          box-shadow: 0 12px 30px rgba(161, 15, 18, 0.12) !important;
+        }
+
+        .captain-bg-wrap {
+          position: absolute !important;
+          inset: 0 !important;
+          width: 100% !important;
+          height: 100% !important;
+          z-index: 1 !important;
+          overflow: hidden !important;
+        }
+
+        .captain-bg-image {
+          width: 100% !important;
+          height: 100% !important;
+          object-fit: cover !important;
+          transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+        }
+
+        .captain-card:hover .captain-bg-image {
+          transform: scale(1.06) !important;
+        }
+
+        .captain-bg-placeholder {
+          width: 100% !important;
+          height: 100% !important;
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: center !important;
+          justify-content: center !important;
+          gap: 8px !important;
+          color: rgba(255, 255, 255, 0.15) !important;
+          background: radial-gradient(circle, rgba(161, 15, 18, 0.04) 0%, rgba(10, 10, 12, 0.98) 100%) !important;
+          transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+        }
+
+        .captain-card:hover .captain-bg-placeholder {
+          transform: scale(1.06) !important;
+        }
+
+        .captain-bg-placeholder svg {
+          opacity: 0.25 !important;
+          color: var(--color-primary-bright) !important;
+        }
+
+        .placeholder-text {
+          font-size: 11px !important;
+          font-weight: 700 !important;
+          letter-spacing: 0.08em !important;
+          text-transform: uppercase !important;
+          opacity: 0.35 !important;
+        }
+
+        .captain-bg-overlay {
+          position: absolute !important;
+          inset: 0 !important;
+          background: linear-gradient(180deg, rgba(10, 10, 12, 0.1) 0%, rgba(10, 10, 12, 0.6) 45%, rgba(6, 6, 8, 0.96) 100%) !important;
+          z-index: 2 !important;
+        }
+
+        .captain-card-content {
+          position: relative !important;
+          z-index: 3 !important;
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 12px !important;
+          width: 100% !important;
         }
 
         .captain-period {
           font-family: var(--font-display);
-          font-size: 11px;
-          font-weight: 800;
+          font-size: 10.5px !important;
+          font-weight: 800 !important;
           color: var(--color-primary-bright) !important;
-          letter-spacing: 0.1em;
-          background: rgba(161, 15, 18, 0.12) !important;
+          letter-spacing: 0.1em !important;
+          background: rgba(161, 15, 18, 0.25) !important;
           padding: 4px 12px !important;
-          border-radius: 6px;
-          align-self: flex-start;
-          border: 1px solid rgba(161, 15, 18, 0.25);
+          border-radius: 6px !important;
+          align-self: flex-start !important;
+          border: 1px solid rgba(161, 15, 18, 0.4) !important;
+          backdrop-filter: blur(4px) !important;
+          -webkit-backdrop-filter: blur(4px) !important;
         }
 
         .captain-name {
-          font-size: 17px;
-          font-weight: 700;
-          color: #ffffff;
-          margin: 0;
+          font-size: 18px !important;
+          font-weight: 800 !important;
+          color: #ffffff !important;
+          margin: 0 !important;
+          text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important;
         }
 
         .captain-legacy {
-          font-size: 13.5px;
-          line-height: 1.6;
-          color: var(--color-outline);
-          margin: 0;
+          font-size: 13px !important;
+          line-height: 1.6 !important;
+          color: rgba(255, 255, 255, 0.7) !important;
+          margin: 0 !important;
+          text-shadow: 0 1px 3px rgba(0,0,0,0.5) !important;
         }
 
         .captain-achievement {
-          font-size: 11.5px;
-          font-weight: 700;
-          color: var(--color-primary-bright);
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          border-top: 1px solid rgba(255, 255, 255, 0.06);
-          padding-top: 14px;
-        }
-
-        .captain-image-wrap {
-          width: 100%;
-          height: 180px;
-          border-radius: 12px;
-          overflow: hidden;
-          position: relative;
-          background: rgba(0, 0, 0, 0.4);
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          margin-bottom: 4px;
-        }
-
-        .captain-image {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          transition: transform 0.5s ease;
-        }
-
-        .captain-card:hover .captain-image {
-          transform: scale(1.05);
-        }
-
-        .captain-image-placeholder {
-          width: 100%;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          color: var(--color-outline);
-        }
-
-        .captain-image-placeholder svg {
-          opacity: 0.4;
-          color: var(--color-primary-bright);
-        }
-
-        .placeholder-text {
-          font-size: 11px;
-          font-weight: 600;
-          letter-spacing: 0.05em;
-          text-transform: uppercase;
-          opacity: 0.5;
+          font-size: 11.5px !important;
+          font-weight: 700 !important;
+          color: var(--color-primary-bright) !important;
+          display: flex !important;
+          align-items: center !important;
+          gap: 6px !important;
+          margin-top: 4px !important;
+          border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+          padding-top: 12px !important;
         }
       `}</style>
       {/* ── HEADER BANNER ── */}
@@ -225,22 +252,29 @@ export default function AboutPage() {
           <div className="captains-grid">
             {capos.map((capo, i) => (
               <div key={i} className="captain-card glass-1">
-                <div className="captain-image-wrap">
+                {/* Background Image / Placeholder */}
+                <div className="captain-bg-wrap">
                   {capo.image ? (
-                    <img src={capo.image} alt={capo.name} className="captain-image" />
+                    <img src={capo.image} alt={capo.name} className="captain-bg-image" />
                   ) : (
-                    <div className="captain-image-placeholder">
+                    <div className="captain-bg-placeholder">
                       <IconCaptainPlaceholder />
                       <span className="placeholder-text">Foto Belum Tersedia</span>
                     </div>
                   )}
+                  {/* Gradient Overlay for text readability */}
+                  <div className="captain-bg-overlay" />
                 </div>
-                <span className="captain-period">{capo.period}</span>
-                <h3 className="captain-name">{capo.name}</h3>
-                <p className="captain-legacy">{capo.legacy}</p>
-                <div className="captain-achievement">
-                  <IconAward />
-                  {capo.achievement}
+
+                {/* Content Overlay */}
+                <div className="captain-card-content">
+                  <span className="captain-period">{capo.period}</span>
+                  <h3 className="captain-name">{capo.name}</h3>
+                  <p className="captain-legacy">{capo.legacy}</p>
+                  <div className="captain-achievement">
+                    <IconAward />
+                    {capo.achievement}
+                  </div>
                 </div>
               </div>
             ))}
