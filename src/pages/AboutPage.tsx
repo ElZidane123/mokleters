@@ -1,4 +1,4 @@
-import mokletsMascot from '../assets/mascot.png'
+import mokletsMascot from '../assets/bombi.png'
 import mokletersLogo from '../assets/Mokleters logo.png'
 
 /* =============================================
@@ -110,9 +110,14 @@ export default function AboutPage() {
               <div className="about-mascot-card glass-2">
                 <img src={mokletsMascot} alt="Maskot Mokleters" className="about-mascot-img" />
                 <div className="about-mascot-info">
-                  <span className="about-mascot-badge">MASKOT RESMI</span>
-                  <h3 className="about-mascot-name">Si Wiku</h3>
-                  <p className="about-mascot-desc">Simbol singa petarung berjiwa ksatria pembawa keberuntungan Wikusama.</p>
+                  <span className="about-mascot-badge">Maskot Resmi</span>
+                  <h3 className="about-mascot-name">Bombi</h3>
+                  <p className="about-mascot-desc">
+                    Bombi merupakan logo yang terbentuk berlandaskan kearifan lokal. Ia menyiratkan perangai tokoh Gatotkaca sewaktu kecil bernama Tetuko — kesatria yang memiliki kesaktian paling sempurna, hebat di segala medan baik di darat maupun di udara.
+                  </p>
+                  <p className="about-mascot-desc">
+                    Karakter Bombi mengajarkan tangkas, lincah, kuat, dan trengginas. Harapannya, semua anak Moklet dapat memiliki kualitas akademis dan softskill yang komplet, sehingga kelak mampu berdaya saing, disegani, dan mengharumkan nama MOKLET tercinta.
+                  </p>
                 </div>
               </div>
             </div>
