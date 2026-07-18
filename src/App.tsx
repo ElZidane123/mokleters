@@ -4,6 +4,8 @@ import ChantLibrary from './ChantLibrary'
 import PlaylistPage from './PlaylistPage'
 import LeaderboardPage from './LeaderboardPage'
 import mokletersLogo from './assets/Mokleters logo.png'
+import mokletsMascot from './assets/mascot.png'
+import mokletersGraffiti from './assets/Group 1261154060 (1).png'
 
 /* =============================================
    ICON COMPONENTS (inline SVG)
@@ -391,21 +393,11 @@ function HomePage({ onPlay }: { onPlay: () => void }) {
             <button id="crowd-mode-launch-btn" className="btn btn-primary" type="button">Buka Pemutar <IconZap /></button>
           </div>
           <div className="crowd-device-col">
-            <div className="crowd-device">
-              <div className="crowd-device-badge" role="status"><span className="live-dot" aria-hidden="true" />SESI LANGSUNG</div>
-              <div className="crowd-device-frame" aria-label="Tampilan lirik">
-                <p className="crowd-lyrics-prev" aria-hidden="true">TELKOM...</p>
-                <p className="crowd-lyrics-current">MALANG!</p>
-                <p className="crowd-lyrics-next" aria-hidden="true">TERBAIK...</p>
-                <div className="crowd-progress-bar" aria-hidden="true"><div className="crowd-progress-fill" /></div>
-              </div>
-              <div className="crowd-device-supporters">
-                <div className="supporter-avatars" aria-hidden="true">
-                  <div className="supporter-avatar">A</div>
-                  <div className="supporter-avatar">R</div>
-                  <div className="supporter-avatar">+</div>
-                </div>
-                <div className="supporter-text"><strong>12 Aktif</strong><span>pendukung online</span></div>
+            <div className="crowd-mascot-wrap">
+              <img src={mokletsMascot} alt="Maskot Mokleters" className="crowd-mascot-img" />
+              <div className="crowd-mascot-badge" role="status">
+                <span className="live-dot" aria-hidden="true" />
+                <span>12 PENDUKUNG AKTIF</span>
               </div>
             </div>
           </div>
@@ -443,9 +435,13 @@ function HomePage({ onPlay }: { onPlay: () => void }) {
 
       {/* FOOTER */}
       <footer className="footer" role="contentinfo">
+        <div className="footer-graffiti-wrap" aria-hidden="true">
+          <img src={mokletersGraffiti} alt="" className="footer-graffiti-img" />
+        </div>
         <div className="container">
           <div className="footer-grid">
             <div>
+              <img src={mokletersLogo} alt="Mokleters" className="footer-logo-img" />
               <p className="footer-brand-name">MOKLETERS</p>
               <p className="footer-brand-desc">Detak jantung pendukung SMK Telkom Malang. Kami adalah suara yang tak pernah padam, dan api yang tak pernah mati.</p>
             </div>
@@ -487,12 +483,18 @@ export default function App() {
   const [isLiked, setIsLiked] = useState(false)
   const [activeNav, setActiveNav] = useState('Beranda')
   const [currentTrack, setCurrentTrack] = useState<PlayerTrack>(defaultTrack)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const navLinks = ['Beranda', 'Chant', 'Playlist', 'Papan Peringkat', 'Tentang']
 
   const handlePlay = (track?: Partial<PlayerTrack>) => {
     if (track) setCurrentTrack({ ...defaultTrack, ...track })
     setIsPlaying(true)
+  }
+
+  const handleNavClick = (link: string) => {
+    setActiveNav(link)
+    setMobileMenuOpen(false)
   }
 
   const renderPage = () => {
@@ -521,10 +523,12 @@ export default function App() {
       {/* NAVBAR */}
       <nav className="navbar" role="navigation" aria-label="Navigasi utama">
         <div className="container">
-          <a href="#" className="navbar-logo" aria-label="Halaman Beranda Stadium Pulse" onClick={e=>{e.preventDefault();setActiveNav('Beranda')}}>
-            <img src={mokletersLogo} alt="Mokleters Logo" className="navbar-logo-img" style={{ height: '32px', width: 'auto', marginRight: '10px', objectFit: 'contain' }} />
+          <a href="#" className="navbar-logo" aria-label="Halaman Beranda Mokleters" onClick={e=>{e.preventDefault();handleNavClick('Beranda')}}>
+            <img src={mokletersLogo} alt="Mokleters Logo" className="navbar-logo-img" />
             MOKLETERS
           </a>
+
+          {/* Desktop Nav */}
           <ul className="navbar-nav" role="list">
             {navLinks.map(link => (
               <li key={link}>
@@ -532,7 +536,7 @@ export default function App() {
                   href="#"
                   id={`nav-${link.toLowerCase().replace(' ', '-')}`}
                   className={activeNav === link ? 'active' : ''}
-                  onClick={e => { e.preventDefault(); setActiveNav(link) }}
+                  onClick={e => { e.preventDefault(); handleNavClick(link) }}
                   aria-current={activeNav === link ? 'page' : undefined}
                 >
                   {link}
@@ -540,15 +544,54 @@ export default function App() {
               </li>
             ))}
           </ul>
+
           <div className="navbar-actions">
             <label className="navbar-search" htmlFor="navbar-search-input">
               <IconSearch />
               <input id="navbar-search-input" type="search" placeholder="Cari semua chant..." aria-label="Cari chant" />
             </label>
-            <div className="navbar-avatar" role="button" tabIndex={0} aria-label="Akun pengguna">S</div>
+            <img src={mokletsMascot} alt="Avatar" className="navbar-avatar-img" />
+            {/* Hamburger */}
+            <button
+              id="mobile-menu-btn"
+              className={`hamburger-btn${mobileMenuOpen ? ' open' : ''}`}
+              type="button"
+              aria-label={mobileMenuOpen ? 'Tutup menu' : 'Buka menu'}
+              aria-expanded={mobileMenuOpen}
+              onClick={() => setMobileMenuOpen(o => !o)}
+            >
+              <span /><span /><span />
+            </button>
           </div>
         </div>
+
+        {/* Mobile Drawer */}
+        <div className={`mobile-nav-drawer${mobileMenuOpen ? ' open' : ''}`} aria-hidden={!mobileMenuOpen}>
+          <ul role="list">
+            {navLinks.map(link => (
+              <li key={link}>
+                <a
+                  href="#"
+                  className={activeNav === link ? 'active' : ''}
+                  onClick={e => { e.preventDefault(); handleNavClick(link) }}
+                  aria-current={activeNav === link ? 'page' : undefined}
+                >
+                  {link}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <label className="mobile-search" htmlFor="mobile-search-input">
+            <IconSearch />
+            <input id="mobile-search-input" type="search" placeholder="Cari semua chant..." aria-label="Cari chant di mobile" />
+          </label>
+        </div>
       </nav>
+
+      {/* Overlay mobile menu */}
+      {mobileMenuOpen && (
+        <div className="mobile-nav-overlay" onClick={() => setMobileMenuOpen(false)} aria-hidden="true" />
+      )}
 
       {/* ISI HALAMAN */}
       <main style={{ paddingTop: activeNav !== 'Beranda' ? '64px' : '0' }}>

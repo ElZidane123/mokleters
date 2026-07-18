@@ -3066,3 +3066,359 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .lb-footer-inner { grid-template-columns: 1fr; }
   .lb-title { font-size: clamp(32px, 10vw, 52px); }
 }
+
+/* ============================================
+   NAVBAR LOGO IMG
+   ============================================ */
+.navbar-logo-img {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   NAVBAR AVATAR (maskot image)
+   ============================================ */
+.navbar-avatar-img {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top center;
+  border: 2px solid var(--color-primary-container);
+  background: #1a1a1a;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.navbar-avatar-img:hover { transform: scale(1.08); border-color: var(--color-primary-bright); }
+
+/* ============================================
+   HAMBURGER BUTTON
+   ============================================ */
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+  transition: background var(--transition-fast);
+  flex-shrink: 0;
+}
+.hamburger-btn:hover { background: rgba(255,255,255,0.12); }
+.hamburger-btn span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--color-on-surface);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease, width 0.3s ease;
+  transform-origin: center;
+}
+.hamburger-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ============================================
+   MOBILE NAV DRAWER
+   ============================================ */
+.mobile-nav-drawer {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  background: rgba(15, 15, 15, 0.97);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 0 20px 20px;
+  transform: translateY(-110%);
+  opacity: 0;
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease;
+  pointer-events: none;
+}
+.mobile-nav-drawer.open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.mobile-nav-drawer ul {
+  display: flex;
+  flex-direction: column;
+  padding-top: 12px;
+}
+.mobile-nav-drawer ul li a {
+  display: block;
+  padding: 14px 8px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-on-surface-variant);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  transition: color var(--transition-fast), padding-left var(--transition-fast);
+}
+.mobile-nav-drawer ul li a:hover,
+.mobile-nav-drawer ul li a.active {
+  color: var(--color-primary-bright);
+  padding-left: 16px;
+}
+
+.mobile-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  margin-top: 14px;
+  border-radius: var(--radius-full);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+.mobile-search input {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--color-on-surface);
+  font-size: 14px;
+  font-family: var(--font-body);
+  width: 100%;
+}
+.mobile-search input::placeholder { color: var(--color-outline); }
+.mobile-search svg { flex-shrink: 0; color: var(--color-outline); }
+
+/* Overlay */
+.mobile-nav-overlay {
+  position: fixed;
+  inset: 64px 0 0 0;
+  z-index: 98;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+/* ============================================
+   CROWD MASCOT (replaces phone mockup)
+   ============================================ */
+.crowd-mascot-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 380px;
+}
+.crowd-mascot-img {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 40px rgba(215, 38, 46, 0.45));
+  animation: mascotFloat 3.5s ease-in-out infinite;
+}
+@keyframes mascotFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.crowd-mascot-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: rgba(161, 15, 18, 0.30);
+  border: 1px solid rgba(215, 38, 46, 0.55);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-primary-bright);
+  margin-top: 16px;
+}
+
+/* ============================================
+   FOOTER ASSETS
+   ============================================ */
+.footer-graffiti-wrap {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  max-width: 600px;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.06;
+  mix-blend-mode: luminosity;
+}
+.footer-graffiti-img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: invert(1) sepia(1) saturate(3) hue-rotate(320deg);
+}
+.footer-logo-img {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+  margin-bottom: 8px;
+  opacity: 0.85;
+}
+.footer { position: relative; }
+
+/* ============================================
+   GLOBAL MOBILE RESPONSIVE STYLES
+   ============================================ */
+
+/* --- 1024px — Tablet --- */
+@media (max-width: 1024px) {
+  .container { padding-inline: 24px; }
+
+  /* Navbar */
+  .navbar-search { display: none; }
+  .hamburger-btn { display: flex; }
+  .navbar-nav { display: none; }
+  .navbar .container { gap: 16px; }
+
+  /* Hero */
+  .hero-title { font-size: clamp(44px, 7vw, 80px); }
+
+  /* Stats */
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1px; }
+  .stat-item { padding: 28px 16px; }
+  .stat-number { font-size: 44px; }
+
+  /* Anthems grid */
+  .anthems-grid { grid-template-columns: 1fr; gap: 16px; }
+  .anthem-featured { height: 320px; }
+  .anthem-side { height: 180px; }
+
+  /* Crowd */
+  .crowd-section .container { grid-template-columns: 1fr; gap: 40px; }
+  .crowd-mascot-wrap { min-height: 260px; }
+  .crowd-mascot-img { max-width: 220px; }
+
+  /* Leaderboard list */
+  .leaderboard-list { gap: 4px; }
+  .leaderboard-plays { display: none; }
+
+  /* Footer */
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer-graffiti-wrap { width: 70%; opacity: 0.05; }
+}
+
+/* --- 768px — Large Mobile --- */
+@media (max-width: 768px) {
+  .container { padding-inline: 16px; }
+
+  /* Hero */
+  .hero-section { min-height: 100svh; }
+  .hero-title { font-size: clamp(36px, 10vw, 60px); line-height: 0.95; }
+  .hero-subtitle { font-size: 14px; padding-inline: 16px; }
+  .hero-actions { flex-direction: column; align-items: center; gap: 10px; }
+  .hero-actions .btn { width: 100%; max-width: 300px; justify-content: center; }
+  .hero-scroll-hint { bottom: 100px; }
+
+  /* Stats */
+  .stats-section { padding: 32px 0; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-item { padding: 20px 12px; }
+  .stat-number { font-size: 36px; }
+  .stat-label { font-size: 11px; }
+
+  /* Section */
+  .section { padding: 48px 0; }
+  .section-title { font-size: clamp(28px, 7vw, 44px); }
+  .section-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+
+  /* Anthems */
+  .anthems-grid { grid-template-columns: 1fr; }
+  .anthem-featured { height: 280px; }
+  .anthem-side { height: 160px; }
+  .anthem-side-inner { flex-direction: column; gap: 10px; padding: 16px; }
+  .anthem-side-btn { width: 100%; justify-content: center; }
+  .anthem-side-thumb { width: 64px; height: 64px; }
+
+  /* Crowd section */
+  .crowd-section { padding: 48px 0; }
+  .crowd-section .container { grid-template-columns: 1fr; gap: 32px; text-align: center; }
+  .crowd-text-col { text-align: center; }
+  .crowd-features { max-width: 100%; }
+  .crowd-feature-item { flex-direction: row; gap: 12px; text-align: left; }
+  .crowd-mascot-img { max-width: 200px; }
+
+  /* Leaderboard (home) */
+  .leaderboard-list { gap: 2px; }
+  .leaderboard-item { padding: 12px; gap: 10px; }
+  .leaderboard-plays { display: none; }
+  .leaderboard-sub { display: none; }
+  .leaderboard-rank { font-size: 16px; width: 28px; }
+
+  /* Player bar */
+  .player-bar { padding: 0 12px; gap: 8px; height: 72px; }
+  .player-track-info { gap: 8px; min-width: 0; flex: 1; }
+  .player-track-name { font-size: 12px; }
+  .player-track-artist { font-size: 10px; display: none; }
+  .player-controls-col { flex: 2; }
+  .player-right-controls { gap: 4px; }
+  .player-crowd-mode { display: none; }
+  .player-queue-btn, .player-playlist-btn { display: none; }
+  .volume-slider { display: none; }
+  .player-fullscreen-btn { display: none; }
+  .player-thumb { width: 38px; height: 38px; border-radius: 6px; }
+  .ctrl-btn { width: 28px; height: 28px; font-size: 13px; }
+  .ctrl-btn-play { width: 40px !important; height: 40px !important; }
+
+  /* Footer */
+  .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+  .footer-brand-desc { font-size: 13px; max-width: 100%; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+  .footer-graffiti-wrap { display: none; }
+  .footer { padding-bottom: 80px; }
+}
+
+/* --- 480px — Small Mobile --- */
+@media (max-width: 480px) {
+  /* Navbar */
+  .navbar-logo { font-size: 16px; gap: 6px; }
+  .navbar-logo-img { height: 26px; }
+  .navbar-avatar-img { width: 30px; height: 30px; }
+  .navbar .container { gap: 8px; }
+
+  /* Hero */
+  .hero-title { font-size: clamp(32px, 11vw, 52px); }
+  .hero-eyebrow { font-size: 9px; padding: 4px 10px; }
+
+  /* Stats */
+  .stat-number { font-size: 30px; }
+
+  /* Chant Library */
+  .cl-header h1 { font-size: clamp(28px, 9vw, 40px); }
+  .cl-filters { flex-wrap: wrap; gap: 6px; }
+  .cl-grid { grid-template-columns: 1fr; }
+  .cl-search-sort { flex-wrap: wrap; gap: 8px; }
+  .cl-search { width: 100%; }
+
+  /* Playlist page */
+  .pl-page-layout { grid-template-columns: 1fr !important; }
+  .pl-track-list { display: none; }
+  .pl-artwork-wrap { max-width: 240px; margin: 0 auto; }
+  .pl-title { font-size: 22px !important; }
+
+  /* Leaderboard page */
+  .lb-chart-bars { gap: 4px; }
+  .lb-chart-bar-wrap { min-width: 36px; }
+  .lb-recent-list { gap: 6px; }
+}
+
+/* --- Player bar bottom adjustment for very small screens --- */
+@media (max-width: 380px) {
+  .player-bar { height: 64px; padding: 0 8px; }
+  .player-track-like { display: none; }
+  .ctrl-btn-play { width: 36px !important; height: 36px !important; }
+}
