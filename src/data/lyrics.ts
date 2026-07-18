@@ -126,7 +126,7 @@ export const CHANTS: ChantData[] = [
     title: 'Loyalitas Tanpa Batas',
     duration: '1:28',
     durationSec: 88,
-    category: 'Anthem Penutup',
+    category: 'Anthem Mokleters',
     tag: 'Penutup',
     popular: true,
     img: '/anthem3.png',

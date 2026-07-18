@@ -1921,6 +1921,44 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .chant-card-action-btn:hover { color: var(--color-on-surface); background: rgba(255,255,255,0.06); }
 .chant-card-action-btn--liked { color: var(--color-primary) !important; }
 
+/* Custom Dropdown Menu for ChantCard Options */
+.chant-card-dropdown-menu {
+  position: absolute;
+  bottom: 36px;
+  right: 0;
+  background: rgba(22, 22, 22, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  padding: 6px;
+  min-width: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 99;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(12px);
+}
+
+.chant-card-dropdown-item {
+  background: transparent;
+  border: none;
+  color: var(--color-outline);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  width: 100%;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.chant-card-dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-primary-bright);
+}
+
 /* ── List View ── */
 .chant-list-view { display: flex; flex-direction: column; gap: 4px; }
 

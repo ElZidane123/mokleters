@@ -105,13 +105,14 @@ function ChantCard({
 }) {
   const [liked, setLiked] = useState(false)
   const [hovered, setHovered] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
     <article
       className={`chant-card${isPlaying ? ' chant-card--playing' : ''}${chant.id === 6 ? ' chant-card--featured' : ''}`}
       id={`chant-card-${chant.id}`}
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseLeave={() => { setHovered(false); setIsMenuOpen(false); }}
       aria-label={chant.title}
     >
       {/* Image area */}
@@ -124,27 +125,7 @@ function ChantCard({
         />
 
         {/* Overlay on hover / playing */}
-        <div className={`chant-card-overlay${hovered || isPlaying ? ' chant-card-overlay--visible' : ''}`} aria-hidden="true">
-          {/* Overlaid icons top-right */}
-          <div className="chant-card-overlay-top">
-            <button
-              className={`chant-card-icon-btn${liked ? ' chant-card-icon-btn--liked' : ''}`}
-              type="button"
-              aria-label={liked ? 'Unlike' : 'Like'}
-              onClick={e => { e.stopPropagation(); setLiked(l => !l) }}
-            >
-              <IconHeart filled={liked} size={13} />
-            </button>
-            <button
-              className="chant-card-icon-btn"
-              type="button"
-              aria-label="More options"
-              onClick={e => e.stopPropagation()}
-            >
-              <IconMoreHorizontal />
-            </button>
-          </div>
-        </div>
+        <div className={`chant-card-overlay${hovered || isPlaying ? ' chant-card-overlay--visible' : ''}`} aria-hidden="true" />
 
         {/* Popular / Anthem badge */}
         {chant.id === 6 ? (
@@ -192,13 +173,59 @@ function ChantCard({
               <IconVolume2 /> Diputar
             </span>
           )}
-          <button
-            className="chant-card-action-btn"
-            type="button"
-            aria-label="More options"
-          >
-            <IconMoreHorizontal />
-          </button>
+          <div style={{ position: 'relative', display: 'inline-block' }}>
+            <button
+              className="chant-card-action-btn"
+              type="button"
+              aria-label="More options"
+              onClick={(e) => {
+                e.stopPropagation()
+                setIsMenuOpen(prev => !prev)
+              }}
+            >
+              <IconMoreHorizontal />
+            </button>
+
+            {isMenuOpen && (
+              <div className="chant-card-dropdown-menu glass-2">
+                <button
+                  type="button"
+                  className="chant-card-dropdown-item"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onPlay()
+                    setIsMenuOpen(false)
+                  }}
+                >
+                  Putar Sekarang
+                </button>
+                <button
+                  type="button"
+                  className="chant-card-dropdown-item"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    navigator.clipboard.writeText(chant.lyrics.map(l => l.text).join('\n'))
+                    setIsMenuOpen(false)
+                    alert('Lirik chant berhasil disalin!')
+                  }}
+                >
+                  Salin Lirik
+                </button>
+                <button
+                  type="button"
+                  className="chant-card-dropdown-item"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    navigator.clipboard.writeText(window.location.origin + '?chant=' + chant.id)
+                    setIsMenuOpen(false)
+                    alert('Tautan bagikan chant berhasil disalin!')
+                  }}
+                >
+                  Bagikan Chant
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </article>
@@ -381,7 +408,7 @@ export default function ChantLibrary({
               <div className="chant-featured-section">
                 <div className="chant-featured-separator" />
                 <div className="chant-featured-label-row">
-                  <span className="chant-featured-tag">ANTHEM UTAMA WIKUSAMA</span>
+                  <span className="chant-featured-tag">ANTHEM MOKLETERS</span>
                 </div>
                 <ChantCard
                   chant={CHANTS.find(c => c.id === 6)!}
