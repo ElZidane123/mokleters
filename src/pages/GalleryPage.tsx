@@ -1,10 +1,10 @@
 import { useState, useCallback } from 'react'
-import gallery1 from '../assets/gallery1.png'
-import gallery2 from '../assets/gallery2.png'
-import gallery3 from '../assets/gallery3.png'
-import gallery4 from '../assets/gallery4.png'
-import gallery5 from '../assets/gallery5.png'
-import gallery6 from '../assets/gallery6.png'
+import gallery1 from '../assets/images/DSC01919.png'
+import gallery2 from '../assets/images/DSC01950.png'
+import gallery3 from '../assets/images/DSC01952.png'
+import gallery4 from '../assets/images/DSC01952.png'
+import gallery5 from '../assets/images/DSC01957.png'
+import gallery6 from '../assets/images/DSC01958.png'
 import nabilPhoto from '../assets/nabil.jpg'
 import elzidanePhoto from '../assets/elzidane.jpg'
 import mascotPhoto from '../assets/mascot.png'
@@ -29,19 +29,19 @@ const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: 1,
     src: gallery1,
-    title: 'Lautan Merah Utara',
+    title: 'koor mokleters 2025',
     category: 'Laga',
     date: '12 Mei 2024',
-    desc: 'Ribuan Mokleters menyalakan flare merah putih di tribun utara, menciptakan lautan api kebanggaan yang takkan terlupakan.',
+    desc: 'Koor Mokleters 2025 di tribun utara stadion Wikusama, menyalakan semangat tim dengan yel-yel yang menggema.',
     wide: true,
   },
   {
     id: 2,
     src: gallery2,
-    title: 'Formasi Korsa',
+    title: 'KickOff DBL 2025',
     category: 'Kolektif',
     date: '8 Maret 2024',
-    desc: 'Momen kompak Mokleters berbaris di depan banner raksasa sebelum laga dimulai.',
+    desc: 'Mokleters hadir memeriahkan KickOff DBL 2025, menyalakan semangat tim dengan koreografi dan yel-yel yang menggema di seluruh stadion.',
   },
   {
     id: 3,
@@ -54,10 +54,10 @@ const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: 4,
     src: gallery4,
-    title: 'Tifo Raksasa',
+    title: 'Perkusi Mokleters',
     category: 'Koreografi',
     date: '22 Februari 2024',
-    desc: 'Koreografi kertas berwarna membentuk mosaik luar biasa di tribun utara saat laga dimulai.',
+    desc: 'Ritme perkusi yang menghentak di tribun utara, menggetarkan stadion dan membakar semangat tim.',
     wide: true,
   },
   {
