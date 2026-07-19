@@ -1,6 +1,6 @@
 import ProfileCard from '../components/ProfileCard'
-import nabilPhoto from '../assets/nabil.jpg'
-import elzidanePhoto from '../assets/elzidane.jpg'
+import nabilPhoto from '../assets/nabil_optimized.webp'
+import elzidanePhoto from '../assets/elzidane_optimized.webp'
 import logoPatternTilted from '../assets/logo_pattern_tilted.svg'
 
 export default function DeveloperPage() {

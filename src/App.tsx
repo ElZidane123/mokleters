@@ -6,9 +6,10 @@ import ChantDetailPage from './pages/ChantDetailPage'
 import AboutPage from './pages/AboutPage'
 import DeveloperPage from './pages/DeveloperPage'
 import GalleryPage from './pages/GalleryPage'
+import SplashScreen from './components/SplashScreen'
 import mokletersLogo from './assets/Mokleters logo.png'
-import mokletsMascot from './assets/mascot.png'
-import mokletsBombi from './assets/bombi.png'
+import mokletsMascot from './assets/mascot_optimized.webp'
+import mokletsBombi from './assets/bombi_optimized.webp'
 
 import mokletersGraffiti from './assets/Group 1261154060 (1).png'
 import { CHANTS } from './data/lyrics'
@@ -694,6 +695,9 @@ function fmtSec(s: number) {
    MAIN APP
    ============================================= */
 export default function App() {
+  // ── Splash Screen State ──
+  const [showSplash, setShowSplash] = useState(true)
+
   // ── Navigation ──
   const [activeNav, setActiveNav] = useState('Beranda')
   const [detailChant, setDetailChant] = useState<ChantData | null>(null)
@@ -890,6 +894,18 @@ export default function App() {
 
   // ── Cleanup ──
   useEffect(() => () => stopAudio(), [stopAudio])
+
+  // ── Lock body scroll during splash screen ──
+  useEffect(() => {
+    if (showSplash) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [showSplash])
 
   // ── Render page ──
   const renderPage = () => {
@@ -1143,6 +1159,10 @@ export default function App() {
             ))}
           </div>
         </div>
+      )}
+
+      {showSplash && (
+        <SplashScreen onComplete={() => setShowSplash(false)} />
       )}
     </>
   )

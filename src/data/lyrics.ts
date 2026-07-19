@@ -1,6 +1,16 @@
 /* =============================================
    LYRICS DATA — Sync with real MP4 durations and PDF content
    ============================================= */
+import dsc01919 from '../assets/images/DSC01919_optimized.jpg'
+import dsc01950 from '../assets/images/DSC01950_optimized.jpg'
+import dsc01952 from '../assets/images/DSC01952_optimized.jpg'
+import dsc01954 from '../assets/images/DSC01954_optimized.jpg'
+import dsc01957 from '../assets/images/DSC01957_optimized.jpg'
+import dsc01958 from '../assets/images/DSC01958_optimized.jpg'
+import dsc01993 from '../assets/images/DSC01993_optimized.jpg'
+import dsc02049 from '../assets/images/DSC02049_optimized.jpg'
+import dsc02088 from '../assets/images/DSC02088_optimized.jpg'
+import dsc02120 from '../assets/images/DSC02120_optimized.jpg'
 
 export interface LyricLine {
   id: number
@@ -30,7 +40,7 @@ export const CHANTS: ChantData[] = [
     category: 'Chant Mokleters',
     tag: 'Chant Mokleters',
     popular: true,
-    img: '/anthem1.png',
+    img: dsc01919,
     src: '/mp4/kami datang lagi.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Kami datang lagi', time: 0 },
@@ -48,7 +58,7 @@ export const CHANTS: ChantData[] = [
     category: 'Anthem Pembuka',
     tag: 'Pembuka',
     popular: true,
-    img: '/anthem2.png',
+    img: dsc01950,
     src: '/mp4/smk telkom malang kami datang.m4a.mp4',
     lyrics: [
       { id: 0, text: 'SMK Telkom Malang', time: 0 },
@@ -70,7 +80,7 @@ export const CHANTS: ChantData[] = [
     category: 'Tempo Pertandingan',
     tag: 'Pertandingan',
     popular: false,
-    img: '/anthem3.png',
+    img: dsc01952,
     src: '/mp4/bukalah matamu.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Buka lah Matamu', time: 0 },
@@ -92,7 +102,7 @@ export const CHANTS: ChantData[] = [
     category: 'Chant Kebanggaan',
     tag: 'Kebanggaan',
     popular: true,
-    img: '/anthem1.png',
+    img: dsc01954,
     src: '/mp4/mokleters mokleters wikusama.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Mokleters Mokleters wikusama (oe oe o)', time: 0 },
@@ -109,7 +119,7 @@ export const CHANTS: ChantData[] = [
     category: 'Tempo Pertandingan',
     tag: 'Pertandingan',
     popular: false,
-    img: '/anthem2.png',
+    img: dsc01957,
     src: '/mp4/kami pendukung telkom malang.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Kami pendukung Telkom Malang', time: 0 },
@@ -129,7 +139,7 @@ export const CHANTS: ChantData[] = [
     category: 'Anthem Mokleters',
     tag: 'Penutup',
     popular: true,
-    img: '/anthem3.png',
+    img: dsc01958,
     src: '/mp4/LOYALITAS TANPA BATAS ANTHEM.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Dengarlah kawan cerita dan semangatku', time: 0 },
@@ -155,7 +165,7 @@ export const CHANTS: ChantData[] = [
     category: 'Tempo Pertandingan',
     tag: 'Pertandingan',
     popular: true,
-    img: '/anthem1.png',
+    img: dsc01993,
     src: '/mp4/hey forza moklet forza forza moklet.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Hari ini Telkom Malang berlaga', time: 0 },
@@ -174,7 +184,7 @@ export const CHANTS: ChantData[] = [
     category: 'Chant Kemenangan',
     tag: 'Kemenangan',
     popular: false,
-    img: '/anthem2.png',
+    img: dsc02049,
     src: '/mp4/bret.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Wis sue aku ngenteni koe', time: 0 },
@@ -193,7 +203,7 @@ export const CHANTS: ChantData[] = [
     category: 'Chant Kemenangan',
     tag: 'Kemenangan',
     popular: false,
-    img: '/anthem3.png',
+    img: dsc02088,
     src: '/mp4/yeyeye happy yayaya.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Yeyeye happy yayaya', time: 0 },
@@ -216,7 +226,7 @@ export const CHANTS: ChantData[] = [
     category: 'Chant Kebanggaan',
     tag: 'Kebanggaan',
     popular: true,
-    img: '/anthem1.png',
+    img: dsc02120,
     src: '/mp4/warna merah kebanggan kami.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Warna merah kebanggaan kami', time: 0 },
@@ -236,7 +246,7 @@ export const CHANTS: ChantData[] = [
     category: 'Anthem Pembuka',
     tag: 'Pembuka',
     popular: false,
-    img: '/anthem2.png',
+    img: dsc01919,
     src: '/mp4/hari ini ku tinggalkan pelajaran.m4a.mp4',
     lyrics: [
       { id: 0, text: 'Hari ini kutinggalkan Pelajaran', time: 0 },
