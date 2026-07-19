@@ -564,7 +564,7 @@ function HomePage({
             </div>
             <div className="crowd-device-col" style={{ flex: '1 1 40%', display: 'flex', justifyContent: 'center', zIndex: 2 }}>
               <div className="crowd-mascot-wrap" style={{ minHeight: 'auto' }}>
-                <img src={mokletsBombi} alt="Maskot Mokleters" className="crowd-mascot-img" />
+                <img src={mokletsBombi} alt="Maskot Mokleters" className="crowd-mascot-img" loading="lazy" />
                 <div className="crowd-mascot-badge" role="status">
                   <span>Mokleters Maskot</span>
                 </div>
@@ -588,7 +588,7 @@ function HomePage({
             {leaderboardData.map((item) => (
               <li key={item.rank} className={`leaderboard-item${item.rank <= 3 ? ' top-rank' : ''}`} id={`leaderboard-item-${item.rank}`}>
                 <span className="leaderboard-rank">{item.rank}</span>
-                <img src={item.img} alt="" aria-hidden="true" className="leaderboard-thumb" />
+                <img src={item.img} alt="" aria-hidden="true" className="leaderboard-thumb" loading="lazy" />
                 <div className="leaderboard-info">
                   <p className="leaderboard-name">{item.title}</p>
                   <p className="leaderboard-sub">{item.artist}</p>
@@ -608,12 +608,12 @@ function HomePage({
       {/* FOOTER */}
       <footer className="footer" role="contentinfo">
         <div className="footer-graffiti-wrap" aria-hidden="true">
-          <img src={mokletersGraffiti} alt="" className="footer-graffiti-img" />
+          <img src={mokletersGraffiti} alt="" className="footer-graffiti-img" loading="lazy" />
         </div>
         <div className="container">
           <div className="footer-grid">
             <div>
-              <img src={mokletersLogo} alt="Mokleters" className="footer-logo-img" />
+              <img src={mokletersLogo} alt="Mokleters" className="footer-logo-img" loading="lazy" />
               <p className="footer-brand-name">MOKLETERS</p>
               <p className="footer-brand-desc">Detak jantung pendukung SMK Telkom Malang. Kami adalah suara yang tak pernah padam, dan api yang tak pernah mati.</p>
             </div>

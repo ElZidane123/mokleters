@@ -6128,7 +6128,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  auto-rows: 280px;
+  grid-auto-rows: 280px;
 }
 
 /* ── Gallery Card ── */
@@ -6477,7 +6477,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   }
   .gallery-masonry {
     grid-template-columns: 1fr;
-    auto-rows: 240px;
+    grid-auto-rows: 240px;
   }
   .gallery-card--wide {
     grid-column: span 1;

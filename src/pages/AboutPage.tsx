@@ -351,7 +351,7 @@ export default function AboutPage() {
           <div className="about-profile-grid">
             <div className="about-profile-visual" style={{ justifyContent: 'center' }}>
               <div className="about-mascot-visual-container">
-                <img src={mokletsMascot} alt="Maskot Mokleters Bombi" className="about-mascot-page-img" />
+                <img src={mokletsMascot} alt="Maskot Mokleters Bombi" className="about-mascot-page-img" loading="lazy" />
               </div>
             </div>
             <div className="about-profile-text">
@@ -393,7 +393,7 @@ export default function AboutPage() {
               {/* Left Column: Image with gradient overlay */}
               <div className="captain-single-image-sec">
                 {currentCaptain.image ? (
-                  <img src={currentCaptain.image} alt={currentCaptain.name} className="captain-single-img" />
+                  <img src={currentCaptain.image} alt={currentCaptain.name} className="captain-single-img" loading="lazy" />
                 ) : (
                   <div className="captain-bg-placeholder">
                     <IconCaptainPlaceholder />
@@ -433,7 +433,7 @@ export default function AboutPage() {
               <div key={i} className="prev-captain-item">
                 <div className="prev-captain-avatar-wrap">
                   {capo.image ? (
-                    <img src={capo.image} alt={capo.name} className="prev-captain-img" />
+                    <img src={capo.image} alt={capo.name} className="prev-captain-img" loading="lazy" />
                   ) : (
                     <div className="captain-bg-placeholder" style={{ borderRadius: '50%' }}>
                       <IconCaptainPlaceholder />

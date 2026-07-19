@@ -147,7 +147,7 @@ export const CHANTS: ChantData[] = [
       { id: 2, text: 'Suka duka tinggi Bersama', time: 15 },
       { id: 3, text: 'Jiwa korsa di dalam hati kita semua', time: 20 },
       { id: 4, text: 'Mari, ikut, benyanyi kawan ooooo', time: 27 },
-      { id: 5, text: 'Angkat, jempot, sambil tertawa hahahaha', time: 38 },
+      { id: 5, text: 'Angkat, jempol, sambil tertawa hahahaha', time: 38 },
       { id: 6, text: 'Jika kau memang anak mokleters', time: 48 },
       { id: 7, text: 'Mari kita tunjukkan semangatmu kawan', time: 53 },
       { id: 8, text: 'Suka duka slalu Bersama', time: 58 },
