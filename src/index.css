@@ -381,7 +381,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .hero-bg {
   position: absolute;
   inset: 0;
-  background-image: url('/DSC02088.png');
+  background-image: url('/DSC02088_optimized.webp');
   background-size: cover;
   background-position: center 30%;
   z-index: 0;

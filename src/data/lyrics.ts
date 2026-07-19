@@ -1,16 +1,16 @@
 /* =============================================
    LYRICS DATA — Sync with real MP4 durations and PDF content
    ============================================= */
-import dsc01919 from '../assets/images/DSC01919_optimized.jpg'
-import dsc01950 from '../assets/images/DSC01950_optimized.jpg'
-import dsc01952 from '../assets/images/DSC01952_optimized.jpg'
-import dsc01954 from '../assets/images/DSC01954_optimized.jpg'
-import dsc01957 from '../assets/images/DSC01957_optimized.jpg'
-import dsc01958 from '../assets/images/WhatsApp Image 2026-07-19 at 11.58.42 (1).jpeg'
-import dsc01993 from '../assets/images/DSC01993_optimized.jpg'
-import dsc02049 from '../assets/images/DSC02049_optimized.jpg'
-import dsc02088 from '../assets/images/DSC02088_optimized.jpg'
-import dsc02120 from '../assets/images/DSC02120_optimized.jpg'
+import dsc01919 from '../assets/images/DSC01919_optimized.webp'
+import dsc01950 from '../assets/images/DSC01950_optimized.webp'
+import dsc01952 from '../assets/images/DSC01952_optimized.webp'
+import dsc01954 from '../assets/images/DSC01954_optimized.webp'
+import dsc01957 from '../assets/images/DSC01957_optimized.webp'
+import dsc01958 from '../assets/images/wa_image_6_optimized.webp'
+import dsc01993 from '../assets/images/DSC01993_optimized.webp'
+import dsc02049 from '../assets/images/DSC02049_optimized.webp'
+import dsc02088 from '../assets/images/DSC02088_optimized.webp'
+import dsc02120 from '../assets/images/DSC02120_optimized.webp'
 
 export interface LyricLine {
   id: number

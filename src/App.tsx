@@ -11,7 +11,7 @@ import mokletersLogo from './assets/Mokleters logo.png'
 import mokletsMascot from './assets/mascot_optimized.webp'
 import mokletsBombi from './assets/bombi_optimized.webp'
 
-import mokletersGraffiti from './assets/Group 1261154060 (1).png'
+import mokletersGraffiti from './assets/graffiti_optimized.webp'
 import { CHANTS } from './data/lyrics'
 import type { ChantData } from './data/lyrics'
 
@@ -123,11 +123,11 @@ const IconX = ({ size = 16 }: { size?: number }) => (
    DATA
    ============================================= */
 const leaderboardData = [
-  { rank: 1, title: 'Kami Datang Lagi', artist: 'Chant Mokleters', img: '/anthem1.png' },
-  { rank: 2, title: 'SMK Telkom Malang Kami Datang', artist: 'Anthem Pembuka', img: '/anthem2.png' },
-  { rank: 3, title: 'Bukalah Matamu', artist: 'Tempo Pertandingan', img: '/anthem3.png' },
-  { rank: 4, title: 'Mokleters Mokleters Wikusama', artist: 'Chant Kebanggaan', img: '/anthem1.png' },
-  { rank: 5, title: 'Kami Pendukung Telkom Malang', artist: 'Tempo Pertandingan', img: '/anthem2.png' },
+  { rank: 1, title: 'Kami Datang Lagi', artist: 'Chant Mokleters', img: '/anthem1.webp' },
+  { rank: 2, title: 'SMK Telkom Malang Kami Datang', artist: 'Anthem Pembuka', img: '/anthem2.webp' },
+  { rank: 3, title: 'Bukalah Matamu', artist: 'Tempo Pertandingan', img: '/anthem3.webp' },
+  { rank: 4, title: 'Mokleters Mokleters Wikusama', artist: 'Chant Kebanggaan', img: '/anthem1.webp' },
+  { rank: 5, title: 'Kami Pendukung Telkom Malang', artist: 'Tempo Pertandingan', img: '/anthem2.webp' },
 ]
 
 /* =============================================
@@ -147,7 +147,7 @@ export interface PlayerTrack {
 const defaultTrack: PlayerTrack = {
   title: 'Mokleters Pride',
   artist: 'Anthem Pembuka •  ',
-  img: '/chant-art.png',
+  img: '/chant-art.webp',
   duration: '3:45',
   currentTime: '0:00',
   progress: 0,
