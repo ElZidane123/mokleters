@@ -381,7 +381,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .hero-bg {
   position: absolute;
   inset: 0;
-  background-image: url('/hero-bg.png');
+  background-image: url('/DSC02088.png');
   background-size: cover;
   background-position: center 30%;
   z-index: 0;
@@ -1122,8 +1122,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 
 .player-mobile-play-btn,
-.player-mobile-progress-line,
-.player-bar-top .player-close-btn {
+.player-mobile-progress-line {
   display: none;
 }
 
@@ -6310,14 +6309,14 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 
 .gallery-lightbox-close {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 10;
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 10001;
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.72);
   border: 1px solid rgba(255, 255, 255, 0.18);
   color: #fff;
   display: flex;
@@ -6325,10 +6324,12 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   justify-content: center;
   cursor: pointer;
   transition: background 0.2s ease, transform 0.2s ease;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .gallery-lightbox-close:hover {
-  background: rgba(161, 15, 18, 0.7);
+  background: rgba(161, 15, 18, 0.8);
   transform: rotate(90deg);
 }
 
