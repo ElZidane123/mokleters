@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import type { ChantData } from '../data/lyrics'
 import { CHANTS } from '../data/lyrics'
 
@@ -98,7 +98,7 @@ const IconVolume2 = () => (
   </svg>
 )
 
-function ChantCard({
+const ChantCard = memo(function ChantCard({
   chant,
   isPlaying,
   onPlay,
@@ -107,7 +107,7 @@ function ChantCard({
 }: {
   chant: ChantType
   isPlaying: boolean
-  onPlay: () => void
+  onPlay: (chant: ChantData) => void
   progress: number
   onSeek?: (pct: number) => void
 }) {
@@ -122,6 +122,7 @@ function ChantCard({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => { setHovered(false); setIsMenuOpen(false); }}
       aria-label={chant.title}
+      onClick={() => onPlay(chant)}
     >
       {/* Image area */}
       <div className="chant-card-img-wrap">
@@ -147,7 +148,10 @@ function ChantCard({
           className={`chant-card-play-btn${hovered || isPlaying ? ' chant-card-play-btn--visible' : ''}`}
           type="button"
           aria-label={isPlaying ? `Pause ${chant.title}` : `Play ${chant.title}`}
-          onClick={onPlay}
+          onClick={(e) => {
+            e.stopPropagation()
+            onPlay(chant)
+          }}
           id={`chant-play-btn-${chant.id}`}
         >
           {isPlaying ? <IconPause size={22} /> : <IconPlay size={22} />}
@@ -172,7 +176,10 @@ function ChantCard({
             type="button"
             aria-label={liked ? 'Unlike' : 'Like'}
             aria-pressed={liked}
-            onClick={() => setLiked(l => !l)}
+            onClick={(e) => {
+              e.stopPropagation()
+              setLiked(l => !l)
+            }}
           >
             <IconHeart filled={liked} size={14} />
           </button>
@@ -201,7 +208,7 @@ function ChantCard({
                   className="chant-card-dropdown-item"
                   onClick={(e) => {
                     e.stopPropagation()
-                    onPlay()
+                    onPlay(chant)
                     setIsMenuOpen(false)
                   }}
                 >
@@ -238,12 +245,12 @@ function ChantCard({
       </div>
     </article>
   )
-}
+})
 
 /* =============================================
    CHANT ROW (List View)
    ============================================= */
-function ChantRow({
+const ChantRow = memo(function ChantRow({
   chant,
   index,
   isPlaying,
@@ -254,7 +261,7 @@ function ChantRow({
   chant: ChantType
   index: number
   isPlaying: boolean
-  onPlay: () => void
+  onPlay: (chant: ChantData) => void
   progress: number
   onSeek?: (pct: number) => void
 }) {
@@ -268,12 +275,23 @@ function ChantRow({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       aria-label={chant.title}
+      onClick={() => onPlay(chant)}
     >
       <div className="chant-row-num">
         {isPlaying ? (
           <div className="chant-row-playing-bars" aria-hidden="true"><span /><span /><span /></div>
         ) : hovered ? (
-          <button type="button" className="chant-row-play-inline" onClick={onPlay} aria-label={`Play ${chant.title}`}><IconPlay size={14} /></button>
+          <button
+            type="button"
+            className="chant-row-play-inline"
+            onClick={(e) => {
+              e.stopPropagation()
+              onPlay(chant)
+            }}
+            aria-label={`Play ${chant.title}`}
+          >
+            <IconPlay size={14} />
+          </button>
         ) : (
           <span className="chant-row-index">{index + 1}</span>
         )}
@@ -291,7 +309,10 @@ function ChantRow({
           type="button"
           aria-label={liked ? 'Unlike' : 'Like'}
           aria-pressed={liked}
-          onClick={() => setLiked(l => !l)}
+          onClick={(e) => {
+            e.stopPropagation()
+            setLiked(l => !l)
+          }}
         >
           <IconHeart filled={liked} size={14} />
         </button>
@@ -299,16 +320,78 @@ function ChantRow({
         <button
           type="button"
           className="chant-row-play-inline"
-          onClick={onPlay}
+          onClick={(e) => {
+            e.stopPropagation()
+            onPlay(chant)
+          }}
           aria-label={isPlaying ? `Pause ${chant.title}` : `Play ${chant.title}`}
         >
           {isPlaying ? <IconPause size={14} /> : <IconPlay size={14} />}
         </button>
-        <button className="chant-card-action-btn" type="button" aria-label="More options"><IconMoreHorizontal /></button>
+        <button
+          className="chant-card-action-btn"
+          type="button"
+          aria-label="More options"
+          onClick={(e) => {
+            e.stopPropagation()
+          }}
+        >
+          <IconMoreHorizontal />
+        </button>
       </div>
     </li>
   )
-}
+})
+
+const matchFlowPhases = [
+  {
+    phase: 'INTRO PANJANG BARU (6 MENIT)',
+    sub: 'Dinyanyikan sebelum pertandingan dimulai',
+    chants: [
+      { id: 4, num: '1.', title: '1. Mokleters Mokleters wikusama (oe oe o)', note: 'Wikusama SMK Telkom (Syalalalalalala) - 1.35 MENIT' },
+      { id: 7, num: '2.', title: '2. Hari ini Telkom Malang berlaga', note: 'Hey forza moklet (clap 4x tangan diatas) - 1.40 MENIT' },
+    ]
+  },
+  {
+    phase: 'ISTIRAHAT QUARTER 1 KE 2 (INTRO PENDEK)',
+    sub: 'Jeda pertandingan Quarter 1 ke Quarter 2',
+    chants: [
+      { id: 1, num: '3.', title: '3. Kami datang lagi', note: 'SMK Telkom Malang (Lantang ku bernyanyi 3X) - 2 MENIT' },
+      { id: 2, num: '5.', title: '5. SMK Telkom Malang', note: 'Mendukungmu selamanya (clap 4x tangan diatas) - 2 MENIT' },
+    ]
+  },
+  {
+    phase: 'QUARTER 2 (TRIBUN)',
+    sub: 'Dinyanyikan selama Quarter 2 berlangsung',
+    chants: [
+      { id: 3, num: '10.', title: '10. Buka lah Matamu', note: 'Dukung wikusama (Kiri & Kanan bersuara) - 1.50 MENIT' },
+      { id: 11, num: '11.', title: '11. Hari ini kutinggalkan Pelajaran', note: 'Untuk moklet segalanya kulakukan (clap 4x) - 2 MENIT' },
+      { id: 8, num: '12.', title: '12. Wis sue aku ngenteni koe', note: 'Telkom Malang kudu dimenangke (Bret) - 2.10 MENIT' },
+    ]
+  },
+  {
+    phase: 'QUARTER 2 KE 3 (INTRO PANJANG LAWAS) 3.30 MENIT',
+    sub: 'Jeda Quarter 2 ke 3',
+    chants: [
+      { id: 5, num: '14.', title: '14. Kami pendukung Telkom Malang', note: 'Ale ale Telkom School selamanya - 2.10 MENIT' },
+      { id: 10, num: '17.', title: '17. Warna merah kebanggaan kami', note: 'Disini kami terus berdiri (Takkan berhenti) - 2 MENIT' },
+    ]
+  },
+  {
+    phase: 'QUARTER 3 KE 4 (INTRO PENDEK)',
+    sub: 'Jeda Quarter 3 ke 4 & Pengulangan',
+    chants: [
+      { id: 9, num: '17.', title: '17. Yeyeye happy yayaya', note: 'Telkom Malang jadi juara (4x) - 1.40 MENIT' },
+    ]
+  },
+  {
+    phase: 'ANTHEM (PENUTUP)',
+    sub: 'Dinyanyikan bersama di akhir laga',
+    chants: [
+      { id: 6, num: 'ANTHEM', title: 'LOYALITAS TANPA BATAS MOKLETERS', note: 'Dengarlah kawan cerita dan semangatku' },
+    ]
+  }
+]
 
 /* =============================================
    CHANT LIBRARY PAGE
@@ -334,56 +417,6 @@ export default function ChantLibrary({
 }) {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [expandedChantId, setExpandedChantId] = useState<number | null>(null)
-
-  const matchFlowPhases = [
-    {
-      phase: 'INTRO PANJANG BARU (6 MENIT)',
-      sub: 'Dinyanyikan sebelum pertandingan dimulai',
-      chants: [
-        { id: 4, num: '1.', title: '1. Mokleters Mokleters wikusama (oe oe o)', note: 'Wikusama SMK Telkom (Syalalalalalala) - 1.35 MENIT' },
-        { id: 7, num: '2.', title: '2. Hari ini Telkom Malang berlaga', note: 'Hey forza moklet (clap 4x tangan diatas) - 1.40 MENIT' },
-      ]
-    },
-    {
-      phase: 'ISTIRAHAT QUARTER 1 KE 2 (INTRO PENDEK)',
-      sub: 'Jeda pertandingan Quarter 1 ke Quarter 2',
-      chants: [
-        { id: 1, num: '3.', title: '3. Kami datang lagi', note: 'SMK Telkom Malang (Lantang ku bernyanyi 3X) - 2 MENIT' },
-        { id: 2, num: '5.', title: '5. SMK Telkom Malang', note: 'Mendukungmu selamanya (clap 4x tangan diatas) - 2 MENIT' },
-      ]
-    },
-    {
-      phase: 'QUARTER 2 (TRIBUN)',
-      sub: 'Dinyanyikan selama Quarter 2 berlangsung',
-      chants: [
-        { id: 3, num: '10.', title: '10. Buka lah Matamu', note: 'Dukung wikusama (Kiri & Kanan bersuara) - 1.50 MENIT' },
-        { id: 11, num: '11.', title: '11. Hari ini kutinggalkan Pelajaran', note: 'Untuk moklet segalanya kulakukan (clap 4x) - 2 MENIT' },
-        { id: 8, num: '12.', title: '12. Wis sue aku ngenteni koe', note: 'Telkom Malang kudu dimenangke (Bret) - 2.10 MENIT' },
-      ]
-    },
-    {
-      phase: 'QUARTER 2 KE 3 (INTRO PANJANG LAWAS) 3.30 MENIT',
-      sub: 'Jeda Quarter 2 ke 3',
-      chants: [
-        { id: 5, num: '14.', title: '14. Kami pendukung Telkom Malang', note: 'Ale ale Telkom School selamanya - 2.10 MENIT' },
-        { id: 10, num: '17.', title: '17. Warna merah kebanggaan kami', note: 'Disini kami terus berdiri (Takkan berhenti) - 2 MENIT' },
-      ]
-    },
-    {
-      phase: 'QUARTER 3 KE 4 (INTRO PENDEK)',
-      sub: 'Jeda Quarter 3 ke 4 & Pengulangan',
-      chants: [
-        { id: 9, num: '17.', title: '17. Yeyeye happy yayaya', note: 'Telkom Malang jadi juara (4x) - 1.40 MENIT' },
-      ]
-    },
-    {
-      phase: 'ANTHEM (PENUTUP)',
-      sub: 'Dinyanyikan bersama di akhir laga',
-      chants: [
-        { id: 6, num: 'ANTHEM', title: 'LOYALITAS TANPA BATAS MOKLETERS', note: 'Dengarlah kawan cerita dan semangatku' },
-      ]
-    }
-  ]
 
   const filtered = CHANTS.filter(c => {
     const matchSearch = c.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -710,7 +743,7 @@ export default function ChantLibrary({
                   key={chant.id}
                   chant={chant}
                   isPlaying={playingChantId === chant.id && isPlaying}
-                  onPlay={() => onCardClick(chant)}
+                  onPlay={onCardClick}
                   progress={playingChantId === chant.id ? progress : 0}
                   onSeek={onSeek}
                 />
@@ -726,7 +759,7 @@ export default function ChantLibrary({
                 <ChantCard
                   chant={CHANTS.find(c => c.id === 6)!}
                   isPlaying={playingChantId === 6 && isPlaying}
-                  onPlay={() => onCardClick(CHANTS.find(c => c.id === 6)!)}
+                  onPlay={onCardClick}
                   progress={playingChantId === 6 ? progress : 0}
                   onSeek={onSeek}
                 />
@@ -749,7 +782,7 @@ export default function ChantLibrary({
                   chant={chant}
                   index={i}
                   isPlaying={playingChantId === chant.id && isPlaying}
-                  onPlay={() => onCardClick(chant)}
+                  onPlay={onCardClick}
                   progress={playingChantId === chant.id ? progress : 0}
                   onSeek={onSeek}
                 />
