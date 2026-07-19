@@ -2,13 +2,22 @@ import { useState, useCallback } from 'react'
 import gallery1 from '../assets/images/DSC01919_optimized.webp'
 import gallery2 from '../assets/images/DSC01950_optimized.webp'
 import gallery3 from '../assets/images/DSC01952_optimized.webp'
-import gallery4 from '../assets/images/DSC01952_optimized.webp'
+import gallery4 from '../assets/images/DSC01954_optimized.webp' // Fixed from DSC01952
 import gallery5 from '../assets/images/DSC01957_optimized.webp'
 import gallery6 from '../assets/images/DSC01958_optimized.webp'
 import nabilPhoto from '../assets/nabil_optimized.webp'
 import elzidanePhoto from '../assets/elzidane_optimized.webp'
 import mascotPhoto from '../assets/mascot_optimized.webp'
 import bombiPhoto from '../assets/bombi_optimized.webp'
+// WhatsApp Images
+import wa1 from '../assets/images/wa_1_optimized.webp'
+import wa2 from '../assets/images/wa_2_optimized.webp'
+import wa3 from '../assets/images/wa_3_optimized.webp'
+import wa4 from '../assets/images/wa_4_optimized.webp'
+import wa5 from '../assets/images/wa_5_optimized.webp'
+import wa6 from '../assets/images/wa_6_optimized.webp'
+import wa7 from '../assets/images/wa_7_optimized.webp'
+import wa8 from '../assets/images/wa_8_optimized.webp'
 
 /* =============================================
    GALLERY PAGE – MOKLETERS PHOTO ARCHIVE
@@ -109,6 +118,71 @@ const GALLERY_ITEMS: GalleryItem[] = [
     category: 'Maskot',
     date: '30 Mei 2024',
     desc: 'Bombi, sang maskot gagah yang terinspirasi dari Gatotkaca—simbol keberanian dan kekuatan Mokleters.',
+  },
+  {
+    id: 11,
+    src: wa1,
+    title: 'Aksi Tribun Utara',
+    category: 'Laga',
+    date: '19 Juli 2026',
+    desc: 'Gemuruh ribuan Mokleters menyanyikan chant kebanggaan di tribun utara stadion.',
+  },
+  {
+    id: 12,
+    src: wa2,
+    title: 'Koreografi Merah Putih',
+    category: 'Koreografi',
+    date: '19 Juli 2026',
+    desc: 'Pertunjukan koreografi kertas dan bendera raksasa oleh suporter Mokleters.',
+  },
+  {
+    id: 13,
+    src: wa3,
+    title: 'Semangat Wikusama',
+    category: 'Kolektif',
+    date: '19 Juli 2026',
+    desc: 'Kekompakan suporter Mokleters yang tak kenal lelah mengawal tim kebanggaan.',
+  },
+  {
+    id: 14,
+    src: wa4,
+    title: 'Kibaran Bendera Kebesaran',
+    category: 'Laga',
+    date: '19 Juli 2026',
+    desc: 'Giant flag dengan lambang Mokleters berkibar megah di tengah-tengah kerumunan suporter.',
+  },
+  {
+    id: 15,
+    src: wa5,
+    title: 'Gemuruh Stadion',
+    category: 'Event',
+    date: '19 Juli 2026',
+    desc: 'Euforia dan gairah suporter Mokleters saat merayakan kemenangan tim Wikusama.',
+  },
+  {
+    id: 16,
+    src: wa6,
+    title: 'Suasana DBL Malang',
+    category: 'Laga',
+    date: '19 Juli 2026',
+    desc: 'Potret lautan merah suporter Mokleters memadati DBL Arena Malang.',
+    wide: true,
+  },
+  {
+    id: 17,
+    src: wa7,
+    title: 'Solidaritas Tanpa Batas',
+    category: 'Kolektif',
+    date: '19 Juli 2026',
+    desc: 'Persaudaraan erat antar suporter Mokleters baik di dalam maupun di luar tribun.',
+  },
+  {
+    id: 18,
+    src: wa8,
+    title: 'Kreativitas Tribun',
+    category: 'Koreografi',
+    date: '19 Juli 2026',
+    desc: 'Persiapan koreo 3D kreatif dari tim kreatif Mokleters.',
   },
 ]
 

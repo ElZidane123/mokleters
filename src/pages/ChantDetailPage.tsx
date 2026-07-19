@@ -304,7 +304,7 @@ export default function ChantDetailPage({
           </div>
 
           {/* Sync indicator */}
-          <div className="chant-detail-lyrics-sync" aria-hidden="true">
+          <div className="chant-detail-lyrics-sync" style={{ cursor: 'pointer' }} onClick={handleProgressClick}>
             <div className="chant-detail-lyrics-sync-bar">
               <div className="chant-detail-lyrics-sync-fill" style={{ width: `${progress}%` }} />
             </div>

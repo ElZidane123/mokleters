@@ -1123,7 +1123,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 .player-mobile-play-btn,
 .player-mobile-progress-line {
-  display: none;
+  display: none !important;
 }
 
 .player-thumb {
@@ -4269,7 +4269,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
   /* Mobile play/pause: small circular premium button next to close */
   .player-mobile-play-btn {
-    display: inline-flex;
+    display: inline-flex !important;
     align-items: center;
     justify-content: center;
     width: 38px;

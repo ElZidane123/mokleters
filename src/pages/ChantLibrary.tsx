@@ -54,22 +54,36 @@ type ChantType = ChantData
 /* =============================================
    MINI PROGRESS BAR (shown on playing card)
    ============================================= */
-function MiniProgressBar({ progress }: { progress: number }) {
+function MiniProgressBar({ progress, onSeek }: { progress: number; onSeek?: (pct: number) => void }) {
+  const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!onSeek) return
+    e.stopPropagation()
+    const rect = e.currentTarget.getBoundingClientRect()
+    const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width))
+    onSeek(pct)
+  }
+
   return (
-    <div style={{
-      width: '100%',
-      height: 3,
-      background: 'rgba(255,255,255,0.12)',
-      borderRadius: 99,
-      overflow: 'hidden',
-      marginTop: 8,
-    }}>
+    <div
+      onClick={handleProgressClick}
+      style={{
+        width: '100%',
+        height: 5,
+        background: 'rgba(255,255,255,0.12)',
+        borderRadius: 99,
+        overflow: 'hidden',
+        marginTop: 8,
+        cursor: onSeek ? 'pointer' : 'default',
+        position: 'relative',
+        zIndex: 5,
+      }}
+    >
       <div style={{
         height: '100%',
         width: `${progress}%`,
         background: 'linear-gradient(90deg, #e53935, #ff6b35)',
         borderRadius: 99,
-        transition: 'width 0.3s linear',
+        transition: 'width 0.1s linear',
       }} />
     </div>
   )
@@ -89,11 +103,13 @@ function ChantCard({
   isPlaying,
   onPlay,
   progress,
+  onSeek,
 }: {
   chant: ChantType
   isPlaying: boolean
   onPlay: () => void
   progress: number
+  onSeek?: (pct: number) => void
 }) {
   const [liked, setLiked] = useState(false)
   const [hovered, setHovered] = useState(false)
@@ -149,7 +165,7 @@ function ChantCard({
       <div className="chant-card-info">
         <h3 className="chant-card-title" style={{ color: isPlaying ? '#ff6060' : undefined }}>{chant.title}</h3>
         <p className="chant-card-meta">{chant.duration} • {chant.category}</p>
-        {isPlaying && <MiniProgressBar progress={progress} />}
+        {isPlaying && <MiniProgressBar progress={progress} onSeek={onSeek} />}
         <div className="chant-card-actions">
           <button
             className={`chant-card-action-btn${liked ? ' chant-card-action-btn--liked' : ''}`}
@@ -233,12 +249,14 @@ function ChantRow({
   isPlaying,
   onPlay,
   progress,
+  onSeek,
 }: {
   chant: ChantType
   index: number
   isPlaying: boolean
   onPlay: () => void
   progress: number
+  onSeek?: (pct: number) => void
 }) {
   const [liked, setLiked] = useState(false)
   const [hovered, setHovered] = useState(false)
@@ -263,7 +281,7 @@ function ChantRow({
       <img src={chant.img} alt="" aria-hidden="true" className="chant-row-thumb" />
       <div className="chant-row-info">
         <p className="chant-row-title" style={{ color: isPlaying ? '#ff6060' : undefined }}>{chant.title}</p>
-        {isPlaying && <MiniProgressBar progress={progress} />}
+        {isPlaying && <MiniProgressBar progress={progress} onSeek={onSeek} />}
       </div>
       <span className="chant-row-category">{chant.category}</span>
       <span className="chant-row-plays">{chant.popular ? 'Populer' : 'Standard'}</span>
@@ -302,6 +320,8 @@ export default function ChantLibrary({
   onPlayChantOnly,
   search,
   setSearch,
+  progress = 0,
+  onSeek,
 }: {
   playingChantId: number | null
   isPlaying: boolean
@@ -309,6 +329,8 @@ export default function ChantLibrary({
   onPlayChantOnly: (chant: ChantData) => void
   search: string
   setSearch: (s: string) => void
+  progress?: number
+  onSeek?: (pct: number) => void
 }) {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [expandedChantId, setExpandedChantId] = useState<number | null>(null)
@@ -689,7 +711,8 @@ export default function ChantLibrary({
                   chant={chant}
                   isPlaying={playingChantId === chant.id && isPlaying}
                   onPlay={() => onCardClick(chant)}
-                  progress={0}
+                  progress={playingChantId === chant.id ? progress : 0}
+                  onSeek={onSeek}
                 />
               ))}
             </div>
@@ -704,7 +727,8 @@ export default function ChantLibrary({
                   chant={CHANTS.find(c => c.id === 6)!}
                   isPlaying={playingChantId === 6 && isPlaying}
                   onPlay={() => onCardClick(CHANTS.find(c => c.id === 6)!)}
-                  progress={0}
+                  progress={playingChantId === 6 ? progress : 0}
+                  onSeek={onSeek}
                 />
               </div>
             )}
@@ -726,7 +750,8 @@ export default function ChantLibrary({
                   index={i}
                   isPlaying={playingChantId === chant.id && isPlaying}
                   onPlay={() => onCardClick(chant)}
-                  progress={0}
+                  progress={playingChantId === chant.id ? progress : 0}
+                  onSeek={onSeek}
                 />
               ))}
             </ol>

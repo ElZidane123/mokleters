@@ -123,11 +123,11 @@ const IconX = ({ size = 16 }: { size?: number }) => (
    DATA
    ============================================= */
 const leaderboardData = [
-  { rank: 1, title: 'Kami Datang Lagi', artist: 'Chant Mokleters', plays: '1.5Jt putaran', img: '/anthem1.png' },
-  { rank: 2, title: 'SMK Telkom Malang Kami Datang', artist: 'Anthem Pembuka', plays: '892Rb putaran', img: '/anthem2.png' },
-  { rank: 3, title: 'Bukalah Matamu', artist: 'Tempo Pertandingan', plays: '740Rb putaran', img: '/anthem3.png' },
-  { rank: 4, title: 'Mokleters Mokleters Wikusama', artist: 'Chant Kebanggaan', plays: '612Rb putaran', img: '/anthem1.png' },
-  { rank: 5, title: 'Kami Pendukung Telkom Malang', artist: 'Tempo Pertandingan', plays: '541Rb putaran', img: '/anthem2.png' },
+  { rank: 1, title: 'Kami Datang Lagi', artist: 'Chant Mokleters', img: '/anthem1.png' },
+  { rank: 2, title: 'SMK Telkom Malang Kami Datang', artist: 'Anthem Pembuka', img: '/anthem2.png' },
+  { rank: 3, title: 'Bukalah Matamu', artist: 'Tempo Pertandingan', img: '/anthem3.png' },
+  { rank: 4, title: 'Mokleters Mokleters Wikusama', artist: 'Chant Kebanggaan', img: '/anthem1.png' },
+  { rank: 5, title: 'Kami Pendukung Telkom Malang', artist: 'Tempo Pertandingan', img: '/anthem2.png' },
 ]
 
 /* =============================================
@@ -503,7 +503,6 @@ function HomePage({
                   <div className="playlist-card-content">
                     <span className={`playlist-card-tag ${featured.tagClass}`}>{featured.tagLabel}</span>
                     <h3 className="playlist-card-title">{featured.chant.title}</h3>
-                    <p className="playlist-card-meta">{featured.plays} putaran</p>
                     <p style={{ fontSize: 13, color: 'rgba(229,226,225,0.60)', marginTop: 6, lineHeight: 1.5 }}>
                       Lirik: {featured.chant.lyrics.slice(0, 3).map(l => l.text).join(', ')}...
                     </p>
@@ -522,7 +521,6 @@ function HomePage({
                       <div className="playlist-card-content">
                         <span className={`playlist-card-tag ${item.tagClass}`}>{item.tagLabel}</span>
                         <h3 className="playlist-card-title">{item.chant.title}</h3>
-                        <p className="playlist-card-meta">{item.plays} putaran</p>
                       </div>
                     </div>
                   </div>
@@ -704,6 +702,7 @@ export default function App() {
 
   // ── Audio engine state ──
   const audioRef = useRef<HTMLAudioElement | null>(null)
+  const audioCtxRef = useRef<AudioContext | null>(null)
   const [playingChantId, setPlayingChantId] = useState<number | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [elapsed, setElapsed] = useState(0)
@@ -750,8 +749,59 @@ export default function App() {
     stopAudio()
 
     const audio = new Audio(chant.src)
+    audio.crossOrigin = 'anonymous'
     audioRef.current = audio
     audio.volume = volume / 100
+
+    // Web Audio API: Jernihkan dan perbagus audio suporter secara realtime (EQ & Compressor)
+    try {
+      if (!audioCtxRef.current) {
+        audioCtxRef.current = new (window.AudioContext || (window as any).webkitAudioContext)()
+      }
+      const ctx = audioCtxRef.current
+      if (ctx.state === 'suspended') {
+        ctx.resume()
+      }
+
+      const source = ctx.createMediaElementSource(audio)
+
+      // 1. Highpass filter untuk menghilangkan gemuruh/sub-bass berlebih di bawah 80Hz (rumble tribun)
+      const hpFilter = ctx.createBiquadFilter()
+      hpFilter.type = 'highpass'
+      hpFilter.frequency.value = 80
+      hpFilter.Q.value = 0.7
+
+      // 2. Peaking filter untuk meredam frekuensi berdengung/keruh di 300Hz (anti-muddy)
+      const mudFilter = ctx.createBiquadFilter()
+      mudFilter.type = 'peaking'
+      mudFilter.frequency.value = 300
+      mudFilter.Q.value = 1.0
+      mudFilter.gain.value = -3
+
+      // 3. Peaking filter untuk memperjelas vokal & yel-yel suporter di 2.5kHz (clarity boost)
+      const vocalFilter = ctx.createBiquadFilter()
+      vocalFilter.type = 'peaking'
+      vocalFilter.frequency.value = 2500
+      vocalFilter.Q.value = 1.0
+      vocalFilter.gain.value = 4.5
+
+      // 4. Dynamics compressor untuk membuat suara yel-yel terasa tebal, padat, dan megah
+      const compressor = ctx.createDynamicsCompressor()
+      compressor.threshold.value = -16
+      compressor.knee.value = 12
+      compressor.ratio.value = 4
+      compressor.attack.value = 0.010
+      compressor.release.value = 0.150
+
+      // Hubungkan rantai efek: source -> highpass -> mud -> vocal -> compressor -> destination
+      source.connect(hpFilter)
+      hpFilter.connect(mudFilter)
+      mudFilter.connect(vocalFilter)
+      vocalFilter.connect(compressor)
+      compressor.connect(ctx.destination)
+    } catch (err) {
+      console.warn('Web Audio API enhancement failed, playing raw audio:', err)
+    }
 
     audio.onloadedmetadata = () => setDuration(audio.duration)
 
@@ -942,6 +992,8 @@ export default function App() {
             onPlayChantOnly={playChant}
             search={searchQuery}
             setSearch={setSearchQuery}
+            progress={progress}
+            onSeek={handleSeek}
           />
         )
       case 'Playlist':

@@ -43,8 +43,14 @@ export default function PlaylistPage({
   const activeChant = chant || CHANTS[0]
   const [activeLyricIdx, setActiveLyricIdx] = useState(0)
 
+  const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width))
+    onSeek(pct)
+  }
+
   // Reference unused variables to satisfy strict compilation checks
-  const _unused = { isShuffle, isRepeat, volume, onPlayPause, onPrev, onNext, onShuffle, onRepeat, onVolume, handleProgressClick: onSeek }
+  const _unused = { isShuffle, isRepeat, volume, onPlayPause, onPrev, onNext, onShuffle, onRepeat, onVolume }
   void _unused
 
   // Sync lyric to elapsed time
@@ -121,7 +127,7 @@ export default function PlaylistPage({
           </div>
 
           {/* Indikator Sinkronisasi */}
-          <div className="pl-lyrics-sync" aria-hidden="true">
+          <div className="pl-lyrics-sync" style={{ cursor: 'pointer' }} onClick={handleProgressClick}>
             <div className="pl-lyrics-sync-bar">
               <div className="pl-lyrics-sync-fill" style={{ width: `${progress}%` }} />
             </div>
