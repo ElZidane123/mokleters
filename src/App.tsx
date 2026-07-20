@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 import './index.css'
 import ChantLibrary from './pages/ChantLibrary'
 import PlaylistPage from './pages/PlaylistPage'
@@ -1216,6 +1217,7 @@ export default function App() {
       {showSplash && (
         <SplashScreen onComplete={() => setShowSplash(false)} />
       )}
+      <Analytics />
     </>
   )
 }
