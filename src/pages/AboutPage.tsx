@@ -1,27 +1,30 @@
 import mokletsMascot from '../assets/bombi_optimized.webp'
 import mokletersLogo from '../assets/Mokleters logo.png'
 import attaPhoto from '../assets/atta_optimized.webp'
-import nabilPhoto from '../assets/nabil_optimized.webp'
-import elzidanePhoto from '../assets/elzidane_optimized.webp'
+// import nabilPhoto from '../assets/nabil_optimized.webp'
+// import elzidanePhoto from '../assets/elzidane_optimized.webp'
+
 
 /* =============================================
    LUCIDE-STYLE SVG ICONS
    ============================================= */
 
-export default function AboutPage() {
-  const IconGraduation = () => (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 4 }}>
-      <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-      <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5" />
-    </svg>
-  )
+const IconGraduation = () => (
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 4 }}>
+    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+    <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5" />
+  </svg>
+)
 
-  const IconCaptainPlaceholder = () => (
-    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-      <circle cx="12" cy="7" r="4" />
-    </svg>
-  )
+const IconCaptainPlaceholder = () => (
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+    <circle cx="12" cy="7" r="4" />
+  </svg>
+)
+
+export default function AboutPage() {
+
 
   const currentCaptain = {
     period: '2026 - 2027',
@@ -30,6 +33,7 @@ export default function AboutPage() {
     image: attaPhoto
   }
 
+  /*
   const previousCaptains = [
     {
       period: '2022 - 2023',
@@ -50,6 +54,7 @@ export default function AboutPage() {
       image: mokletsMascot
     }
   ]
+  */
 
 
 
