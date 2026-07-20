@@ -1014,6 +1014,7 @@ export default function App() {
             onShuffle={() => setIsShuffle(s => !s)}
             onRepeat={() => setIsRepeat(r => !r)}
             onVolume={handleVolume}
+            onBack={() => setActiveNav('Chant')}
           />
         )
       case 'Tentang':
