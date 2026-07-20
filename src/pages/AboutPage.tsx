@@ -427,7 +427,8 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <h3 className="previous-captains-title">Kapten Angkatan Sebelumnya</h3>
+                {/* Comment dulu sementara belum ada fotonya  */}
+          {/* <h3 className="previous-captains-title">Kapten Angkatan Sebelumnya</h3>
           <div className="previous-captains-list">
             {previousCaptains.map((capo, i) => (
               <div key={i} className="prev-captain-item">
@@ -445,7 +446,7 @@ export default function AboutPage() {
                 <span className="prev-captain-angkatan">{capo.angkatan}</span>
               </div>
             ))}
-          </div>
+          </div> */}
         </section>
 
         {/* ── HISTORY / STATS ── */}
