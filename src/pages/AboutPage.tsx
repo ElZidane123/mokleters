@@ -2,8 +2,8 @@ import mokletsMascot from '../assets/bombi_optimized.webp'
 import mokletersLogo from '../assets/Mokleters logo.png'
 import attaPhoto from '../assets/atta_optimized.webp'
 import keicuPhoto from '../assets/keicu.webp'
-import nabilPhoto from '../assets/nabil_optimized.webp'
-import elzidanePhoto from '../assets/elzidane_optimized.webp'
+// import nabilPhoto from '../assets/nabil_optimized.webp'
+// import elzidanePhoto from '../assets/elzidane_optimized.webp'
 
 
 /* =============================================
