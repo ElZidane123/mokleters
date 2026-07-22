@@ -1,8 +1,9 @@
 import mokletsMascot from '../assets/bombi_optimized.webp'
 import mokletersLogo from '../assets/Mokleters logo.png'
 import attaPhoto from '../assets/atta_optimized.webp'
-// import nabilPhoto from '../assets/nabil_optimized.webp'
-// import elzidanePhoto from '../assets/elzidane_optimized.webp'
+import keicuPhoto from '../assets/keicu.webp'
+import nabilPhoto from '../assets/nabil_optimized.webp'
+import elzidanePhoto from '../assets/elzidane_optimized.webp'
 
 
 /* =============================================
@@ -33,17 +34,23 @@ export default function AboutPage() {
     image: attaPhoto
   }
 
-  /*
   const previousCaptains = [
     {
+      period: '2025 - 2026',
+      name: 'Keisya Aurora Putri Susetyo',
+      angkatan: 'Angkatan 32',
+      image: keicuPhoto
+    },
+    /*
+    {
       period: '2022 - 2023',
-      name: 'Capo Utama Mokleters',
+      name: 'Nabil',
       angkatan: 'Angkatan 31',
       image: nabilPhoto
     },
     {
       period: '2020 - 2021',
-      name: 'Capo Utama Mokleters',
+      name: 'El Zidane',
       angkatan: 'Angkatan 29',
       image: elzidanePhoto
     },
@@ -53,8 +60,8 @@ export default function AboutPage() {
       angkatan: 'Angkatan 27',
       image: mokletsMascot
     }
+    */
   ]
-  */
 
 
 
@@ -280,7 +287,7 @@ export default function AboutPage() {
           flex-direction: column !important;
           align-items: center !important;
           text-align: center !important;
-          width: 160px !important;
+          width: 180px !important;
           transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
         }
 
@@ -289,8 +296,8 @@ export default function AboutPage() {
         }
 
         .prev-captain-avatar-wrap {
-          width: 100px !important;
-          height: 100px !important;
+          width: 120px !important;
+          height: 120px !important;
           border-radius: 50% !important;
           overflow: hidden !important;
           border: 2px solid rgba(255, 255, 255, 0.1) !important;
@@ -318,7 +325,7 @@ export default function AboutPage() {
 
         .prev-captain-period {
           font-family: var(--font-display);
-          font-size: 9.5px !important;
+          font-size: 10.5px !important;
           font-weight: 800 !important;
           color: var(--color-primary-bright) !important;
           letter-spacing: 0.05em !important;
@@ -326,14 +333,14 @@ export default function AboutPage() {
         }
 
         .prev-captain-name {
-          font-size: 13.5px !important;
+          font-size: 15px !important;
           font-weight: 700 !important;
           color: #ffffff !important;
           margin: 0 0 2px 0 !important;
         }
 
         .prev-captain-angkatan {
-          font-size: 11px !important;
+          font-size: 12px !important;
           color: rgba(255, 255, 255, 0.5) !important;
         }
       `}</style>
@@ -432,8 +439,9 @@ export default function AboutPage() {
             </div>
           </div>
 
-                {/* Comment dulu sementara belum ada fotonya  */}
-          {/* <h3 className="previous-captains-title">Kapten Angkatan Sebelumnya</h3>
+          <div style={{ margin: '40px 0', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.08) 50%, transparent)' }} />
+
+          <h3 className="previous-captains-title">Kapten Angkatan Sebelumnya</h3>
           <div className="previous-captains-list">
             {previousCaptains.map((capo, i) => (
               <div key={i} className="prev-captain-item">
@@ -446,12 +454,12 @@ export default function AboutPage() {
                     </div>
                   )}
                 </div>
-                <span className="prev-captain-period">{capo.period}</span>
+                <span className="prev-captain-period">Periode {capo.period}</span>
                 <h4 className="prev-captain-name">{capo.name}</h4>
                 <span className="prev-captain-angkatan">{capo.angkatan}</span>
               </div>
             ))}
-          </div> */}
+          </div>
         </section>
 
         {/* ── HISTORY / STATS ── */}
