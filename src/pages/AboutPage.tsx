@@ -2,6 +2,7 @@ import mokletsMascot from '../assets/bombi_optimized.webp'
 import mokletersLogo from '../assets/Mokleters logo.png'
 import attaPhoto from '../assets/atta_optimized.webp'
 import keicuPhoto from '../assets/keicu.webp'
+import faiqPhoto from '../assets/faiq.jpeg'
 // import nabilPhoto from '../assets/nabil_optimized.webp'
 // import elzidanePhoto from '../assets/elzidane_optimized.webp'
 
@@ -40,6 +41,12 @@ export default function AboutPage() {
       name: 'Keisya Aurora Putri Susetyo',
       angkatan: 'Angkatan 32',
       image: keicuPhoto
+    },
+    {
+      period: '2021 - 2022',
+      name: 'Faiqu Dzaky El. Subkhan',
+      angkatan: 'Angkatan 28',
+      image: faiqPhoto
     },
     /*
     {

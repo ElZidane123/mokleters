@@ -5,10 +5,7 @@ import gallery3 from '../assets/images/DSC01952_optimized.webp'
 import gallery4 from '../assets/images/DSC01954_optimized.webp' // Fixed from DSC01952
 import gallery5 from '../assets/images/DSC01957_optimized.webp'
 import gallery6 from '../assets/images/DSC01958_optimized.webp'
-import nabilPhoto from '../assets/nabil_optimized.webp'
-import elzidanePhoto from '../assets/elzidane_optimized.webp'
-import mascotPhoto from '../assets/mascot_optimized.webp'
-import bombiPhoto from '../assets/bombi_optimized.webp'
+
 // WhatsApp Images
 import wa1 from '../assets/images/wa_1_optimized.webp'
 import wa2 from '../assets/images/wa_2_optimized.webp'
@@ -86,39 +83,7 @@ const GALLERY_ITEMS: GalleryItem[] = [
     desc: 'Suasana Pekan Olahraga & Seni SMK Telkom Malang 2024 — Mokleters hadir penuh semangat dari awal hingga akhir.',
     wide: true,
   },
-  {
-    id: 7,
-    src: mascotPhoto,
-    title: 'Bombi Si Maskot',
-    category: 'Maskot',
-    date: '1 Juli 2024',
-    desc: 'Si Wiku—maskot resmi Mokleters—hadir memeriahkan setiap laga sebagai penjaga semangat tribun.',
-    tall: true,
-  },
-  {
-    id: 8,
-    src: nabilPhoto,
-    title: 'Developer & Crew',
-    category: 'Tim',
-    date: '10 Juni 2024',
-    desc: 'Anggota tim kreatif Mokleters yang bekerja di balik layar untuk memajukan komunitas supporter.',
-  },
-  {
-    id: 9,
-    src: elzidanePhoto,
-    title: 'Website Developer Mokleters',
-    category: 'Developer',
-    date: '10 Juni 2026',
-    desc: 'Website Developer Mokleters',
-  },
-  {
-    id: 10,
-    src: bombiPhoto,
-    title: 'Bombi — Pahlawan Kecil',
-    category: 'Maskot',
-    date: '30 Mei 2024',
-    desc: 'Bombi, sang maskot gagah yang terinspirasi dari Gatotkaca—simbol keberanian dan kekuatan Mokleters.',
-  },
+
   {
     id: 11,
     src: wa1,
@@ -144,6 +109,15 @@ const GALLERY_ITEMS: GalleryItem[] = [
     desc: 'Kekompakan suporter Mokleters yang tak kenal lelah mengawal tim kebanggaan.',
   },
   {
+    id: 16,
+    src: wa6,
+    title: 'Suasana DBL Malang',
+    category: 'Laga',
+    date: '19 Juli 2026',
+    desc: 'Potret lautan merah suporter Mokleters memadati DBL Arena Malang.',
+    wide: true,
+  },
+  {
     id: 14,
     src: wa4,
     title: 'Kibaran Bendera Kebesaran',
@@ -158,15 +132,6 @@ const GALLERY_ITEMS: GalleryItem[] = [
     category: 'Event',
     date: '19 Juli 2026',
     desc: 'Euforia dan gairah suporter Mokleters saat merayakan kemenangan tim Wikusama.',
-  },
-  {
-    id: 16,
-    src: wa6,
-    title: 'Suasana DBL Malang',
-    category: 'Laga',
-    date: '19 Juli 2026',
-    desc: 'Potret lautan merah suporter Mokleters memadati DBL Arena Malang.',
-    wide: true,
   },
   {
     id: 17,
@@ -186,7 +151,7 @@ const GALLERY_ITEMS: GalleryItem[] = [
   },
 ]
 
-const CATEGORIES = ['Semua', 'Laga', 'Koreografi', 'Kolektif', 'Event', 'Maskot', 'Tim']
+const CATEGORIES = ['Semua', 'Laga', 'Koreografi', 'Kolektif', 'Event']
 
 export default function GalleryPage() {
   const [activeCategory, setActiveCategory] = useState('Semua')
